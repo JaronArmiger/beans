@@ -35,8 +35,9 @@ const RegisterComplete = ({ history }) => {
         window.localStorage.removeItem('emailForRegistration');
         let user = auth.currentUser;
         await user.updatePassword(password);
+        // this is a jwt
         const idTokenResult = await user.getIdTokenResult();
-        // reduc store
+        // redux store
         history.push('/');
       }
     } catch (error) {
