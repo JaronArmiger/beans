@@ -5,6 +5,7 @@ import {
   AppstoreOutlined, 
   SettingOutlined ,
   UserAddOutlined,
+  LogoutOutlined
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase';
@@ -51,7 +52,7 @@ const Header = () => {
           <Item key="setting:2">Option 2</Item>
           <Item 
             key="setting:3" 
-            icon={<UserOutlined />}
+            icon={<LogoutOutlined />}
             onClick={logout}
           >
             Logout
