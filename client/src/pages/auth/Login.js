@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { createOrUpdateUser } from '../../functions/auth';
 
 
@@ -19,7 +19,7 @@ const Login = ({ history }) => {
   
   useEffect(() => {
     if (user && user.token) history.push('/');
-  }, [user]);
+  }, [user, history]);
 
   const roleBasedRedirect = (res) => {
     if (res.data.role === 'admin') {
@@ -132,7 +132,7 @@ const Login = ({ history }) => {
     <div className='container p-5'>
  	  <div className="row">
  	    <div className="col-md-6 offset-md-4">
- 	      {loading == true ? (
+ 	      {loading === true ? (
  	      	  <h4 className='text-danger'>Loading...</h4>
  	      	) : (
  	      	  <h4>Login</h4>
