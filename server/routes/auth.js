@@ -3,6 +3,6 @@ const router = express.Router();
 
 const { createOrUpdateUser } = require('../controllers/auth');
 
-router.get('/create-or-update-user', createOrUpdateUser);
+router.post('/create-or-update-user', createOrUpdateUser);
 
 module.exports = router;
