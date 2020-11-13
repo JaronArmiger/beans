@@ -43,20 +43,20 @@ const Login = ({ history }) => {
 
       createOrUpdateUser(idTokenResult.token)
         .then((res) => {
-          console.log(res);
+            dispatch({
+            type: 'LOGGED_IN_USER',
+            payload: {
+              email: res.data.email,
+              token: idTokenResult.token,
+              role: res.data.role,
+              _id: res.data._id,
+            }
+          });
         })
         .catch((err) => {
           console.log(err);
         })
-
-      // dispatch({
-      // 	type: 'LOGGED_IN_USER',
-      // 	payload: {
-      // 	  email: user.email,
-      // 	  token: idTokenResult.token,
-      // 	}
-      // });
-      // history.push('/');
+      history.push('/');
     } catch (error) {
       console.log(error);
       toast.error(error.message);
