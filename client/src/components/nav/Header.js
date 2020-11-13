@@ -56,7 +56,7 @@ const Header = () => {
         <SubMenu 
           key="SubMenu" 
           icon={<SettingOutlined />} 
-          title={user.email.split('@')[0]}
+          title={user.email && user.email.split('@')[0]}
           className='float-right'
         >
           <Menu.ItemGroup title="Item 1">

@@ -6,27 +6,15 @@ import { MailOutlined, GoogleOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { createOrUpdateUser } from '../../functions/auth';
 
-const createOrUpdateUser = async (authtoken) => {
-  // empty braces are for body
-  // third arg is headers
-  return await axios.post(
-    `${process.env.REACT_APP_API}/create-or-update-user`, 
-    {}, 
-    {
-      headers: {
-        authtoken
-      }
-    },
-  );
-}
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  
   let dispatch = useDispatch();
-
   const { user } = useSelector(state => state);
   
   useEffect(() => {
@@ -46,6 +34,7 @@ const Login = ({ history }) => {
             dispatch({
             type: 'LOGGED_IN_USER',
             payload: {
+              name: res.data.name,
               email: res.data.email,
               token: idTokenResult.token,
               role: res.data.role,
@@ -65,21 +54,31 @@ const Login = ({ history }) => {
   }
 
   const googleLogin = async () => {
-    auth.signInWithPopup(googleAuthProvider)
+    auth
+      .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
-        dispatch({
-      	  type: 'LOGGED_IN_USER',
-      	  payload: {
-      	    email: user.email,
-      	    token: idTokenResult.token,
-      	  },
-        });
+        createOrUpdateUser(idTokenResult.token)
+          .then((res) => {
+              dispatch({
+              type: 'LOGGED_IN_USER',
+              payload: {
+                email: res.data.email,
+                token: idTokenResult.token,
+                role: res.data.role,
+                _id: res.data._id,
+              }
+            });
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+        history.push('/');
       })
       .catch((err) => {
-      	console.log(err);
-      	toast.error(err.message);
+        console.log(err);
+        toast.error(err.message);
       });
   }
 
