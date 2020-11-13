@@ -7,3 +7,4 @@ admin.initializeApp({
   databaseURL: "https://beans-fe9bf.firebaseio.com"
 });
 
+module.exports = admin;
