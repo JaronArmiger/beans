@@ -29,8 +29,6 @@ router.get(
 );
 router.get(
   '/category/:slug',
-  authCheck,
-  adminCheck,
   read
 );
 router.put(
