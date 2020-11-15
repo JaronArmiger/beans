@@ -13,6 +13,7 @@ import Wishlist from './pages/user/Wishlist';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import CategoryCreate from './pages/admin/category/CategoryCreate';
 import CategoryUpdate from './pages/admin/category/CategoryUpdate';
+import SubCreate from './pages/admin/sub/SubCreate';
 import Home from './pages/Home';
 
 import Header from './components/nav/Header';
@@ -72,6 +73,7 @@ const App = () => {
           path='/admin/category/:slug' 
           component={CategoryUpdate} 
         />
+        <AdminRoute exact path='/admin/sub' component={SubCreate} />
       </Switch>
     </>
   );
