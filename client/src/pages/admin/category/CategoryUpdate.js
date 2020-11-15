@@ -6,6 +6,7 @@ import {
   getCategory,
   updateCategory,
 } from '../../../functions/category';
+import CategoryForm from '../../../components/forms/CategoryForm';
 
 const CategoryUpdate = ({ history, match }) => {
   const [name, setName] = useState('');
@@ -46,33 +47,6 @@ const CategoryUpdate = ({ history, match }) => {
       })
   };
 
-  
-  const categoryForm = () => {
-    return (
-      <form
-        onSubmit={handleSubmit}
-      >
-       <div className="form-group">
-         <label>Name</label>
-         <input 
-           type="text"
-           className='form-control'
-           value={name}
-           onChange={e => setName(e.target.value)}
-           autoFocus
-           required
-         />
-         <br />
-         <button
-           className='btn btn-outline-primary'
-           disabled={!name || name.length < 3}
-         >
-           Save
-         </button>
-       </div> 
-      </form>
-    );
-  }
 
   return (
     <div className="container-fluid">
@@ -84,7 +58,11 @@ const CategoryUpdate = ({ history, match }) => {
           {loading ? (
               (<h4 className="text-danger">Loading...</h4>)
             ) : (<h4>Update Category</h4>)}
-          {categoryForm()}
+          <CategoryForm 
+            handleSubmit={handleSubmit}
+            name={name}
+            setName={setName}
+          />
         </div>
       </div>
     </div>
