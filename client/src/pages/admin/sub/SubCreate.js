@@ -6,7 +6,8 @@ import { getCategories } from '../../../functions/category';
 import { 
   createSub,
   getSub,
-  removeSub
+  removeSub,
+  getSubs,
 } from '../../../functions/sub';
 import { Link } from 'react-router-dom';
 import {
@@ -19,6 +20,7 @@ import LocalSearch from '../../../components/forms/LocalSearch';
 const SubCreate = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [subs, setSubs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState('');
   const [keyword, setKeyword] = useState('');
@@ -27,12 +29,23 @@ const SubCreate = () => {
 
   useEffect(() => {
     loadCategories();
+    loadSubs();
   }, []);
 
   const loadCategories = () => {
     getCategories()
       .then((res) => {
         setCategories(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  const loadSubs = () => {
+    getSubs()
+      .then((res) => {
+        setSubs(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -50,7 +63,8 @@ const SubCreate = () => {
       .then((res) => {
         setLoading(false);
         setName('');
-        toast.success(`Category "${res.data.name}" created!`);
+        toast.success(`Sub-Category "${res.data.name}" created!`);
+        loadSubs();
       })
       .catch((err) => {
         setLoading(false);
@@ -66,6 +80,7 @@ const SubCreate = () => {
         .then((res) => {
           setLoading(false);
           toast.success(`${res.data.name} deleted.`);
+          loadSubs();
         })
         .catch((err) => {
           setLoading(false);
@@ -124,27 +139,27 @@ const SubCreate = () => {
             setKeyword={setKeyword}
           />
           
-           {// categories.filter(searched(keyword)).map((c) => (
-          //   <div
-          //     className='alert alert-secondary'
-          //     key={c._id}
-          //   >
-          //     {c.name}{' '}
-          //     <span
-          //       onClick={() => handleRemove(c.slug)}
-          //       className='btn btn-sm float-right'
-          //     >
-          //       <DeleteOutlined className='text-danger'/>
-          //     </span>{' '}
-          //     <Link to={`/admin/category/${c.slug}`}>
-          //       <span 
-          //       className='btn btn-sm float-right'
-          //       >
-          //         <EditOutlined className='text-warning'/>
-          //       </span>
-          //     </Link>
-          //   </div>
-          // ))
+           {subs.filter(searched(keyword)).map((s) => (
+            <div
+              className='alert alert-secondary'
+              key={s._id}
+            >
+              {s.name}{' '}
+              <span
+                onClick={() => handleRemove(s.slug)}
+                className='btn btn-sm float-right'
+              >
+                <DeleteOutlined className='text-danger'/>
+              </span>{' '}
+              <Link to={`/admin/sub/${s.slug}`}>
+                <span 
+                className='btn btn-sm float-right'
+                >
+                  <EditOutlined className='text-warning'/>
+                </span>
+              </Link>
+            </div>
+          ))
            }
         </div>
       </div>
