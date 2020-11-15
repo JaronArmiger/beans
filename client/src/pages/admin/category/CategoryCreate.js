@@ -13,6 +13,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import CategoryForm from '../../../components/forms/CategoryForm';
+import LocalSearch from '../../../components/forms/LocalSearch';
 
 const CategoryCreate = () => {
   const [name, setName] = useState('');
@@ -70,11 +71,6 @@ const CategoryCreate = () => {
     }
   }
 
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setKeyword(e.target.value.toLowerCase());
-  }
-
   const searched = (keyword) => {
     return (c) => c.name.toLowerCase().includes(keyword);
   }
@@ -94,14 +90,14 @@ const CategoryCreate = () => {
             name={name}
             setName={setName}
           />
+
           <hr />
-          <input 
-            type="search" 
-            placeholder='filter categories'
-            value={keyword}
-            onChange={handleSearchChange}
-            className='form-control mb-4'
+
+          <LocalSearch 
+            keyword={keyword}
+            setKeyword={setKeyword}
           />
+          
           {categories.filter(searched(keyword)).map((c) => (
             <div
               className='alert alert-secondary'
