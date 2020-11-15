@@ -19,7 +19,7 @@ const Header = () => {
   let dispatch = useDispatch();
   let { user } = useSelector((state) => state);
   let history = useHistory();
-  console.log(JSON.stringify(user));
+  // console.log(JSON.stringify(user));
 
   const handleClick = (e) => {
     setCurrent(e.key);
