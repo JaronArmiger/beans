@@ -6,15 +6,8 @@ import { getCategories } from '../../../functions/category';
 import { 
   updateSub,
   getSub,
-  removeSub,
 } from '../../../functions/sub';
-import { Link } from 'react-router-dom';
-import {
-  EditOutlined,
-  DeleteOutlined,
-} from '@ant-design/icons';
 import CategoryForm from '../../../components/forms/CategoryForm';
-import LocalSearch from '../../../components/forms/LocalSearch';
 
 const SubUpdate = ({ match, history }) => {
   const [name, setName] = useState('');

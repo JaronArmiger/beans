@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { getCategories } from '../../../functions/category';
 import { 
   createSub,
-  getSub,
   removeSub,
   getSubs,
 } from '../../../functions/sub';
@@ -55,7 +54,7 @@ const SubCreate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (category.length == 0) {
+    if (category.length === 0) {
       toast.error('Select a parent category.');
       return;
     }

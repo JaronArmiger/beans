@@ -17,7 +17,7 @@ const CategoryUpdate = ({ history, match }) => {
 
   useEffect(() => {
     loadCategory(match.params.slug);
-  }, []);
+  }, [match.params.slug]);
 
   const loadCategory = (slug) => {
     getCategory(slug)
