@@ -14,6 +14,7 @@ const {
   update,
   remove,
   list,
+  getSubs,
 } = require('../controllers/category');
 
 // routes
@@ -42,6 +43,10 @@ router.delete(
   authCheck,
   adminCheck,
   remove
+);
+router.get(
+  '/category/subs/:_id',
+  getSubs
 );
 
 module.exports = router;
