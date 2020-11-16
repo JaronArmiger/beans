@@ -3,6 +3,7 @@ import React from 'react';
 const ProductForm = ({ 
   handleChange, 
   handleSubmit,
+  handleCategoryChange,
   values,
 }) => {
   const { 
@@ -127,7 +128,7 @@ const ProductForm = ({
           <select 
             name="category" 
             className='form-control'
-            onChange={handleChange}
+            onChange={handleCategoryChange}
           >  
             <option>** select a category **</option>
             {categories.length > 0 && categories.map((c) => {

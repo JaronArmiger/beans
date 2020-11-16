@@ -4,7 +4,10 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
 import ProductForm from '../../../components/forms/ProductForm';
-import { getCategories } from '../../../functions/category';
+import { 
+  getCategories, 
+  getCategorySubs,
+} from '../../../functions/category';
 
 const initialValues = {
   title: '',
@@ -24,6 +27,7 @@ const initialValues = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialValues);
+  const [subOptions, setSubOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const {token} = useSelector(state => state.user);
@@ -64,6 +68,18 @@ const ProductCreate = () => {
     setValues({...values, [e.target.name]: e.target.value});
   }
 
+  const handleCategoryChange = (e) => {
+    setValues({...values, category: e.target.value });
+    getCategorySubs(e.target.value)
+      .then((res) => {
+        setSubOptions(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.err);
+        toast.error(err.response.data.err);
+      });
+  }
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -75,6 +91,7 @@ const ProductCreate = () => {
           <hr />
           <ProductForm 
             handleChange={handleChange}
+            handleCategoryChange={handleCategoryChange}
             handleSubmit={handleSubmit}
             values={values}
           />
