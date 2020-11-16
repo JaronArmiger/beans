@@ -69,7 +69,11 @@ const ProductCreate = () => {
   }
 
   const handleCategoryChange = (e) => {
-    setValues({...values, category: e.target.value });
+    setValues({
+      ...values, 
+      subs: [], 
+      category: e.target.value 
+    });
     getCategorySubs(e.target.value)
       .then((res) => {
         setSubOptions(res.data);
@@ -88,7 +92,6 @@ const ProductCreate = () => {
         </div>
         <div className="col-md-10">
           <h4>Product Create</h4>
-          {JSON.stringify(values)}
           <hr />
           <ProductForm 
             handleChange={handleChange}

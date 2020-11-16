@@ -148,19 +148,30 @@ const ProductForm = ({
         </select>
       </div>
       <br />
-      <div>
-      	<label>Sub-Categories</label>
-      	<Select
-      	  mode='multiple'
-      	  style={{width: '100%'}}
-      	  placeholder='select sub-categories'
-      	  value={subs}
-      	  onChange={subsArr => setValues({...values, subs: subsArr})}
-      	>
-      	  <Option key='one' value='one'>option one</Option>
-      	  <Option key='two' value='two'>option two</Option>
-      	</Select>
-      </div>
+      {subOptions.length > 0 && 
+      	(<div>
+	      	<label>Sub-Categories</label>
+	      	<Select
+	      	  mode='multiple'
+	      	  style={{width: '100%'}}
+	      	  placeholder='select sub-categories'
+	      	  value={subs}
+	      	  onChange={subsArr => setValues({...values, subs: subsArr})}
+	      	>
+	      	  {subOptions.map((s) => {
+	      	   	return (
+	      	   	  <Option
+	      	   	    key={s._id}
+	      	   	    value={s._id}
+	      	   	  >
+	      	   	  	{s.name}
+	      	   	  </Option>
+	      	   	);
+	      	   })
+	      	  }
+	      	</Select>
+	      </div>)}
+      	<br />
 	    <button
 	      className='btn btn-outline-info'
 	    >
