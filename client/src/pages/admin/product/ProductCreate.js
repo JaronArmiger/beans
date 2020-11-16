@@ -8,6 +8,7 @@ import {
   getCategories, 
   getCategorySubs,
 } from '../../../functions/category';
+import FileUpload from '../../../components/forms/FileUpload';
 
 const initialValues = {
   title: '',
@@ -93,6 +94,9 @@ const ProductCreate = () => {
         <div className="col-md-10">
           <h4>Product Create</h4>
           <hr />
+          <div className="p-3">
+            <FileUpload />
+          </div>
           <ProductForm 
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}
