@@ -3,6 +3,7 @@ import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
+import { Avatar } from 'antd';
 
 const FileUpload = ({
   values,
@@ -21,7 +22,7 @@ const FileUpload = ({
         Resizer.imageFileResizer(
           files[i], // file
           720, // maxWidth
-          720, // maxHeigh
+          720, // maxHeight
           'JPEG', // compressFormat
           100, // quality
           0, // rotation
@@ -58,20 +59,34 @@ const FileUpload = ({
   };
 
   return (
-    <div className="row">
-      <label
-        className='btn btn-primary btn-raised'
-      >
-        Choose Files
-        <input 
-          type="file"
-          multiple
-          hidden
-          accept='images/*'
-          onChange={fileUploadAndResize}
-        />
-      </label>
-    </div>
+  	<React.Fragment>
+  	 <div className="row">
+  	   {values.images && values.images.map((image) => {
+  	      return (
+  	      	<Avatar
+  	          key={image.public_id}
+  	          src={image.url}
+  	          size={100}
+  	          className='m-3'
+  	        />
+  	      );
+  	   })}
+  	 </div>
+  	  <div className="row">
+        <label
+          className='btn btn-primary btn-raised'
+        >
+          Choose Files
+          <input 
+            type="file"
+            multiple
+            hidden
+            accept='images/*'
+            onChange={fileUploadAndResize}
+          />
+        </label>
+      </div>
+  	</React.Fragment>
   );
 };
 
