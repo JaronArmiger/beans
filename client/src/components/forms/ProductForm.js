@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
+import FileUpload from './FileUpload';
 const { Option } = Select;
 
 const ProductForm = ({ 
@@ -9,6 +10,7 @@ const ProductForm = ({
   values,
   setValues,
   subOptions,
+  setLoading,
 }) => {
   const { 
   	title, 
@@ -30,6 +32,13 @@ const ProductForm = ({
 	  <form 
 	    onSubmit={handleSubmit}
 	  >
+	    <div className="p-3">
+	      <FileUpload 
+	        values={values}
+	        setValues={setValues}
+	        setLoading={setLoading}
+	      />
+	    </div>
 	    <div className="from-group">
 	      <label>Title</label>
 	      <input 
