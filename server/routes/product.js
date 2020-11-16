@@ -10,14 +10,20 @@ const {
 // controller
 const { 
   create,
+  list,
 } = require('../controllers/product');
 
 // routes
+router.get(
+  '/products',
+  list
+);
 router.post(
   '/product',
   authCheck,
   adminCheck,
   create
 );
+
 
 module.exports = router;
