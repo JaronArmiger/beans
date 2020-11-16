@@ -1,10 +1,14 @@
 import React from 'react';
+import { Select } from 'antd';
+const { Option } = Select;
 
 const ProductForm = ({ 
   handleChange, 
   handleSubmit,
   handleCategoryChange,
   values,
+  setValues,
+  subOptions,
 }) => {
   const { 
   	title, 
@@ -142,6 +146,20 @@ const ProductForm = ({
             	);
             })}
         </select>
+      </div>
+      <br />
+      <div>
+      	<label>Sub-Categories</label>
+      	<Select
+      	  mode='multiple'
+      	  style={{width: '100%'}}
+      	  placeholder='select sub-categories'
+      	  value={subs}
+      	  onChange={subsArr => setValues({...values, subs: subsArr})}
+      	>
+      	  <Option key='one' value='one'>option one</Option>
+      	  <Option key='two' value='two'>option two</Option>
+      	</Select>
       </div>
 	    <button
 	      className='btn btn-outline-info'
