@@ -53,8 +53,8 @@ const ProductCreate = () => {
       })
       .catch((err) => {
       	setLoading(false);
-        console.log(err);
-        toast.error('Product create failed.');
+        console.log(err.response.data.err);
+        toast.error(err.response.data.err);
       });
   }
 

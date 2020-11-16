@@ -9,6 +9,10 @@ exports.create = async (req, res) => {
     res.json(newProduct);
   } catch (err) {
   	console.log(err);
-  	res.status(400).send({ err });
+  	// res.status(400).send({ err });
+  	console.log('PRODUCT CREATE ERR: ', err);
+  	res.status(400).json({
+  	  err: err.message,
+  	})
   }
 };
