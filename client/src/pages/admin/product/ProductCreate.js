@@ -22,6 +22,7 @@ const initialValues = {
 
 const ProductCreate = () => {
   const [values, setValues] = useState(initialValues);
+  const [loading, setLoading] = useState(false);
   const {token} = useSelector(state => state.user);
 
   const { 
@@ -42,11 +43,16 @@ const ProductCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     createProduct(values, token)
       .then((res) => {
-      	console.log(res);
+      	setLoading(false);
+      	console.log(res.data);
+      	window.alert(`"${res.data.title}" created successfully!`);
+      	window.location.reload();
       })
       .catch((err) => {
+      	setLoading(false);
         console.log(err);
         toast.error('Product create failed.');
       });
