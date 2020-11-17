@@ -33,3 +33,16 @@ exports.list = async (req, res) => {
     });
   }
 }
+
+exports.remove = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const deleted = await Product.findOneAndRemove({ slug });
+    res.json(deleted);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    })
+  }
+}

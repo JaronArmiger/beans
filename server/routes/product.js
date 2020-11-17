@@ -11,6 +11,7 @@ const {
 const { 
   create,
   list,
+  remove,
 } = require('../controllers/product');
 
 // routes
@@ -23,6 +24,12 @@ router.post(
   authCheck,
   adminCheck,
   create
+);
+router.delete(
+  '/product/:slug',
+  authCheck,
+  adminCheck,
+  remove
 );
 
 
