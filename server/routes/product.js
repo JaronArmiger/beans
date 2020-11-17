@@ -10,6 +10,7 @@ const {
 // controller
 const { 
   create,
+  read,
   list,
   remove,
 } = require('../controllers/product');
@@ -30,6 +31,10 @@ router.delete(
   authCheck,
   adminCheck,
   remove
+);
+router.get(
+  '/product/:slug',
+  read
 );
 
 

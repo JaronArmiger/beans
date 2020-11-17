@@ -8,6 +8,9 @@ import {
   getCategories, 
   getCategorySubs,
 } from '../../../functions/category';
+import {
+  getProduct,
+} from '../../../functions/product';
 import { LoadingOutlined } from '@ant-design/icons';
 
 const initialValues = {
@@ -26,7 +29,7 @@ const initialValues = {
   brand: '',
 }
 
-const ProductCreate = () => {
+const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialValues);
   const [subOptions, setSubOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,7 +38,23 @@ const ProductCreate = () => {
 
   useEffect(() => {
     loadCategories();
+    loadProduct(match.params.slug);
   }, []);
+
+  const loadProduct = (slug) => {
+    setLoading(true);
+    getProduct(slug)
+      .then((res) => {
+        console.log(res.data);
+        setLoading(false);
+        setValues(res.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        // toast.error(err.response.data.err);
+      })
+  }
 
   const loadCategories = () => {
     getCategories()
@@ -110,4 +129,4 @@ const ProductCreate = () => {
   );
 };
 
-export default ProductCreate;
+export default ProductUpdate;

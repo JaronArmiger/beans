@@ -34,6 +34,20 @@ exports.list = async (req, res) => {
   }
 }
 
+exports.read = async (req, res) => {
+  try {
+    const product = await Product.findOne({ slug: req.params.slug })
+      .populate('category')
+      .populate('subs')
+    res.json(product);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}
+
 exports.remove = async (req, res) => {
   try {
     const { slug } = req.params;
