@@ -15,7 +15,7 @@ const {
 
 // routes
 router.get(
-  '/products',
+  '/products/:count',
   list
 );
 router.post(

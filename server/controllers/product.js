@@ -18,6 +18,15 @@ exports.create = async (req, res) => {
 };
 
 exports.list = async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
+  try {
+    const products = await Product.find({})
+      .limit(parseInt(req.params.count))
+      .populate('category')
+      .populate('subs')
+      .sort([['createdAt', 'desc']]);
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+  }
 }
