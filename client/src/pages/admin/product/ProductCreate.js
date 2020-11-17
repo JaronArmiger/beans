@@ -8,6 +8,7 @@ import {
   getCategories, 
   getCategorySubs,
 } from '../../../functions/category';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const initialValues = {
   title: '',
@@ -92,9 +93,9 @@ const ProductCreate = () => {
         </div>
         <div className="col-md-10">
           <h4>Product Create</h4>
+          {loading && <LoadingOutlined className='text-danger h1'/>}
           <hr />
           {JSON.stringify(values.images)}
-          {loading ? 'loading' : 'not loading'}
           <ProductForm 
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}

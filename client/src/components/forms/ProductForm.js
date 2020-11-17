@@ -36,7 +36,6 @@ const ProductForm = ({
 	      <FileUpload 
 	        values={values}
 	        setValues={setValues}
-	        setLoading={setLoading}
 	      />
 	    </div>
 	    <div className="from-group">

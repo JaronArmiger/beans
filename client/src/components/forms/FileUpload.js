@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Resizer from 'react-image-file-resizer';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { Avatar } from 'antd';
+import { 
+  Avatar,
+  Badge,
+} from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 const FileUpload = ({
   values,
   setValues,
-  setLoading,
 }) => {
   const { token } = useSelector(state => state.user);
+  const [loading, setLoading] = useState(false);
 
   const fileUploadAndResize = (e) => {
     const files = e.target.files;
@@ -58,17 +62,52 @@ const FileUpload = ({
     }
   };
 
+  const handleImageRemove = (public_id) => {
+  	setLoading(true);
+  	axios.post(
+  	  `${process.env.REACT_APP_API}/removeimage`,
+  	  {
+  	  	public_id,
+  	  },
+  	  {
+  	  	headers: {
+  	      authtoken: token || '',
+  	    },
+  	  }
+  	).then((res) => {
+  	  setLoading(false);
+  	  const { images } = values;
+  	  const filteredImages = images.filter((image) => {
+  	  	return image.public_id !== public_id;
+  	  });
+  	  setValues({ ...values, images: filteredImages });
+  	})
+  	.catch((err) => {
+  	  console.log(err);
+      setLoading(false);
+      toast.error(err.response.data.err);
+  	})
+  }
+
   return (
   	<React.Fragment>
+  	  {loading && <LoadingOutlined className='text-danger h1'/>}
   	 <div className="row">
   	   {values.images && values.images.map((image) => {
   	      return (
-  	      	<Avatar
-  	          key={image.public_id}
-  	          src={image.url}
-  	          size={100}
-  	          className='m-3'
-  	        />
+  	      	<Badge
+  	      	  count='X'
+  	      	  onClick={() => handleImageRemove(image.public_id)}
+  	      	  key={image.public_id}
+  	      	  style={{ cursor: 'pointer' }}
+  	      	>
+  	      	  <Avatar
+  	            src={image.url}
+  	            size={100}
+  	            shape='square'
+  	            className='ml-3'
+  	          />
+  	      	</Badge>
   	      );
   	   })}
   	 </div>
