@@ -8,11 +8,12 @@ import {
 
 const { Meta } = Card;
 
-const AdminProductCard = ({ product }) => {
+const AdminProductCard = ({ product, handleRemove }) => {
   const {
   	title,
   	description,
   	images,
+    slug,
   } = product;
   return (
   	<Card
@@ -22,6 +23,7 @@ const AdminProductCard = ({ product }) => {
   	  	  	src={(images && images.length > 0) ? images[0].url : defaultImage}
   	  	  	style={{ height: '150px', objectFit: 'cover' }}
   	  	  	className='p-1'
+            alt={title}
   	  	 />)
   	  }
   	  actions={[
@@ -30,6 +32,7 @@ const AdminProductCard = ({ product }) => {
   	  	/>, 
   	  	<DeleteOutlined 
   	  	  className='text-danger'
+          onClick={() => handleRemove(slug)}
   	  	/>
   	  ]}
   	>
