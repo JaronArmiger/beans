@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import FileUpload from './FileUpload';
 const { Option } = Select;
 
-const ProductForm = ({ 
+const ProductUpdateForm = ({ 
   handleChange, 
   handleSubmit,
   handleCategoryChange,
@@ -11,12 +11,12 @@ const ProductForm = ({
   setValues,
   subOptions,
   setLoading,
+  categories,
 }) => {
   const { 
   	title, 
   	description,
   	price,
-  	categories,
   	category,
   	subs,
   	shipping,
@@ -77,6 +77,7 @@ const ProductForm = ({
 	        name="shipping"
 	        className='form-control'
 	        onChange={handleChange}
+	        value={shipping}
 	      >
 	        <option>** select an option **</option>
 	        <option value="No">No</option>
@@ -101,6 +102,7 @@ const ProductForm = ({
 	        name="color"
 	        className='form-control'
 	        onChange={handleChange}
+	        value={color}
 	      >
 	        <option>** select a color **</option>
 	        {colors.map((c) => {
@@ -121,6 +123,7 @@ const ProductForm = ({
 	        name="brand"
 	        className='form-control'
 	        onChange={handleChange}
+	        value={brand}
 	      >
 	        <option>** select a brand **</option>
 	        {brands.map((b) => {
@@ -141,6 +144,7 @@ const ProductForm = ({
             name="category" 
             className='form-control'
             onChange={handleCategoryChange}
+            value={category._id}
           >  
             <option>** select a category **</option>
             {categories.length > 0 && categories.map((c) => {
@@ -156,6 +160,7 @@ const ProductForm = ({
         </select>
       </div>
       <br />
+      {JSON.stringify(subOptions)}
       {subOptions.length > 0 && 
       	(<div>
 	      	<label>Sub-Categories</label>
@@ -189,4 +194,4 @@ const ProductForm = ({
 	);
 };
 
-export default ProductForm;
+export default ProductUpdateForm;

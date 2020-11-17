@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
-import ProductForm from '../../../components/forms/ProductForm';
+import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
 import { 
   getCategories, 
   getCategorySubs,
@@ -17,7 +17,6 @@ const initialValues = {
   title: '',
   description: '',
   price: '',
-  categories: [],
   category: '',
   subs: [],
   shipping: '',
@@ -31,23 +30,24 @@ const initialValues = {
 
 const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialValues);
+  const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const {token} = useSelector(state => state.user);
 
-  useEffect(() => {
-    loadCategories();
-    loadProduct(match.params.slug);
+  useEffect(async () => {
+    await loadProduct(match.params.slug);
+    await loadCategories();
   }, []);
+
 
   const loadProduct = (slug) => {
     setLoading(true);
     getProduct(slug)
       .then((res) => {
-        console.log(res.data);
         setLoading(false);
-        setValues(res.data);
+        setValues({...values, ...res.data});
       })
       .catch((err) => {
         setLoading(false);
@@ -59,11 +59,22 @@ const ProductUpdate = ({ match }) => {
   const loadCategories = () => {
     getCategories()
       .then((res) => {
-        setValues({...values, categories: res.data});
+        setCategories(res.data);
       })
       .catch((err) => {
         console.log(err);
       })
+  }
+
+  const loadSubs = (_id) => {
+    getCategorySubs(_id)
+      .then((res) => {
+        setSubOptions(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.err);
+        toast.error(err.response.data.err);
+      });
   }
   
 
@@ -94,14 +105,7 @@ const ProductUpdate = ({ match }) => {
       subs: [], 
       category: e.target.value 
     });
-    getCategorySubs(e.target.value)
-      .then((res) => {
-        setSubOptions(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data.err);
-        toast.error(err.response.data.err);
-      });
+    loadSubs(e.target.value);
   }
 
   return (
@@ -114,7 +118,7 @@ const ProductUpdate = ({ match }) => {
           <h4>Product Create</h4>
           {loading && <LoadingOutlined className='text-danger h1'/>}
           <hr />
-          <ProductForm 
+          <ProductUpdateForm 
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}
             handleSubmit={handleSubmit}
@@ -122,6 +126,7 @@ const ProductUpdate = ({ match }) => {
             setValues={setValues}
             subOptions={subOptions}
             setLoading={setLoading}
+            categories={categories}
           />
         </div>
       </div>

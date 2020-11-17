@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
-import ProductForm from '../../../components/forms/ProductForm';
+import ProductForm from '../../../components/forms/ProductCreateForm';
 import { 
   getCategories, 
   getCategorySubs,
