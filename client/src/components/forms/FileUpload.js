@@ -115,7 +115,7 @@ const FileUpload = ({
         <label
           className='btn btn-primary btn-raised'
         >
-          Choose Files
+          Add Files
           <input 
             type="file"
             multiple

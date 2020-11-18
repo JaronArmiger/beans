@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { createProduct } from '../../../functions/product';
 import ProductForm from '../../../components/forms/ProductForm';
 import { 
   getCategories, 
@@ -38,9 +37,9 @@ const ProductUpdate = ({ match, history }) => {
 
   const {token} = useSelector(state => state.user);
 
-  useEffect(async () => {
-    await loadProduct(match.params.slug);
-    await loadCategories();
+  useEffect(() => {
+    loadProduct(match.params.slug);
+    loadCategories();
   }, []);
 
 

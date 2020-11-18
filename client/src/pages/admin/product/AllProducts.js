@@ -29,7 +29,7 @@ const AllProducts = () => {
       .catch((err) => {
         setLoading(false);
         console.log(err);
-        toast.error(err.response.data.err);
+        // toast.error(err.response.data.err);
       })
   }
 
