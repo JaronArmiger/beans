@@ -3,7 +3,7 @@ import { Select } from 'antd';
 import FileUpload from './FileUpload';
 const { Option } = Select;
 
-const ProductUpdateForm = ({ 
+const ProductForm = ({ 
   handleChange, 
   handleSubmit,
   handleCategoryChange,
@@ -12,8 +12,6 @@ const ProductUpdateForm = ({
   subOptions,
   setLoading,
   categories,
-  selectedSubs,
-  setSelectedSubs,
 }) => {
   const { 
   	title, 
@@ -146,7 +144,7 @@ const ProductUpdateForm = ({
             name="category" 
             className='form-control'
             onChange={handleCategoryChange}
-            value={category._id}
+            value={category}
           >  
             <option>** select a category **</option>
             {categories.length > 0 && categories.map((c) => {
@@ -169,8 +167,8 @@ const ProductUpdateForm = ({
 	      	  mode='multiple'
 	      	  style={{width: '100%'}}
 	      	  placeholder='select sub-categories'
-	      	  value={selectedSubs}
-	      	  onChange={subsArr => setSelectedSubs(subsArr)}
+	      	  value={subs}
+	      	  onChange={subsArr => setValues({...values, subs: subsArr})}
 	      	>
 	      	  {subOptions.map((s) => {
 	      	   	return (
@@ -195,4 +193,4 @@ const ProductUpdateForm = ({
 	);
 };
 
-export default ProductUpdateForm;
+export default ProductForm;

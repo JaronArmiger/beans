@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
-import ProductForm from '../../../components/forms/ProductCreateForm';
+import ProductForm from '../../../components/forms/ProductForm';
 import { 
   getCategories, 
   getCategorySubs,
@@ -14,7 +14,6 @@ const initialValues = {
   title: '',
   description: '',
   price: '',
-  categories: [],
   category: '',
   subs: [],
   shipping: '',
@@ -30,6 +29,7 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialValues);
   const [subOptions, setSubOptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const {token} = useSelector(state => state.user);
 
@@ -40,7 +40,7 @@ const ProductCreate = () => {
   const loadCategories = () => {
     getCategories()
       .then((res) => {
-        setValues({...values, categories: res.data});
+        setCategories(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -50,6 +50,7 @@ const ProductCreate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(values);
     setLoading(true);
     createProduct(values, token)
       .then((res) => {
@@ -103,6 +104,7 @@ const ProductCreate = () => {
             setValues={setValues}
             subOptions={subOptions}
             setLoading={setLoading}
+            categories={categories}
           />
         </div>
       </div>

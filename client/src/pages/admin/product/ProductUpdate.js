@@ -3,7 +3,7 @@ import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { createProduct } from '../../../functions/product';
-import ProductUpdateForm from '../../../components/forms/ProductUpdateForm';
+import ProductForm from '../../../components/forms/ProductForm';
 import { 
   getCategories, 
   getCategorySubs,
@@ -48,7 +48,13 @@ const ProductUpdate = ({ match }) => {
     getProduct(slug)
       .then((res) => {
         setLoading(false);
-        setValues({...values, ...res.data});
+        const subsArr = res.data.subs.map((s) => s._id);
+        const productObj = {
+          ...res.data,
+          category: res.data.category._id,
+          subs: subsArr,
+        };
+        setValues({...values, ...productObj});
         getCategorySubs(res.data.category._id)
           .then((res) => {
             setSubOptions(res.data);
@@ -57,7 +63,9 @@ const ProductUpdate = ({ match }) => {
             console.log(err.response.data.err);
             toast.error(err.response.data.err);
           });
-          setSelectedSubs(res.data.subs.map((s) => s._id));
+          const subsArr2 = res.data.subs.map((s) => s._id);
+          // setValues({...values, subs: subsArr });
+          setSelectedSubs(subsArr2);
       })
       .catch((err) => {
         setLoading(false);
@@ -78,19 +86,20 @@ const ProductUpdate = ({ match }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    createProduct(values, token)
-      .then((res) => {
-      	setLoading(false);
-      	console.log(res.data);
-      	window.alert(`"${res.data.title}" created successfully!`);
-      	window.location.reload();
-      })
-      .catch((err) => {
-      	setLoading(false);
-        console.log(err.response.data.err);
-        toast.error(err.response.data.err);
-      });
+    console.log(values);
+    // setLoading(true);
+    // createProduct(values, token)
+    //   .then((res) => {
+    //   	setLoading(false);
+    //   	console.log(res.data);
+    //   	window.alert(`"${res.data.title}" created successfully!`);
+    //   	window.location.reload();
+    //   })
+    //   .catch((err) => {
+    //   	setLoading(false);
+    //     console.log(err.response.data.err);
+    //     toast.error(err.response.data.err);
+    //   });
   }
 
   const handleChange = (e) => {
@@ -106,6 +115,7 @@ const ProductUpdate = ({ match }) => {
     getCategorySubs(e.target.value)
       .then((res) => {
         setSubOptions(res.data);
+        setSelectedSubs([]);
       })
       .catch((err) => {
         console.log(err.response.data.err);
@@ -123,8 +133,7 @@ const ProductUpdate = ({ match }) => {
           <h4>Product Create</h4>
           {loading && <LoadingOutlined className='text-danger h1'/>}
           <hr />
-          {JSON.stringify(selectedSubs)}
-          <ProductUpdateForm 
+          <ProductForm 
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}
             handleSubmit={handleSubmit}
@@ -133,8 +142,6 @@ const ProductUpdate = ({ match }) => {
             subOptions={subOptions}
             setLoading={setLoading}
             categories={categories}
-            selectedSubs={selectedSubs}
-            setSelectedSubs={setSelectedSubs}
           />
         </div>
       </div>
