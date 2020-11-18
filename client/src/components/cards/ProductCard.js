@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
-const ProductCard = ({ product, }) => {
+const ProductCard = ({ product }) => {
   const {
     title,
     description,

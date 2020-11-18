@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getProductsByCount } from '../functions/product';
 import ProductCard from '../components/cards/ProductCard';
+import LoadingCards from '../components/cards/LoadingCards';
 import { LoadingOutlined } from '@ant-design/icons';
 import Jumbotron from '../components/cards/Jumbotron';
 
@@ -37,20 +38,21 @@ const Home = () => {
             'Too Many Monograms It\'s Alphabet Soup',
           ]}
         />
-        {loading && <LoadingOutlined className='text-warning h1'/>}
       </div>
   	  <div className="container">
-        <div className="row">
-          {products.map((product) => {
-          	return (
-          	  <div className="col-md-4" key={product._id}>
-          	    <ProductCard 
-          	     product={product}
-          	    />
-          	  </div>
-          	);
-          })}
-        </div>
+        {loading ? 
+           (<LoadingCards count={3} />) :
+        	(<div className="row">
+              {products.map((product) => {
+              	return (
+              	  <div className="col-md-4" key={product._id}>
+              	    <ProductCard 
+              	     product={product}
+              	    />
+              	  </div>
+        	                  	);
+        	     })}
+        	   </div>)}
       </div>
   	</React.Fragment>
   );
