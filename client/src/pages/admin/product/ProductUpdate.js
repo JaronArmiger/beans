@@ -10,6 +10,7 @@ import {
 } from '../../../functions/category';
 import {
   getProduct,
+  updateProduct,
 } from '../../../functions/product';
 import { LoadingOutlined } from '@ant-design/icons';
 
@@ -28,7 +29,7 @@ const initialValues = {
   brand: '',
 }
 
-const ProductUpdate = ({ match }) => {
+const ProductUpdate = ({ match, history }) => {
   const [values, setValues] = useState(initialValues);
   const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
@@ -87,19 +88,19 @@ const ProductUpdate = ({ match }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(values);
-    // setLoading(true);
-    // createProduct(values, token)
-    //   .then((res) => {
-    //   	setLoading(false);
-    //   	console.log(res.data);
-    //   	window.alert(`"${res.data.title}" created successfully!`);
-    //   	window.location.reload();
-    //   })
-    //   .catch((err) => {
-    //   	setLoading(false);
-    //     console.log(err.response.data.err);
-    //     toast.error(err.response.data.err);
-    //   });
+    setLoading(true);
+    updateProduct(match.params.slug, values, token)
+      .then((res) => {
+      	setLoading(false);
+      	console.log(res.data);
+      	toast.success(`Product updated successfully!`);
+      	history.push('/admin/products');
+      })
+      .catch((err) => {
+      	setLoading(false);
+        console.log(err.response.data.err);
+        toast.error(err.response.data.err);
+      });
   }
 
   const handleChange = (e) => {
