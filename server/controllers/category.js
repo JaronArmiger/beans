@@ -27,11 +27,14 @@ exports.update = async (req, res) => {
   const { name } = req.body;
   try {
     const updated = await Category.findOneAndUpdate({
-      slug: req.params.slug,
-    }, { 
-      name,
-      slug: slugify(name),
-    }, { new: true });
+        slug: req.params.slug,
+      }, 
+      { 
+        name,
+        slug: slugify(name),
+      },
+      { new: true }
+    );
     res.json(updated);
   } catch (err) {
     console.log(er);

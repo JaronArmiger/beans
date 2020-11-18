@@ -13,6 +13,7 @@ const {
   read,
   list,
   remove,
+  update,
 } = require('../controllers/product');
 
 // routes
@@ -35,6 +36,12 @@ router.delete(
 router.get(
   '/product/:slug',
   read
+);
+router.put(
+  '/product/:slug',
+  authCheck,
+  adminCheck,
+  update
 );
 
 

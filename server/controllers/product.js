@@ -60,3 +60,24 @@ exports.remove = async (req, res) => {
     })
   }
 }
+
+exports.update = async (req, res) => {
+  try {
+    if (req.body.title) {
+      req.body.slug = slugify(req.body.title);
+    }
+    const updated = await Product
+      .findOneAndUpdate({ slug: req.params.slug, }, 
+        req.body,
+        { new: true }
+      );
+    res.json(updated);
+  } catch (err) {
+    console.log(err);
+    // res.status(400).send({ err });
+    console.log('PRODUCT UPDATE ERR: ', err);
+    res.status(400).json({
+      err: err.message,
+    })
+  }
+};
