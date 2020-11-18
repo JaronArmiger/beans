@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getProductsByCount } from '../functions/product';
 import ProductCard from '../components/cards/ProductCard';
 import { LoadingOutlined } from '@ant-design/icons';
+import Jumbotron from '../components/cards/Jumbotron';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -13,7 +14,7 @@ const Home = () => {
 
   const loadAllProducts = () => {
   	setLoading(true);
-  	getProductsByCount(3)
+  	getProductsByCount(10)
   	  .then((res) => {
   	  	console.log(res.data);
         setProducts(res.data);
@@ -27,8 +28,15 @@ const Home = () => {
 
   return (
   	<React.Fragment>
-  	  <div className='jumbotron'>
-        <h4>All Products</h4>
+  	  <div 
+  	    className='jumbotron text-danger h1 font-weight-bold text-center'
+  	  >
+        <Jumbotron 
+          text={[
+          	'Marni on Marni on me', 
+            'Too Many Monograms It\'s Alphabet Soup',
+          ]}
+        />
         {loading && <LoadingOutlined className='text-warning h1'/>}
       </div>
   	  <div className="container">
