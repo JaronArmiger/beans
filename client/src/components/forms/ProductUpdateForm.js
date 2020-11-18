@@ -12,6 +12,8 @@ const ProductUpdateForm = ({
   subOptions,
   setLoading,
   categories,
+  selectedSubs,
+  setSelectedSubs,
 }) => {
   const { 
   	title, 
@@ -160,16 +162,15 @@ const ProductUpdateForm = ({
         </select>
       </div>
       <br />
-      {JSON.stringify(subOptions)}
-      {subOptions.length > 0 && 
+      {(subOptions.length > 0 || true) && 
       	(<div>
 	      	<label>Sub-Categories</label>
 	      	<Select
 	      	  mode='multiple'
 	      	  style={{width: '100%'}}
 	      	  placeholder='select sub-categories'
-	      	  value={subs}
-	      	  onChange={subsArr => setValues({...values, subs: subsArr})}
+	      	  value={selectedSubs}
+	      	  onChange={subsArr => setSelectedSubs(subsArr)}
 	      	>
 	      	  {subOptions.map((s) => {
 	      	   	return (

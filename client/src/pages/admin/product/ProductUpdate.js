@@ -32,6 +32,7 @@ const ProductUpdate = ({ match }) => {
   const [values, setValues] = useState(initialValues);
   const [categories, setCategories] = useState([]);
   const [subOptions, setSubOptions] = useState([]);
+  const [selectedSubs, setSelectedSubs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const {token} = useSelector(state => state.user);
@@ -48,6 +49,15 @@ const ProductUpdate = ({ match }) => {
       .then((res) => {
         setLoading(false);
         setValues({...values, ...res.data});
+        getCategorySubs(res.data.category._id)
+          .then((res) => {
+            setSubOptions(res.data);
+          })
+          .catch((err) => {
+            console.log(err.response.data.err);
+            toast.error(err.response.data.err);
+          });
+          setSelectedSubs(res.data.subs.map((s) => s._id));
       })
       .catch((err) => {
         setLoading(false);
@@ -64,19 +74,7 @@ const ProductUpdate = ({ match }) => {
       .catch((err) => {
         console.log(err);
       })
-  }
-
-  const loadSubs = (_id) => {
-    getCategorySubs(_id)
-      .then((res) => {
-        setSubOptions(res.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data.err);
-        toast.error(err.response.data.err);
-      });
-  }
-  
+  }  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -105,7 +103,14 @@ const ProductUpdate = ({ match }) => {
       subs: [], 
       category: e.target.value 
     });
-    loadSubs(e.target.value);
+    getCategorySubs(e.target.value)
+      .then((res) => {
+        setSubOptions(res.data);
+      })
+      .catch((err) => {
+        console.log(err.response.data.err);
+        toast.error(err.response.data.err);
+      });
   }
 
   return (
@@ -118,6 +123,7 @@ const ProductUpdate = ({ match }) => {
           <h4>Product Create</h4>
           {loading && <LoadingOutlined className='text-danger h1'/>}
           <hr />
+          {JSON.stringify(selectedSubs)}
           <ProductUpdateForm 
             handleChange={handleChange}
             handleCategoryChange={handleCategoryChange}
@@ -127,6 +133,8 @@ const ProductUpdate = ({ match }) => {
             subOptions={subOptions}
             setLoading={setLoading}
             categories={categories}
+            selectedSubs={selectedSubs}
+            setSelectedSubs={setSelectedSubs}
           />
         </div>
       </div>
