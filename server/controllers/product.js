@@ -17,7 +17,7 @@ exports.create = async (req, res) => {
   }
 };
 
-exports.list = async (req, res) => {
+exports.listAll = async (req, res) => {
   try {
     const products = await Product.find({})
       .limit(parseInt(req.params.count))
@@ -25,6 +25,32 @@ exports.list = async (req, res) => {
       .populate('subs')
       .sort([['createdAt', 'desc']]);
 
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}
+
+exports.list = async (req, res) => {
+  try {
+    // ex:
+    // sort: 'createdAt'
+    // order: 'desc'
+    // limit: 15
+    const {
+      sort,
+      order,
+      limit,
+    } = req.body;
+
+    const products = await Product.find({})
+      .populate('category')
+      .populate('subs')
+      .sort([[sort, order]])
+      .limit(limit);
     res.json(products);
   } catch (err) {
     console.log(err);

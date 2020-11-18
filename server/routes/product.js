@@ -11,15 +11,16 @@ const {
 const { 
   create,
   read,
-  list,
+  listAll,
   remove,
   update,
+  list,
 } = require('../controllers/product');
 
 // routes
 router.get(
   '/products/:count',
-  list
+  listAll
 );
 router.post(
   '/product',
@@ -42,6 +43,13 @@ router.put(
   authCheck,
   adminCheck,
   update
+);
+
+// this is a post request because it's easier
+// to send args in req body
+router.post(
+  '/products',
+  list,
 );
 
 
