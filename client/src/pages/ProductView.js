@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getProduct } from '../functions/product';
+import SingleProduct from '../components/cards/SingleProduct';
 
 const ProductView = ({ match }) => {
   const [product, setProduct] = useState({});
@@ -16,9 +17,16 @@ const ProductView = ({ match }) => {
   }
 
   return (
-  	<React.Fragment>
-  		{JSON.stringify(product)}
-  	</React.Fragment>
+  	<div className="container-fluid">
+  	  <div className="row pt-4">
+  	    <SingleProduct 
+  	      product={product}
+  	    />
+  	  </div>
+  	  <div className="row">
+  	    <div>related products</div>
+  	  </div>
+  	</div>
   );
 };
 
