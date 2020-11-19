@@ -15,9 +15,14 @@ const {
   remove,
   update,
   list,
+  count,
 } = require('../controllers/product');
 
 // routes
+router.get(
+  '/products/total',
+  count
+);
 router.get(
   '/products/:count',
   listAll
@@ -49,7 +54,7 @@ router.put(
 // to send args in req body
 router.post(
   '/products',
-  list,
+  list
 );
 
 

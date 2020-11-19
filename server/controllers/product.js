@@ -74,6 +74,11 @@ exports.read = async (req, res) => {
   }
 }
 
+exports.count = async (req, res) => {
+  let count = await Product.count();
+  res.json(count);
+}
+
 exports.remove = async (req, res) => {
   try {
     const { slug } = req.params;
