@@ -14,7 +14,7 @@ const NewArrivals = () => {
   const perPage = 3;
 
   useEffect(() => {
-    loadAllProducts();
+    loadProducts();
   }, [page]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const NewArrivals = () => {
       })
   }, [])
 
-  const loadAllProducts = () => {
+  const loadProducts = () => {
   	setLoading(true);
     // sort, order, limit
   	getProducts('createdAt', 'desc', perPage, page)

@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { getProducts } from '../../functions/product';
+import { getProducts, getProductsCount } from '../../functions/product';
 import ProductCard from '../cards/ProductCard';
 import LoadingCards from '../cards/LoadingCards';
 import Jumbotron from '../cards/Jumbotron';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Pagination } from 'antd'; 
 
 const BestSellers = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [productsCount, setProductsCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const perPage = 3;
 
   useEffect(() => {
-    loadAllProducts();
-  }, []);
+    loadProducts();
+  }, [page]);
 
-  const loadAllProducts = () => {
+  useEffect(() => {
+    getProductsCount()
+      .then((res) => {
+        setProductsCount(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, [])
+
+  const loadProducts = () => {
   	setLoading(true);
     // sort, order, limit
-  	getProducts('sold', 'desc', 6)
+  	getProducts('sold', 'desc', perPage, page)
   	  .then((res) => {
   	  	console.log(res.data);
         setProducts(res.data);
@@ -44,6 +58,15 @@ const BestSellers = () => {
         	                  	);
         	     })}
         	   </div>)}
+      </div>
+      <div className="row">
+        <nav className='col-md-4 offset-md-4 text-center p-3 mt-5'>
+          <Pagination 
+            current={page}
+            total={(productsCount / perPage) * 10}
+            onChange={value => setPage(value)}
+          />
+        </nav>
       </div>
   	</React.Fragment>
   );
