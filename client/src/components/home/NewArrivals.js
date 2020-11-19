@@ -3,7 +3,7 @@ import { getProducts, getProductsCount } from '../../functions/product';
 import ProductCard from '../cards/ProductCard';
 import LoadingCards from '../cards/LoadingCards';
 import Jumbotron from '../cards/Jumbotron';
-import { Pagination } from 'antd';
+import { Pagination } from 'antd'; 
 import { LoadingOutlined } from '@ant-design/icons';
 
 const NewArrivals = () => {

@@ -11,7 +11,7 @@ const Home = () => {
   	  >
         <Jumbotron 
           text={[
-          	'Marni on Marni on me', 
+          	'Marni on Marni on Marni on Marni on me', 
             'Too Many Monograms It\'s Alphabet Soup',
           ]}
         />

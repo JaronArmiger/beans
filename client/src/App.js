@@ -19,6 +19,7 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import AllProducts from './pages/admin/product/AllProducts';
 import Home from './pages/Home';
+import ProductView from './pages/ProductView';
 
 import Header from './components/nav/Header';
 import UserRoute from './components/routes/UserRoute';
@@ -90,6 +91,7 @@ const App = () => {
           path='/admin/product/:slug' 
           component={ProductUpdate} 
         />
+        <Route exact path='/product/:slug' component={ProductView} />
       </Switch>
     </>
   );
