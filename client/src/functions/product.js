@@ -28,17 +28,23 @@ export const getProductsByCount = async (count) => {
   return await axios.get(`${process.env.REACT_APP_API}/products/${count}`);
 }
 
-export const getProducts = async (sort, order, limit) => {
+export const getProducts = async (sort, order, perPage, page) => {
 
   return await axios.post(
     `${process.env.REACT_APP_API}/products`,
-    { sort, order, limit }
+    { sort, order, perPage, page }
   );
 }
 
 export const getProduct = async (slug) => {
   return await axios.get(
     `${process.env.REACT_APP_API}/product/${slug}`
+  );
+};
+
+export const getProductsCount = async () => {
+  return await axios.get(
+    `${process.env.REACT_APP_API}/products/total`
   );
 };
 

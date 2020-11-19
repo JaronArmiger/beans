@@ -39,18 +39,22 @@ exports.list = async (req, res) => {
     // ex:
     // sort: 'createdAt'
     // order: 'desc'
-    // limit: 15
+    // 
     const {
       sort,
       order,
-      limit,
+      perPage,
+      page,
     } = req.body;
 
+    const currentPage = page || 1;
+
     const products = await Product.find({})
+      .skip((currentPage - 1) * perPage)
       .populate('category')
       .populate('subs')
       .sort([[sort, order]])
-      .limit(limit);
+      .limit(perPage);
     res.json(products);
   } catch (err) {
     console.log(err);
