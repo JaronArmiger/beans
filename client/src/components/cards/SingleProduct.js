@@ -5,6 +5,8 @@ import {
   HeartOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 const { Meta } = Card;
 
@@ -19,7 +21,17 @@ const SingleProduct = ({ product }) => {
   return (
     <React.Fragment>
       <div className="col-md-7">
-        image carousel
+        <Carousel
+          showArrows={true}
+          autoPlay
+          infiniteLoop
+        >
+          {images && images.map((i) => {
+          	return (
+          	  <img src={i.url} alt={title} key={i.public_id} />
+          	);
+          })}
+        </Carousel>
       </div>
       <div className="col-md-5">
         <Card
