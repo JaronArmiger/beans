@@ -160,7 +160,7 @@ const ProductForm = ({
         </select>
       </div>
       <br />
-      {(subOptions.length > 0 || true) && 
+      {(subOptions.length > 0) && 
       	(<div>
 	      	<label>Sub-Categories</label>
 	      	<Select
