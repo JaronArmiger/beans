@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'antd';
 import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import {
   StarOutlined,
@@ -8,11 +9,21 @@ import {
 
 const RatingModal = ({ children }) => {
   const user = useSelector(state => state.user);
+  const history = useHistory();
   const [modalVisible, setModalVisible] = useState(false);
+
+  const handleModal = () => {
+    if (user && user.token) {
+      setModalVisible(true);
+    } else {
+      history.push('/login');
+    }
+  }
+
   return (
     <React.Fragment>
       <div
-        onClick={() => setModalVisible(true)}
+        onClick={handleModal}
       >
       	<StarOutlined className="text-danger" />
       	<br />
