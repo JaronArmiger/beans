@@ -8,15 +8,13 @@ import {
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import defaultImage from '../../images/snake.jpg';
+import ProductListItems from './ProductListItems';
 
-const { Meta } = Card;
 
 const SingleProduct = ({ product }) => {
   const {
   	title,
-  	description,
   	images,
-  	slug,
   } = product;
 
   return (
@@ -35,6 +33,7 @@ const SingleProduct = ({ product }) => {
         </Carousel>
       </div>
       <div className="col-md-5">
+        <h1 className='bg-info p-3'>{title}</h1>
         <Card
           actions={[
           	<React.Fragment>
@@ -48,9 +47,8 @@ const SingleProduct = ({ product }) => {
           	</Link>
           ]}
         >
-          <Meta 
-            title={title}
-            description={description}
+          <ProductListItems
+            product={product}
           />
         </Card>
       </div>
