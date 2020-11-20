@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const User = require('../models/user');
 const slugify = require('slugify');
 
 exports.create = async (req, res) => {
@@ -116,3 +117,36 @@ exports.update = async (req, res) => {
     })
   }
 };
+
+exports.leaveRating = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    const user = await User.findOne({ email: req.user.email });
+
+    const { star } = req.body;
+    const existingRating = product.ratings.find((rating) => {
+      return rating.postedBy.toString() === user._id.toString();
+    });
+
+    if (existingRating === undefined) {
+      const rating = {
+        star,
+        postedBy: user._id,
+      };
+      product.ratings.push(rating);
+      await product.save();
+      res.json(product);
+    } else {
+      existingRating.star = star;
+      await product.save();
+      res.json(product);
+    }
+  } catch (err) {
+    console.log(err);
+    // res.status(400).send({ err });
+    console.log('PRODUCT RATING ERR: ', err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}

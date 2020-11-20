@@ -16,6 +16,7 @@ const {
   update,
   list,
   count,
+  leaveRating,
 } = require('../controllers/product');
 
 // routes
@@ -55,6 +56,12 @@ router.put(
 router.post(
   '/products',
   list
+);
+
+// star rating
+router.put('/product/star/:id',
+  authCheck,
+  leaveRating,
 );
 
 

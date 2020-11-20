@@ -70,3 +70,13 @@ exports.getSubs = async (req, res) => {
       res.json(subs)
     })
 }
+
+
+
+
+
+
+
+
+
+
