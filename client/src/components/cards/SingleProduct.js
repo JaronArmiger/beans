@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card } from 'antd';
+import { Card, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import {
   HeartOutlined,
@@ -10,11 +10,13 @@ import { Carousel } from 'react-responsive-carousel';
 import defaultImage from '../../images/snake.jpg';
 import ProductListItems from './ProductListItems';
 
+const { TabPane } = Tabs;
 
 const SingleProduct = ({ product }) => {
   const {
   	title,
   	images,
+  	description,
   } = product;
 
   return (
@@ -31,6 +33,22 @@ const SingleProduct = ({ product }) => {
           	);
           }) : <img src={defaultImage} alt={title} />}
         </Carousel>
+        <Tabs
+          type='card'
+        >
+          <TabPane
+            tab='Description'
+            key='1'
+          >
+            {description && description}
+          </TabPane>
+          <TabPane
+            tab='Wisdom'
+            key='2'
+          >
+            way more grimy
+          </TabPane>
+        </Tabs>
       </div>
       <div className="col-md-5">
         <h1 className='bg-info p-3'>{title}</h1>
