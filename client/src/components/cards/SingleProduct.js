@@ -5,6 +5,7 @@ import {
   HeartOutlined,
   ShoppingCartOutlined,
 } from '@ant-design/icons';
+import StarRating from 'react-star-ratings';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import defaultImage from '../../images/snake.jpg';
@@ -17,6 +18,7 @@ const SingleProduct = ({ product }) => {
   	title,
   	images,
   	description,
+    _id,
   } = product;
 
   return (
@@ -52,6 +54,14 @@ const SingleProduct = ({ product }) => {
       </div>
       <div className="col-md-5">
         <h1 className='bg-info p-3'>{title}</h1>
+        <StarRating
+          name={_id}
+          numberOfStars={5}
+          rating={2.3}
+          changeRating={(newRating, name) => console.log(newRating, name)}
+          isSelectable={true}
+          starRatedColor='purple'
+        />
         <Card
           actions={[
           	<React.Fragment>
