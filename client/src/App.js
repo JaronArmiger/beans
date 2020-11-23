@@ -20,6 +20,7 @@ import ProductUpdate from './pages/admin/product/ProductUpdate';
 import AllProducts from './pages/admin/product/AllProducts';
 import Home from './pages/Home';
 import ProductView from './pages/ProductView';
+import CategoryHome from './pages/category/CategoryHome';
 
 import Header from './components/nav/Header';
 import UserRoute from './components/routes/UserRoute';
@@ -92,6 +93,7 @@ const App = () => {
           component={ProductUpdate} 
         />
         <Route exact path='/product/:slug' component={ProductView} />
+        <Route exact path='/category/:slug' component={CategoryHome} />
       </Switch>
     </>
   );
