@@ -21,6 +21,7 @@ import AllProducts from './pages/admin/product/AllProducts';
 import Home from './pages/Home';
 import ProductView from './pages/ProductView';
 import CategoryHome from './pages/category/CategoryHome';
+import SubHome from './pages/sub/SubHome';
 
 import Header from './components/nav/Header';
 import UserRoute from './components/routes/UserRoute';
@@ -94,6 +95,7 @@ const App = () => {
         />
         <Route exact path='/product/:slug' component={ProductView} />
         <Route exact path='/category/:slug' component={CategoryHome} />
+        <Route exact path='/sub/:slug' component={SubHome} />
       </Switch>
     </>
   );

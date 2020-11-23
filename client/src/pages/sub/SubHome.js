@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getCategory } from '../../functions/category';
+import { getSub } from '../../functions/sub';
 import ProductCard from '../../components/cards/ProductCard';
 import { LoadingOutlined } from '@ant-design/icons';
 
-const CategoryHome = ({ match }) => {
-  const [category, setCategory] = useState({});
+const SubHome = ({ match }) => {
+  const [sub, setSub] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -12,9 +12,9 @@ const CategoryHome = ({ match }) => {
 
   useEffect(() => {
   	setLoading(true);
-    getCategory(slug)
+    getSub(slug)
       .then((res) => {
-        setCategory(res.data.category);
+        setSub(res.data.sub);
         setProducts(res.data.products);
         setLoading(false);
       })
@@ -29,7 +29,7 @@ const CategoryHome = ({ match }) => {
   	  <div className="row">
   	    <div className="col">
 	  	  <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-	  	    {products.length} products in "{category.name}" category
+	  	    {products.length} products in "{sub.name}" sub-category
 	  	  </h4>
   	    </div>
   	  </div>
@@ -50,4 +50,4 @@ const CategoryHome = ({ match }) => {
   );
 };
 
-export default CategoryHome;
+export default SubHome;
