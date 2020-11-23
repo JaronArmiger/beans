@@ -38,7 +38,7 @@ const CategoryHome = ({ match }) => {
   	    {loading ? (
 	  	    <LoadingOutlined className='text-danger h1' />
 	  	  ) : (
-	  	    products.map((p) => {
+	  	    products.length > 0 && products.map((p) => {
 	  	      return (
 	  	      	<div className="col-md-4" key={p._id}>
 	  	      	  <ProductCard product={p} />
