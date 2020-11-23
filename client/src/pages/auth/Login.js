@@ -18,12 +18,15 @@ const Login = ({ history }) => {
   const { user } = useSelector(state => state);
   
   useEffect(() => {
+    const intended = history.location.state;
+    if (intended) return;
     if (user && user.token) history.push('/');
   }, [user, history]);
 
   const roleBasedRedirect = (res) => {
-    if (res.data.redirectTo) {
-      history.push(res.data.redirectTo);
+    const intended = history.location.state;
+    if (intended) {
+      history.push(intended.from);
     } else {
       if (res.data.role === 'admin') {
       history.push('/admin/dashboard');
@@ -40,7 +43,6 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
  	    const { user } = result;
  	    const idTokenResult = await user.getIdTokenResult();
-      const redirectTo = history.location.state.from;
       createOrUpdateUser(idTokenResult.token)
         .then((res) => {
           dispatch({
@@ -53,7 +55,6 @@ const Login = ({ history }) => {
               _id: res.data._id,
             }
           });
-          res.data.redirectTo = redirectTo;
           roleBasedRedirect(res);
         })
         .catch((err) => {
