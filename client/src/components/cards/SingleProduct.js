@@ -11,6 +11,7 @@ import { Carousel } from 'react-responsive-carousel';
 import defaultImage from '../../images/snake.jpg';
 import ProductListItems from './ProductListItems';
 import RatingModal from '../modals/RatingModal';
+import { showAverage } from '../../functions/rating';
 
 const { TabPane } = Tabs;
 
@@ -59,6 +60,9 @@ const SingleProduct = ({
       </div>
       <div className="col-md-5">
         <h1 className='bg-info p-3'>{title}</h1>
+        {product && product.ratings && product.ratings.length > 0 && (
+          showAverage(product.ratings)
+        )}
         <Card
           actions={[
           	<React.Fragment>
