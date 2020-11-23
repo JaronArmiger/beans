@@ -5,6 +5,7 @@ exports.createOrUpdateUser = async (req, res) => {
   const user = await User
     .findOneAndUpdate(
       { email },
+      { name },
       { new: true }, // to return updated information
     )
 

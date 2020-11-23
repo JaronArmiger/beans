@@ -10,9 +10,12 @@ export const showAverage = (ratingsArr) => {
     <div className="text-center pt-1 pb-3">
       <span>
         <StarRating 
-          rating={avg} 
+          rating={avg}
           starRatedColor='purple'
-        />
+          starDimension='20px'
+          starSpacing='2px'
+          editing={false}
+        /> ({length})
       </span>
     </div>
   );
