@@ -150,3 +150,20 @@ exports.leaveRating = async (req, res) => {
     });
   }
 }
+
+exports.listRelated = async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id);
+    const related = await Product.find({ 
+      _id: { $ne: product._id },// exclude this product
+      category: product.category,
+    })
+    .limit(3);
+    res.json(related);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}

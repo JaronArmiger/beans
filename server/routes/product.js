@@ -17,6 +17,7 @@ const {
   list,
   count,
   leaveRating,
+  listRelated,
 } = require('../controllers/product');
 
 // routes
@@ -49,6 +50,10 @@ router.put(
   authCheck,
   adminCheck,
   update
+);
+router.get(
+  '/product/related/:id',
+  listRelated
 );
 
 // this is a post request because it's easier
