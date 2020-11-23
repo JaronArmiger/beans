@@ -32,7 +32,7 @@ const ProductListItems = ({ product }) => {
             {category.name}
           </Link>
         </li>}
-      {subs &&
+      {subs.length > 0 &&
       	<li className="list-group-item">
       	  Sub Categories
       	  {subs.map((s) => {

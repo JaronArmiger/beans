@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { 
   getProduct,
   productStar,
+  getRelated,
 } from '../functions/product';
 import SingleProduct from '../components/cards/SingleProduct';
+import ProductCard from '../components/cards/ProductCard';
 import { useSelector } from 'react-redux';
 
 const ProductView = ({ match }) => {
   const [product, setProduct] = useState({});
+  const [related, setRelated] = useState([]);
   const [star, setStar] = useState(0);
   const { slug } = match.params;
   const { user } = useSelector(state => state);
@@ -26,7 +29,12 @@ const ProductView = ({ match }) => {
 
   const loadProduct = () => {
     getProduct(slug)
-      .then((res) => setProduct(res.data))
+      .then((res) => {
+        setProduct(res.data);
+        getRelated(res.data._id)
+          .then((res) => setRelated(res.data))
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   }
 
@@ -57,6 +65,21 @@ const ProductView = ({ match }) => {
           <hr />
         </div>
   	  </div>
+      <div className="row">
+        {(related.length) ? (
+          related.map((product) => {
+            return (
+              <div className="col-md-4" key={product._id}>
+                <ProductCard product={product}/>
+              </div>
+            );
+          })  
+        ) : (
+          <div className="col text-center">
+            No related products
+          </div>
+        )}
+      </div>
   	</div>
   );
 };

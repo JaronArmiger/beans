@@ -45,7 +45,7 @@ const NewArrivals = () => {
   	<React.Fragment>
   	  <div className="container">
         {loading ? 
-           (<LoadingCards count={3} />) :
+          (<LoadingCards count={3} />) :
         	(<div className="row">
               {products.map((product) => {
               	return (
