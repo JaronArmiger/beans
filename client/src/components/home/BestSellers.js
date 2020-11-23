@@ -14,17 +14,23 @@ const BestSellers = () => {
   const perPage = 3;
 
   useEffect(() => {
-    loadProducts();
+    let mounted = true;
+    if (mounted) loadProducts();  
+    return () => mounted = false;
   }, [page]);
 
   useEffect(() => {
-    getProductsCount()
-      .then((res) => {
-        setProductsCount(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    let mounted = true;
+    if (mounted) {
+      getProductsCount()
+        .then((res) => {
+          setProductsCount(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+    return () => mounted = false;
   }, [])
 
   const loadProducts = () => {
@@ -47,7 +53,7 @@ const BestSellers = () => {
         {loading ? 
            (<LoadingCards count={3} />) :
         	(<div className="row">
-              {products.map((product) => {
+              {products && products.map((product) => {
               	return (
               	  <div className="col-md-4" key={product._id}>
               	    <ProductCard 
