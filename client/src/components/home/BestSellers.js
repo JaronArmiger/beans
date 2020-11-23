@@ -32,7 +32,6 @@ const BestSellers = () => {
     // sort, order, limit
   	getProducts('sold', 'desc', perPage, page)
   	  .then((res) => {
-  	  	console.log(res.data);
         setProducts(res.data);
         setLoading(false);
   	  })

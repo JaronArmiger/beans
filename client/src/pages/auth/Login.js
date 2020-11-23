@@ -22,11 +22,15 @@ const Login = ({ history }) => {
   }, [user, history]);
 
   const roleBasedRedirect = (res) => {
-    if (res.data.role === 'admin') {
-      history.push('/admin/dashboard');
+    if (res.data.redirectTo) {
+      history.push(res.data.redirectTo);
     } else {
-      history.push('/user/history');
-    }
+      if (res.data.role === 'admin') {
+      history.push('/admin/dashboard');
+      } else {
+        history.push('/user/history');
+      }
+    };  
   }
 
   const handleSubmit = async (e) => {
@@ -36,7 +40,7 @@ const Login = ({ history }) => {
       const result = await auth.signInWithEmailAndPassword(email, password);
  	    const { user } = result;
  	    const idTokenResult = await user.getIdTokenResult();
-
+      const redirectTo = history.location.state.from;
       createOrUpdateUser(idTokenResult.token)
         .then((res) => {
           dispatch({
@@ -49,6 +53,7 @@ const Login = ({ history }) => {
               _id: res.data._id,
             }
           });
+          res.data.redirectTo = redirectTo;
           roleBasedRedirect(res);
         })
         .catch((err) => {
