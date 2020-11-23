@@ -10,11 +10,19 @@ const ProductView = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
   const { slug } = match.params;
-  const { token } = useSelector(state => state.user);
+  const { user } = useSelector(state => state);
 
   useEffect(() => {
     loadProduct();
   }, [slug]);
+
+  useEffect(() => {
+    if (product.ratings && user) {
+      const existingRating = product.ratings
+        .find((r) => r.postedBy.toString() === user._id.toString());
+      existingRating && setStar(existingRating.star); // current user's star
+    } 
+  });
 
   const loadProduct = () => {
     getProduct(slug)
@@ -24,9 +32,8 @@ const ProductView = ({ match }) => {
 
   const onStarClick = (newRating, name) => {
     setStar(newRating);
-    productStar(name, newRating, token)
+    productStar(name, newRating, user.token)
       .then((res) => {
-        console.log(res.data);
         loadProduct();
       })
       .catch((err) => {
