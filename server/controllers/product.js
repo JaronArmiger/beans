@@ -166,4 +166,32 @@ exports.listRelated = async (req, res) => {
       err: err.message,
     });
   }
-}
+};
+
+const handleQuery = async (req, res, query) => {
+  // text and description fields are defined 
+  // with text: true in schema
+  const products = await Product
+    .find({ $text: { $search: query } })
+    .populate('category', '_id name')
+    .populate('subs', '_id name');
+  
+  res.json(products);
+};
+
+exports.searchFilters = async (req, res) => {
+  const { query } = req.body;
+
+  if (query) {
+    console.log('query', query);
+    await handleQuery(req, res, query);
+  }
+};
+
+
+
+
+
+
+
+

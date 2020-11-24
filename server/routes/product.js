@@ -18,6 +18,7 @@ const {
   count,
   leaveRating,
   listRelated,
+  searchFilters,
 } = require('../controllers/product');
 
 // routes
@@ -64,9 +65,16 @@ router.post(
 );
 
 // star rating
-router.put('/product/star/:id',
+router.put(
+  '/product/star/:id',
   authCheck,
   leaveRating,
+);
+
+// search
+router.post(
+  '/search/filters',
+  searchFilters
 );
 
 
