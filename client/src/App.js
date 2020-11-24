@@ -19,6 +19,7 @@ import ProductCreate from './pages/admin/product/ProductCreate';
 import ProductUpdate from './pages/admin/product/ProductUpdate';
 import AllProducts from './pages/admin/product/AllProducts';
 import Home from './pages/Home';
+import Shop from './pages/Shop';
 import ProductView from './pages/ProductView';
 import CategoryHome from './pages/category/CategoryHome';
 import SubHome from './pages/sub/SubHome';
@@ -96,6 +97,7 @@ const App = () => {
         <Route exact path='/product/:slug' component={ProductView} />
         <Route exact path='/category/:slug' component={CategoryHome} />
         <Route exact path='/sub/:slug' component={SubHome} />
+        <Route exact path='/shop' component={Shop} />
       </Switch>
     </>
   );
