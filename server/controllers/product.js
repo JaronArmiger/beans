@@ -236,14 +236,39 @@ const handleCategory = async (req, res, category) => {
       err: err.message,
     });
   }
-}
+};
 
+const handleStar = async (req, res, stars) => {
+  try {
+    const products = await Product.aggregate([
+      {
+        $project: {
+          document: '$$ROOT', // access to entire project
+          floorAverage: {
+            $floor: { $avg: '$ratings.star' }
+          }
+        }
+      },
+      {
+        $match: { floorAverage: stars },
+      }
+    ]).limit(12);
+    console.log(products);
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}
 
 exports.searchFilters = async (req, res) => {
   const { 
     query, 
     price,
     category, // category _id
+    stars,
    } = req.body;
 
   if (query) {
@@ -258,6 +283,10 @@ exports.searchFilters = async (req, res) => {
 
   if (category) {
     await handleCategory(req, res, category);
+  }
+
+  if (stars) {
+    await handleStar(req, res, stars);
   }
 };
 
