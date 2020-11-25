@@ -49,7 +49,7 @@ const ProductListItems = ({ product }) => {
       	</li>
       }
       <li className="list-group-item">
-        Shpping Available 
+        Shipping Available? 
         <span className="label label-default label-pill pull-xs-right">
           {shipping}
         </span>
