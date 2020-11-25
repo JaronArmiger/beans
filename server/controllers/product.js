@@ -171,20 +171,70 @@ exports.listRelated = async (req, res) => {
 const handleQuery = async (req, res, query) => {
   // text and description fields are defined 
   // with text: true in schema
-  const products = await Product
-    .find({ $text: { $search: query } })
-    .populate('category', '_id name')
-    .populate('subs', '_id name');
-  
-  res.json(products);
+  try {
+    const products = await Product
+      .find({ $text: { $search: query } })
+      // .populate('category', '_id name')
+      // .populate('subs', '_id name');
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
 };
 
+const handleQueryRegex = async (req, res, query) => {
+  try {
+    const products = await Product
+      .find({
+        $or: [
+          {title: { $regex: query, $options: 'i' }},
+          {description: { $regex: query, $options: 'i' }},
+        ],
+      })
+      // .populate('category', '_id name')
+      // .populate('subs', '_id name');
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}
+
+const handlePrice = async (req, res, price) => {
+  try {
+    const products = await Product
+      .find({
+        price: {
+          $gte: price[0],
+          $lte: price[1],
+        }
+      });
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+}
+
 exports.searchFilters = async (req, res) => {
-  const { query } = req.body;
+  const { query, price } = req.body;
 
   if (query) {
     console.log('query', query);
-    await handleQuery(req, res, query);
+    await handleQueryRegex(req, res, query);
+  }
+  // price comes in as array:
+  // [min, max]
+  if (price) {
+    await handlePrice(req, res, price);
   }
 };
 

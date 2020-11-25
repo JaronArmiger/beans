@@ -28,7 +28,6 @@ const Shop = () => {
   	setLoading(true);
   	getProductsByCount(count)
   	  .then((res) => {
-        console.log(res);
   	  	setProducts(res.data);
   	  	setLoading(false);
   	  })
@@ -64,7 +63,7 @@ const Shop = () => {
  		  ) : (
  		    <h4>Showing {products.length} products</h4>
  		  )}
- 		  {loading && <LoadingOutlined className='text-warning h1'/>}
+ 		  {!loading && <LoadingOutlined className='text-warning h1'/>}
  		  <div className="row pb-5">
  		    {products.map((p) => {
  		      return (
