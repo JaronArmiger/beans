@@ -222,10 +222,29 @@ const handlePrice = async (req, res, price) => {
       err: err.message,
     });
   }
+};
+
+const handleCategory = async (req, res, category) => {
+  try {
+    const products = await Product
+      .find({ category });
+
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
 }
 
+
 exports.searchFilters = async (req, res) => {
-  const { query, price } = req.body;
+  const { 
+    query, 
+    price,
+    category, // category _id
+   } = req.body;
 
   if (query) {
     console.log('query', query);
@@ -235,6 +254,10 @@ exports.searchFilters = async (req, res) => {
   // [min, max]
   if (price) {
     await handlePrice(req, res, price);
+  }
+
+  if (category) {
+    await handleCategory(req, res, category);
   }
 };
 
