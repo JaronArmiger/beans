@@ -16,6 +16,7 @@ const ProductCard = ({ product }) => {
     description,
     images,
     slug,
+    price,
   } = product;
 
   return (
@@ -55,14 +56,16 @@ const ProductCard = ({ product }) => {
           </React.Fragment>
         ]}
       >
-        <Meta 
+        <Meta
+          className='text-center'
           title={title}
           description={
-            description ? (
-              (description.length > 30) ?
-              (`${description.substring(0, 30)}...`)
-              : description
-            ) : ''
+            `$${price}`
+            // description ? (
+            //   (description.length > 30) ?
+            //   (`${description.substring(0, 30)}...`)
+            //   : description
+            // ) : ''
           }
         /> 
       </Card>
