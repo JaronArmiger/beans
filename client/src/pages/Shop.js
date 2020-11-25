@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { getProductsByCount } from '../functions/product';
+import { 
+  getProductsByCount,
+  fetchProductsByFilter,
+} from '../functions/product';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -8,19 +11,46 @@ const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const { text } = useSelector(state => state.search);
+
   useEffect(() => {
     loadAllProducts(12);
   }, []);
+
+  useEffect(() => {
+    const delayed = setTimeout(() => {
+      fetchProducts({ query: text });
+    }, 300);
+    return () => clearTimeout(delayed);
+  }, [text])
 
   const loadAllProducts = (count) => {
   	setLoading(true);
   	getProductsByCount(count)
   	  .then((res) => {
+        console.log(res);
   	  	setProducts(res.data);
   	  	setLoading(false);
   	  })
-  	  .catch((err) => console.log(err));
+  	  .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
+
+  const fetchProducts = async (arg) => {
+    setLoading(true);
+    fetchProductsByFilter(arg)
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  }
+
 
   return (
     <div className="container-fluid">
