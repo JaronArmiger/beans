@@ -23,6 +23,7 @@ import {
   Slider,
   Checkbox,
   Radio,
+  Button,
 } from 'antd';
 
 const { SubMenu } = Menu;
@@ -202,6 +203,11 @@ const Shop = () => {
     }
   };
 
+  const handleReset = () => {
+    resetFilters();
+    loadAllProducts(12);
+  }
+
   const showCategories = () => {
     const categoryDivs = categories.map((c) => {
       return (
@@ -322,6 +328,13 @@ const Shop = () => {
         <div className="col-md-3 pt-2">
           <h4>Filters</h4>
           <hr />
+          <Button
+            block
+            type='primary'
+            onClick={handleReset}
+          >
+            Reset Filters
+          </Button>
           <Menu
             mode='inline'
             defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
