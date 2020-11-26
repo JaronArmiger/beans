@@ -263,7 +263,21 @@ const handleStar = async (req, res, stars) => {
       err: err.message,
     });
   }
-}
+};
+
+const handleSub = async (req, res, sub) => {
+  try {
+    const products = await Product.find({
+      subs: sub,
+    });
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  };
+};
 
 exports.searchFilters = async (req, res) => {
   const { 
@@ -271,6 +285,7 @@ exports.searchFilters = async (req, res) => {
     price,
     category, // category _id
     stars,
+    sub,
    } = req.body;
   console.log(req.body);
   if (query) {
@@ -289,6 +304,10 @@ exports.searchFilters = async (req, res) => {
 
   if (stars) {
     await handleStar(req, res, stars);
+  }
+
+  if (sub) {
+    await handleSub(req, res, sub);
   }
 };
 
