@@ -6,6 +6,9 @@ import {
 import { 
   getCategories,
 } from '../functions/category';
+import { 
+  getSubs,
+} from '../functions/sub';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
 import Star from '../components/forms/Star';
@@ -32,6 +35,7 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState('');
+  const [subs, setSubs] = useState([]);
 
   const dispatch = useDispatch();
   const { text } = useSelector(state => state.search);
@@ -41,6 +45,12 @@ const Shop = () => {
     getCategories()
       .then((res) => {
         setCategories(res.data);
+      })
+      .catch((err) => console.log(err));
+    getSubs()
+      .then((res) => {
+        setSubs(res.data);
+        console.log(subs);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -80,7 +90,6 @@ const Shop = () => {
 
   const fetchProducts = async (arg) => {
     setLoading(true);
-    console.log(arg);
     fetchProductsByFilter(arg)
       .then((res) => {
         setProducts(res.data);
@@ -139,6 +148,18 @@ const Shop = () => {
     fetchProducts({ stars: num});
   };
 
+  const handleSub = (subId) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: {
+        text: '',
+      },
+    });
+    setPrice([0, max]);
+    setCategoryIds([]);
+    fetchProducts({ sub: subId});
+  }
+
   const showCategories = () => {
     const categoryDivs = categories.map((c) => {
       return (
@@ -169,7 +190,22 @@ const Shop = () => {
       );
     }
     return stars;
-  }
+  };
+
+  const showSubs = () => {
+    return subs.map((s) => {
+      return (
+        <div
+          onClick={() => handleSub(s._id)}
+          className='p-1 m-1 badge badge-primary'
+          style={{ cursor: 'pointer' }}
+          key={s._id}
+        >
+          {s.name}
+        </div>
+      );
+    });
+  };
 
   return (
     <div className="container-fluid">
@@ -179,7 +215,7 @@ const Shop = () => {
           <hr />
           <Menu
             mode='inline'
-            defaultOpenKeys={['1', '2', '3']}
+            defaultOpenKeys={['1', '2', '3', '4']}
           >
             {/* Price */}
             <SubMenu 
@@ -230,8 +266,27 @@ const Shop = () => {
             >
               <div
                 style={{ marginTop: '-10px' }}
-              >  <div className="px-4 pb-2">
+              >  
+                <div className="px-4 pb-2">
                   {showStars()}
+                </div>
+              </div>
+            </SubMenu>
+            {/* Subs */}
+            <SubMenu 
+              key='4' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Sub-Categories
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showSubs()}
                 </div>
               </div>
             </SubMenu>
