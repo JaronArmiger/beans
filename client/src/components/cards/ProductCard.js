@@ -7,6 +7,7 @@ import {
 import defaultImage from '../../images/snake.jpg';
 import { Link } from 'react-router-dom';
 import { showAverage } from '../../functions/rating';
+import _ from 'lodash';
 
 const { Meta } = Card;
 
@@ -18,6 +19,23 @@ const ProductCard = ({ product }) => {
     slug,
     price,
   } = product;
+
+  const handleAddToCart = () => {
+    let cart = [];
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'));
+      };
+      cart.push({ 
+        ...product,
+        count: 1,
+      });
+
+      let unique = _.uniqWith(cart, _.isEqual);
+      console.log('unique', unique);
+      localStorage.setItem('cart', JSON.stringify(unique));
+    }
+  };
 
   return (
     <React.Fragment>
@@ -47,13 +65,13 @@ const ProductCard = ({ product }) => {
             <br />
             View
           </Link>, 
-          <React.Fragment>
+          <a onClick={handleAddToCart}>
             <ShoppingCartOutlined 
               className='text-danger'
             />
             <br />
             Add to Cart
-          </React.Fragment>
+          </a>
         ]}
       >
         <Meta
