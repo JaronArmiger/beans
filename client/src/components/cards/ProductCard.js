@@ -1,5 +1,8 @@
-import React from 'react';
-import { Card } from 'antd';
+import React, { useState } from 'react';
+import { 
+  Card, 
+  Tooltip 
+} from 'antd';
 import {
   EyeOutlined,
   ShoppingCartOutlined,
@@ -19,6 +22,7 @@ const ProductCard = ({ product }) => {
     slug,
     price,
   } = product;
+  const [tooltip, setTooltip] = useState('Click to add');
 
   const handleAddToCart = () => {
     let cart = [];
@@ -34,6 +38,7 @@ const ProductCard = ({ product }) => {
       let unique = _.uniqWith(cart, _.isEqual);
       console.log('unique', unique);
       localStorage.setItem('cart', JSON.stringify(unique));
+      setTooltip('Already in cart');
     }
   };
 
@@ -64,14 +69,16 @@ const ProductCard = ({ product }) => {
             />
             <br />
             View
-          </Link>, 
-          <a onClick={handleAddToCart}>
-            <ShoppingCartOutlined 
-              className='text-danger'
-            />
-            <br />
-            Add to Cart
-          </a>
+          </Link>,
+          <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart}>
+              <ShoppingCartOutlined 
+                className='text-danger'
+              />
+              <br />
+              Add to Cart
+            </a>
+          </Tooltip>
         ]}
       >
         <Meta
