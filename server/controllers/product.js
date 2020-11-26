@@ -279,6 +279,48 @@ const handleSub = async (req, res, sub) => {
   };
 };
 
+const handleShipping = async (req, res, shipping ) => {
+  try {
+    const products = await Product.find({
+      shipping,
+    });
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  };
+};
+
+const handleColor = async (req, res, color) => {
+  try {
+    const products = await Product.find({
+      color,
+    });
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  };
+};
+
+const handleBrand = async (req, res, brand) => {
+  try {
+    const products = await Product.find({
+      brand,
+    });
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  };
+};
+
 exports.searchFilters = async (req, res) => {
   const { 
     query, 
@@ -286,6 +328,9 @@ exports.searchFilters = async (req, res) => {
     category, // category _id
     stars,
     sub,
+    shipping,
+    color,
+    brand,
    } = req.body;
   console.log(req.body);
   if (query) {
@@ -308,6 +353,18 @@ exports.searchFilters = async (req, res) => {
 
   if (sub) {
     await handleSub(req, res, sub);
+  }
+
+  if (shipping) {
+    await handleShipping(req, res, shipping);
+  }
+
+  if (color) {
+    await handleColor(req, res, color);
+  }
+
+  if (brand) {
+    await handleBrand(req, res, brand);
   }
 };
 
