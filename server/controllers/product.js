@@ -332,7 +332,7 @@ exports.searchFilters = async (req, res) => {
     color,
     brand,
    } = req.body;
-  console.log(req.body);
+  console.log('searchFilters', req.body);
   if (query) {
     console.log('query', query);
     await handleQueryRegex(req, res, query);

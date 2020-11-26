@@ -21,10 +21,11 @@ import {
 import {
   Menu,
   Slider,
-  Checkbox
+  Checkbox,
+  Radio,
 } from 'antd';
 
-const { SubMenu, ItemGroup } = Menu;
+const { SubMenu } = Menu;
 
 const Shop = () => {
   const max = 10000;
@@ -36,6 +37,23 @@ const Shop = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState('');
   const [subs, setSubs] = useState([]);
+  const [colors, setColors] = useState([
+    'Black', 
+    'Brown', 
+    'Silver', 
+    'White', 
+    'Blue'
+  ]);
+  const [brands, setBrands] = useState([
+    'Apple', 
+    'Samsung', 
+    'Microsoft', 
+    'Lenovo', 
+    'Asos'
+  ]);
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState('');
+  const [selectedShipping, setSelectedShipping] = useState('');
 
   const dispatch = useDispatch();
   const { text } = useSelector(state => state.search);
@@ -101,14 +119,34 @@ const Shop = () => {
       });
   };
 
+  const resetFilters = (exclude='') => {
+    if (exclude !== 'price') {
+      setPrice([0, max]);
+    };
+    if (exclude !== 'categoryIds') {
+      setCategoryIds([]);
+    };
+    if (exclude !== 'query') {
+      dispatch({
+        type: 'SEARCH_QUERY',
+        payload: {
+          text: '',
+        },
+      });
+    };
+    if (exclude !== 'brand') {
+      setSelectedBrand('');
+    };
+    if (exclude !== 'color') {
+      setSelectedColor('');
+    };
+    if (exclude !== 'shipping') {
+      setSelectedShipping('');
+    };
+  }
+
   const handleSlider = (priceArr) => {
-    setCategoryIds([]);
-    dispatch({
-      type: 'SEARCH_QUERY',
-      payload: {
-        text: '',
-      },
-    });
+    resetFilters('price');
     setPrice(priceArr);
     setTimeout(() => {
       setOk(!ok);
@@ -116,13 +154,7 @@ const Shop = () => {
   };
 
   const handleCheck = (e) => {
-    dispatch({
-      type: 'SEARCH_QUERY',
-      payload: {
-        text: '',
-      },
-    });
-    setPrice([0, max]);
+    resetFilters('categoryIds');
     const idArr = [...categoryIds];
     const checked = e.target.value;
     const idx = idArr.indexOf(checked);
@@ -136,29 +168,39 @@ const Shop = () => {
   };
 
   const handleStarClick = (num) => {
-    dispatch({
-      type: 'SEARCH_QUERY',
-      payload: {
-        text: '',
-      },
-    });
-    setPrice([0, max]);
-    setCategoryIds([]);
+    resetFilters();
     setStar(num);
     fetchProducts({ stars: num});
   };
 
   const handleSub = (subId) => {
-    dispatch({
-      type: 'SEARCH_QUERY',
-      payload: {
-        text: '',
-      },
-    });
-    setPrice([0, max]);
-    setCategoryIds([]);
+    resetFilters();
     fetchProducts({ sub: subId});
-  }
+  };
+
+  const radioChange = (e, filterType) => {
+    resetFilters(filterType);
+    const val = e.target.value;
+    console.log(val);
+    console.log(filterType);
+    switch (filterType) {
+      case 'brand':
+        console.log('sent brand')
+        setSelectedBrand(val);
+        fetchProducts({ brand: val });
+        break;
+      case 'color':
+        console.log('sent color');
+        setSelectedColor(val);
+        fetchProducts({ color: val });
+        break;
+      case 'shipping':
+        console.log('sent shipping');
+        setSelectedShipping(val);
+        fetchProducts({ shipping: val });
+        break;
+    }
+  };
 
   const showCategories = () => {
     const categoryDivs = categories.map((c) => {
@@ -207,6 +249,73 @@ const Shop = () => {
     });
   };
 
+  const showBrands = () => {
+    const btns = brands.map((b, idx) => {
+      return (
+        <Radio
+          key={idx}
+          value={b}
+          name={b}
+        >
+          {b}
+        </Radio>
+      );
+    });
+    return (
+      <Radio.Group
+        onChange={(e) => radioChange(e, 'brand')}
+        value={selectedBrand}
+      >
+        {btns}
+      </Radio.Group>
+    );
+  };
+
+  const showColors = () => {
+    const btns = colors.map((c, idx) => {
+      return (
+        <Radio
+          key={idx}
+          value={c}
+          name={c}
+        >
+          {c}
+        </Radio>
+      );
+    });
+    return (
+      <Radio.Group
+        value={selectedColor}
+        onChange={(e) => radioChange(e, 'color')}
+      >
+        {btns}
+      </Radio.Group>
+    );
+  };
+
+  const showShipping = () => {
+    const shippingArr = ['Yes', 'No'];
+    const btns = shippingArr.map((c, idx) => {
+      return (
+        <Radio
+          key={idx}
+          value={c}
+          name={c}
+        >
+          {c}
+        </Radio>
+      );
+    });
+    return (
+      <Radio.Group
+        value={selectedShipping}
+        onChange={(e) => radioChange(e, 'shipping')}
+      >
+        {btns}
+      </Radio.Group>
+    );
+  };
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -215,7 +324,7 @@ const Shop = () => {
           <hr />
           <Menu
             mode='inline'
-            defaultOpenKeys={['1', '2', '3', '4']}
+            defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
           >
             {/* Price */}
             <SubMenu 
@@ -287,6 +396,60 @@ const Shop = () => {
               >
                 <div className="px-4 pb-2">
                   {showSubs()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Brands */}
+            <SubMenu 
+              key='5' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Brands
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showBrands()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Colors */}
+            <SubMenu 
+              key='6' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Colors
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showColors()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Shipping */}
+            <SubMenu 
+              key='7' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Shipping
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showShipping()}
                 </div>
               </div>
             </SubMenu>

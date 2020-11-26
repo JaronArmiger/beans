@@ -1,6 +1,5 @@
 import React from 'react';
 import AdminNav from '../../components/nav/AdminNav';
-import { LoadingOutlined } from '@ant-design/icons';
 
 const AdminDashboard = () => {
   return (
