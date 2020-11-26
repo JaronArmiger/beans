@@ -240,7 +240,7 @@ const handleCategory = async (req, res, category) => {
 
 const handleStar = async (req, res, stars) => {
   try {
-    const products = await Product.aggregate([
+    const data = await Product.aggregate([
       {
         $project: {
           document: '$$ROOT', // access to entire project
@@ -253,7 +253,9 @@ const handleStar = async (req, res, stars) => {
         $match: { floorAverage: stars },
       }
     ]).limit(12);
-    console.log(products);
+    // console.log(data);
+    const products = data.map((el) => el.document);
+    // console.log(products);
     res.json(products);
   } catch (err) {
     console.log(err);
@@ -270,7 +272,7 @@ exports.searchFilters = async (req, res) => {
     category, // category _id
     stars,
    } = req.body;
-
+  console.log(req.body);
   if (query) {
     console.log('query', query);
     await handleQueryRegex(req, res, query);

@@ -8,10 +8,12 @@ import {
 } from '../functions/category';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
+import Star from '../components/forms/Star';
 import { 
   LoadingOutlined, 
   DollarOutlined,
   AimOutlined,
+  StarOutlined,
 } from '@ant-design/icons';
 import {
   Menu,
@@ -29,6 +31,7 @@ const Shop = () => {
   const [price, setPrice] = useState([0, max]);
   const [categories, setCategories] = useState([]);
   const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState('');
 
   const dispatch = useDispatch();
   const { text } = useSelector(state => state.search);
@@ -77,6 +80,7 @@ const Shop = () => {
 
   const fetchProducts = async (arg) => {
     setLoading(true);
+    console.log(arg);
     fetchProductsByFilter(arg)
       .then((res) => {
         setProducts(res.data);
@@ -122,6 +126,19 @@ const Shop = () => {
     fetchProducts({ category: idArr });
   };
 
+  const handleStarClick = (num) => {
+    dispatch({
+      type: 'SEARCH_QUERY',
+      payload: {
+        text: '',
+      },
+    });
+    setPrice([0, max]);
+    setCategoryIds([]);
+    setStar(num);
+    fetchProducts({ stars: num});
+  };
+
   const showCategories = () => {
     const categoryDivs = categories.map((c) => {
       return (
@@ -141,6 +158,19 @@ const Shop = () => {
     return categoryDivs;
   };
 
+  const showStars = (numStars=5) => {
+    const stars = [];
+    for (let i = numStars; i > 0; i--) {
+      stars.push(
+        <Star 
+          starClick={handleStarClick}
+          numberOfStars={i}
+        />
+      );
+    }
+    return stars;
+  }
+
   return (
     <div className="container-fluid">
       <div className="row">
@@ -149,7 +179,7 @@ const Shop = () => {
           <hr />
           <Menu
             mode='inline'
-            defaultOpenKeys={['1', '2']}
+            defaultOpenKeys={['1', '2', '3']}
           >
             {/* Price */}
             <SubMenu 
@@ -188,13 +218,30 @@ const Shop = () => {
                 {showCategories()}
               </div>
             </SubMenu>
+          {/* Stars */}
+          <SubMenu 
+              key='3' 
+              title={
+                <span className='h6'>
+                  <StarOutlined />
+                  Rating
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >  <div className="px-4 pb-2">
+                  {showStars()}
+                </div>
+              </div>
+            </SubMenu>
           </Menu>
         </div>
         <div className="col-md-9 pt-2">
      		  {products.length < 1 ? (
      		  	<h4>No products found</h4>
      		  ) : (
-     		    <h4>Showing {products.length} products</h4>
+     		    <h4>Showing {products.length} product{products.length > 1 ? 's' : ''}</h4>
      		  )}
      		  {loading && <LoadingOutlined className='text-warning h1'/>}
      		  <div className="row pb-5">
