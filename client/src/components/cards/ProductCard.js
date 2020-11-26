@@ -11,6 +11,8 @@ import defaultImage from '../../images/snake.jpg';
 import { Link } from 'react-router-dom';
 import { showAverage } from '../../functions/rating';
 import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const { Meta } = Card;
 
@@ -22,24 +24,44 @@ const ProductCard = ({ product }) => {
     slug,
     price,
   } = product;
+
   const [tooltip, setTooltip] = useState('Click to add');
+  const { user, cart } = useSelector(state => state);
+
+  const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     let cart = [];
-    if (typeof window !== 'undefined') {
-      if (localStorage.getItem('cart')) {
-        cart = JSON.parse(localStorage.getItem('cart'));
-      };
-      cart.push({ 
+    if (typeof window !== "undefined") {
+      // if cart is in local storage GET it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      // push new product to cart
+      cart.push({
         ...product,
         count: 1,
       });
-
+      // remove duplicates
       let unique = _.uniqWith(cart, _.isEqual);
-      console.log('unique', unique);
-      localStorage.setItem('cart', JSON.stringify(unique));
-      setTooltip('Already in cart');
+      // save to local storage
+      // console.log('unique', unique)
+      localStorage.setItem("cart", JSON.stringify(unique));
+      // show tooltip
+      setTooltip("Added");
+
+      // add to reeux state
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+      toast.success(`${title} added to cart!`);
     }
+  };
+
+  const handleRemoveFromCart = () => {
+    console.log('remove');
+    toast.warning(`${title} removed from cart!`);
   };
 
   return (
@@ -65,19 +87,27 @@ const ProductCard = ({ product }) => {
             to={`/product/${slug}`}
           >
             <EyeOutlined
-              className='text-warning'
+              className='text-link'
             />
             <br />
             View
           </Link>,
           <Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-              <ShoppingCartOutlined 
-                className='text-danger'
-              />
-              <br />
-              Add to Cart
-            </a>
+            {_.some(cart, product) ?
+              (<a onClick={handleRemoveFromCart}>
+                          <ShoppingCartOutlined 
+                            className='text-danger'
+                          />
+                          <br />
+                          Remove from Cart
+                        </a>) :
+              (<a onClick={handleAddToCart}>
+                          <ShoppingCartOutlined 
+                            className='text-success'
+                          />
+                          <br />
+                          Add to Cart
+                        </a>)}
           </Tooltip>
         ]}
       >

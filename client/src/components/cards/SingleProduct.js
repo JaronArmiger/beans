@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Tabs } from 'antd';
+import React, { useState } from 'react';
+import { 
+  Card, 
+  Tabs, 
+  Tooltip,
+} from 'antd';
 import { Link } from 'react-router-dom';
 import {
   HeartOutlined,
@@ -12,6 +16,8 @@ import defaultImage from '../../images/snake.jpg';
 import ProductListItems from './ProductListItems';
 import RatingModal from '../modals/RatingModal';
 import { showAverage } from '../../functions/rating';
+import _ from 'lodash';
+import { useSelector, useDispatch } from 'react-redux';
 
 const { TabPane } = Tabs;
 
@@ -26,6 +32,32 @@ const SingleProduct = ({
   	description,
     _id,
   } = product;
+
+  const [tooltip, setTooltip] = useState('Click to add');
+  const { user, cart } = useSelector(state => state);
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    let cart = [];
+    if (typeof window !== 'undefined') {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'));
+      };
+      cart.push({ 
+        ...product,
+        count: 1,
+      });
+
+      let unique = _.uniqWith(cart, _.isEqual);
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: unique,
+      });
+      console.log('unique', unique);
+      localStorage.setItem('cart', JSON.stringify(unique));
+      setTooltip('Already in cart');
+    }
+  };
 
   return (
     <React.Fragment>
@@ -69,10 +101,15 @@ const SingleProduct = ({
         )}
         <Card
           actions={[
-          	<React.Fragment>
-          	  <ShoppingCartOutlined className='text-success'/>
-          	  Add to Cart
-          	</React.Fragment>,
+          	<Tooltip title={tooltip}>
+            <a onClick={handleAddToCart}>
+              <ShoppingCartOutlined 
+                className='text-danger'
+              />
+              <br />
+              Add to Cart
+            </a>
+          </Tooltip>,
           	<Link to=''>
           	  <HeartOutlined className='text-info'/>
           	  <br />
