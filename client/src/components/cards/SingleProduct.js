@@ -63,7 +63,11 @@ const SingleProduct = ({
         type: "MODIFY_CART",
         payload: unique,
       });
-      toast.success(`${title} added to cart!`);
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
+      // toast.success(`${title} added to cart!`);
     }
   };
 

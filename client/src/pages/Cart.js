@@ -46,7 +46,7 @@ const Cart = () => {
   	  <div className="col-md-8">
   	    <h4>
   	      Cart / {cart.length} product
-  	      {cart.length !== 1 && 's'}
+  	      {cart.length !== 1 ? 's' : ''}
   	    </h4>
   	    {cart.length === 0 ? (
   	      <p>No products in cart</p>
@@ -73,14 +73,14 @@ const Cart = () => {
   	      user ? (
   	        <button
   	          onClick={saveOrdertoDb}
-  	          className='btn btn-sm btn-primary mt-2'
+  	          className='btn btn-sm btn-primary mt-2 btn-block'
   	          disabled={cart.length === 0}
   	        >
   	          Proceed to checkout
   	        </button>
   	      ) : (
   	        <button
-  	          className='btn btn-sm btn-primary mt-2'
+  	          className='btn btn-sm btn-primary mt-2 btn-block'
   	        >
   	          <Link to={{
   	          	pathname: '/login',

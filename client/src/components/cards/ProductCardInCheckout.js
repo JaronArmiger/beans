@@ -96,8 +96,8 @@ const ProductCardInCheckout = ({ product }) => {
   	  	    style={{maxWidth: '150px', height: 'auto'}}
   	  	  >
   	        <ModalImage
-  	      	  small={images ? images[0].url : defaultImage}
-  	      	  large={images ? images[0].url : defaultImage}
+  	      	  small={images[0] ? images[0].url : defaultImage}
+  	      	  large={images[0] ? images[0].url : defaultImage}
             />
   	  	  </div>
   	  	</td>
