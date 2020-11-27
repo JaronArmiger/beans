@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
 
       // add to reeux state
       dispatch({
-        type: "ADD_TO_CART",
+        type: "MODIFY_CART",
         payload: unique,
       });
       toast.success(`${title} added to cart!`);

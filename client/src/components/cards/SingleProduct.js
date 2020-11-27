@@ -18,6 +18,7 @@ import RatingModal from '../modals/RatingModal';
 import { showAverage } from '../../functions/rating';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const { TabPane } = Tabs;
 
@@ -50,13 +51,18 @@ const SingleProduct = ({
 
       let unique = _.uniqWith(cart, _.isEqual);
       dispatch({
-        type: 'ADD_TO_CART',
+        type: 'MODIFY_CART',
         payload: unique,
       });
       console.log('unique', unique);
       localStorage.setItem('cart', JSON.stringify(unique));
       setTooltip('Already in cart');
     }
+  };
+
+  const handleRemoveFromCart = () => {
+    console.log('remove');
+    toast.warning(`${title} removed from cart!`);
   };
 
   return (
@@ -102,13 +108,21 @@ const SingleProduct = ({
         <Card
           actions={[
           	<Tooltip title={tooltip}>
-            <a onClick={handleAddToCart}>
-              <ShoppingCartOutlined 
-                className='text-danger'
-              />
-              <br />
-              Add to Cart
-            </a>
+            {_.some(cart, product) ?
+              (<a onClick={handleRemoveFromCart}>
+                          <ShoppingCartOutlined 
+                            className='text-danger'
+                          />
+                          <br />
+                          Remove from Cart
+                        </a>) :
+              (<a onClick={handleAddToCart}>
+                          <ShoppingCartOutlined 
+                            className='text-success'
+                          />
+                          <br />
+                          Add to Cart
+                        </a>)}
           </Tooltip>,
           	<Link to=''>
           	  <HeartOutlined className='text-info'/>
