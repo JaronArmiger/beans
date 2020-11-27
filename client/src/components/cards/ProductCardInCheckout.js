@@ -2,9 +2,15 @@ import React from 'react';
 import ModalImage from 'react-modal-image';
 import defaultImage from '../../images/snake.jpg';
 import { useDispatch } from 'react-redux';
+import {
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 
 const ProductCardInCheckout = ({ product }) => {
   const {
+  	_id,
   	title,
   	price,
   	brand,
@@ -12,6 +18,7 @@ const ProductCardInCheckout = ({ product }) => {
   	count,
   	images,
   	quantity,
+  	shipping,
   } = product;
 
   const colors = [
@@ -31,7 +38,7 @@ const ProductCardInCheckout = ({ product }) => {
       	cart = JSON.parse(localStorage.getItem('cart'));
       }
       cart.map((p, idx) => {
-        if (p._id === product._id) {
+        if (p._id === _id) {
           p.color = e.target.value;
         }
         return p;
@@ -51,7 +58,7 @@ const ProductCardInCheckout = ({ product }) => {
       	cart = JSON.parse(localStorage.getItem('cart'));
       }
       cart.map((p, idx) => {
-        if (p._id === product._id) {
+        if (p._id === _id) {
           p.count = e.target.value;
         }
         return p;
@@ -60,6 +67,21 @@ const ProductCardInCheckout = ({ product }) => {
       dispatch({
       	type: 'MODIFY_CART',
       	payload: cart
+      })
+    }
+  };
+
+  const handleRemove = () => {
+    let cart = [];
+    if (typeof window !== undefined) {
+      if (localStorage.getItem('cart')) {
+      	cart = JSON.parse(localStorage.getItem('cart'));
+      }
+      const newCart = cart.filter((p) => p._id !== _id);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+      dispatch({
+      	type: 'MODIFY_CART',
+      	payload: newCart,
       })
     }
   };
@@ -109,8 +131,20 @@ const ProductCardInCheckout = ({ product }) => {
   	  	    onChange={handleQuantityChange}
   	  	  />
   	  	</td>
-        <td>Shipping Icon</td>
-        <td>Delete Icon</td>
+        <td className='text-center'>
+          {(shipping && shipping ==='Yes') ? (
+          	<CheckCircleOutlined className='text-success' />
+          ) : (
+            <CloseCircleOutlined className='text-danger' />
+          )}
+        </td>
+        <td className='text-center'>
+          <CloseOutlined 
+            onClick={handleRemove}
+            className='text-danger'
+            style={{ cursor: 'pointer' }}
+          />
+        </td>
   	  </tr>
   	</tbody>
   );

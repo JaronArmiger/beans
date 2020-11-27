@@ -40,23 +40,30 @@ const SingleProduct = ({
 
   const handleAddToCart = () => {
     let cart = [];
-    if (typeof window !== 'undefined') {
-      if (localStorage.getItem('cart')) {
-        cart = JSON.parse(localStorage.getItem('cart'));
-      };
-      cart.push({ 
+    if (typeof window !== "undefined") {
+      // if cart is in local storage GET it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      // push new product to cart
+      cart.push({
         ...product,
         count: 1,
       });
-
+      // remove duplicates
       let unique = _.uniqWith(cart, _.isEqual);
+      // save to local storage
+      // console.log('unique', unique)
+      localStorage.setItem("cart", JSON.stringify(unique));
+      // show tooltip
+      setTooltip("Added");
+
+      // add to reeux state
       dispatch({
-        type: 'MODIFY_CART',
+        type: "MODIFY_CART",
         payload: unique,
       });
-      console.log('unique', unique);
-      localStorage.setItem('cart', JSON.stringify(unique));
-      setTooltip('Already in cart');
+      toast.success(`${title} added to cart!`);
     }
   };
 
