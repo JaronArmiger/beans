@@ -7,6 +7,7 @@ import {
   CloseCircleOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 
 const ProductCardInCheckout = ({ product }) => {
   const {
@@ -83,7 +84,8 @@ const ProductCardInCheckout = ({ product }) => {
       	type: 'MODIFY_CART',
       	payload: newCart,
       })
-    }
+    };
+    toast.warning(`${title} removed from cart!`);
   };
 
   return (

@@ -23,10 +23,11 @@ const ProductCard = ({ product }) => {
     images,
     slug,
     price,
+    _id,
   } = product;
 
   const [tooltip, setTooltip] = useState('Click to add');
-  const { user, cart } = useSelector(state => state);
+  const { cart } = useSelector(state => state);
 
   const dispatch = useDispatch();
 
@@ -60,7 +61,18 @@ const ProductCard = ({ product }) => {
   };
 
   const handleRemoveFromCart = () => {
-    console.log('remove');
+    let cart = [];
+    if (typeof window !== undefined) {
+      if (localStorage.getItem('cart')) {
+        cart = JSON.parse(localStorage.getItem('cart'));
+      }
+      const newCart = cart.filter((p) => p._id !== _id);
+      localStorage.setItem('cart', JSON.stringify(newCart));
+      dispatch({
+        type: 'MODIFY_CART',
+        payload: newCart,
+      })
+    }
     toast.warning(`${title} removed from cart!`);
   };
 
