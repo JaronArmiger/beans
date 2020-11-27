@@ -42,12 +42,9 @@ const Login = ({ history }) => {
     try {
       const result = await auth.signInWithEmailAndPassword(email, password);
  	    const { user } = result;
-      console.log('user', user)
  	    const idTokenResult = await user.getIdTokenResult();
-      console.log('idTokenResult', idTokenResult);
       createOrUpdateUser(idTokenResult.token)
         .then((res) => {
-          console.log('LOGIN', res);
           dispatch({
             type: 'LOGGED_IN_USER',
             payload: {
