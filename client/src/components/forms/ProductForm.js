@@ -65,6 +65,7 @@ const ProductForm = ({
 	      <input 
 	        type="number" 
 	        name="price"
+	        min='1'
 	        className='form-control'
 	        value={price}
 	        onChange={handleChange}
@@ -90,6 +91,7 @@ const ProductForm = ({
 	      <input 
 	        type="number" 
 	        name="quantity"
+	        min='1'
 	        className='form-control'
 	        value={quantity}
 	        onChange={handleChange}

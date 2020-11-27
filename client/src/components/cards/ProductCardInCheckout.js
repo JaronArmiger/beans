@@ -11,6 +11,7 @@ const ProductCardInCheckout = ({ product }) => {
   	color,
   	count,
   	images,
+  	quantity,
   } = product;
 
   const colors = [
@@ -32,6 +33,26 @@ const ProductCardInCheckout = ({ product }) => {
       cart.map((p, idx) => {
         if (p._id === product._id) {
           p.color = e.target.value;
+        }
+        return p;
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch({
+      	type: 'MODIFY_CART',
+      	payload: cart
+      })
+    }
+  };
+
+  const handleQuantityChange = (e) => {
+    let cart = [];
+    if (typeof window !== undefined) {
+      if (localStorage.getItem('cart')) {
+      	cart = JSON.parse(localStorage.getItem('cart'));
+      }
+      cart.map((p, idx) => {
+        if (p._id === product._id) {
+          p.count = e.target.value;
         }
         return p;
       });
@@ -77,7 +98,17 @@ const ProductCardInCheckout = ({ product }) => {
   	  	    ))}
   	  	  </select>
   	  	</td>
-  	  	<td>{count}</td>
+  	  	<td>
+  	  	  <input 
+  	  	    style={{ maxWidth: '50px' }}
+  	  	    type="number"
+  	  	    className='form-control'
+  	  	    value={count}
+  	  	    min='1'
+  	  	    max={quantity}
+  	  	    onChange={handleQuantityChange}
+  	  	  />
+  	  	</td>
         <td>Shipping Icon</td>
         <td>Delete Icon</td>
   	  </tr>
