@@ -6,7 +6,7 @@ export const userCart = async (cart, authtoken) => {
   	{ cart },
   	{
   	  headers: {
-  	  	authoken,
+  	  	authtoken,
   	  },
   	}
   );
