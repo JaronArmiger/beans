@@ -54,3 +54,30 @@ exports.userCart = async (req, res) => {
 	  console.log(err);
 	}
 };
+
+exports.getUserCart = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+    const cart = await Cart
+      .findOne({ orderedBy: user._id })
+      .populate('products.product', 'title price');
+
+    const { products, cartTotal, totalAfterDiscount } = cart;
+    res.json({
+      products,
+      cartTotal,
+      totalAfterDiscount,
+    })
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+    err: err.message,
+    })
+  }
+};
+
+
+
+
+
+
