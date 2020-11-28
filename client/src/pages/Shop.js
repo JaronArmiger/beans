@@ -231,7 +231,8 @@ const Shop = () => {
     const stars = [];
     for (let i = numStars; i > 0; i--) {
       stars.push(
-        <Star 
+        <Star
+          key={i}
           starClick={handleStarClick}
           numberOfStars={i}
         />
