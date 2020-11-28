@@ -10,6 +10,7 @@ const CartSchema = new mongoose.Schema({
       },
       count: Number,
       color: String,
+      title: String,
       price: Number,
     }
   ],

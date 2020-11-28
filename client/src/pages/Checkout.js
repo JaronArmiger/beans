@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUserCart } from '../functions/user';
 
 const Checkout = () => {
-  const saveAddressToDb = () => {
+  const [products, setProducts] = useState([]);
+  const [total, setTotal] = useState(0);
 
+  const dispatch = useDispatch();
+  const { user } = useSelector(state => state);
+
+  useEffect(() => {
+    getUserCart(user.token)
+      .then((res) => {
+        setProducts(res.data.products);
+        setTotal(res.data.cartTotal);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }, []);
+
+  const saveAddressToDb = () => {
+    
   };
 
   return (
