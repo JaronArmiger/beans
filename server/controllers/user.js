@@ -89,9 +89,24 @@ exports.emptyCart = async (req, res) => {
   	console.log(err);
   	res.status(400).json({
   	  err: err.mesage,
-  	})
+  	});
   }
-}
+};
+
+exports.saveAddress = async (req, res) => {
+  try {
+    const userAddress = await User.findOneAndUpdate(
+      { email: req.user.email }, 
+      { address: req.body.address }
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+  	res.status(400).json({
+  	  err: err.mesage,
+  	});
+  }
+};
 
 
 
