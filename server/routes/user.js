@@ -5,6 +5,7 @@ const { authCheck } = require('../middlewares/auth');
 const { 
   userCart,
   getUserCart,
+  emptyCart,
 } = require('../controllers/user');
 
 // router.get('/user', (req, res) => {
@@ -17,5 +18,6 @@ const {
 router.post('/user/cart', authCheck, userCart);
 // get cart
 router.get('/user/cart', authCheck, getUserCart);
+router.delete('/user/cart', authCheck, emptyCart);
 
 module.exports = router;
