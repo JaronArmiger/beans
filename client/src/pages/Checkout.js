@@ -45,11 +45,15 @@ const Checkout = () => {
   	  <div className="col-md-6">
   	    <h4>Order Summary</h4>
   	    <hr />
-  	    <p>Products x</p>
+  	    <p>{products.length} Product{products.length !== 1 ? 's' : ''}</p>
   	    <hr />
-  	    <p>List of Products</p>
+  	    {products.map((p, idx) => (
+          <div key={idx}>
+            <p>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</p>
+          </div>
+        ))}
   	    <hr />
-  	    <p>Cart total: $x</p>
+  	    <p>Cart Total: ${total}</p>
   	    <div className="row">
   	      <div className="col-md-6">
   	        <button className="btn btn-primary">Place Order</button>
