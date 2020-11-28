@@ -15,7 +15,6 @@ const Cart = ({ history }) => {
   };
 
   const saveOrdertoDb = () => {
-    console.log('Cart.js', cart);
     userCart(cart, user.token)
       .then((res) => {
         console.log('CART POST RES', res);
