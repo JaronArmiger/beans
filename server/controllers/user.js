@@ -163,7 +163,24 @@ exports.createOrder = async (req, res) => {
       orderedBy: user._id,
     });
     await newOrder.save();
-    console.log(newOrder);
+
+    const bulkOption = products.map((p) => {
+      return {
+        updateOne: {
+          filter: { _id: p.product.toString()},
+          update: {
+            $inc: { 
+              quantity: -p.count,
+              sold: +p.count,
+            },
+          }
+        }
+      }
+    });
+
+    const updated = await Product.bulkWrite(bulkOption, {});
+    console.log(updated);
+
     res.json({ ok: true });
   } catch (err) {
     console.log(err);

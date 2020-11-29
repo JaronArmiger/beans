@@ -24,6 +24,7 @@ import {
   CheckOutlined,
 } from '@ant-design/icons';
 import pilsen from '../images/pilsenvintage.jpg';
+import { toast } from 'react-toastify';
 
 const cardStyle = {
   style: {
@@ -133,6 +134,7 @@ const StripeCheckout = ({ history }) => {
       }
     } catch (err) {
       console.log(err);
+      toast.error('An error has occurred. Order not placed.')
     }
 
   };
