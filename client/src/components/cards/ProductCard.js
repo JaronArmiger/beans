@@ -133,9 +133,13 @@ const ProductCard = ({ product }) => {
         ]}
       >
         <Meta
-          className='text-center'
+          className={
+            `text-center ${quantity === 0 ? 'alert alert-danger' : ''}`
+          }
           title={title}
           description={
+            quantity === 0 ?
+            'OUT OF STOCK' :
             `$${price}`
             // description ? (
             //   (description.length > 30) ?
