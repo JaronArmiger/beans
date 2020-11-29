@@ -4,6 +4,7 @@ import {
   getUserCart,
   emptyUserCart,
   saveUserAddress,
+  applyCoupon,
 } from '../functions/user';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
@@ -15,6 +16,7 @@ const Checkout = () => {
   const [address, setAddress] = useState('');
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState('');
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
 
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
@@ -55,7 +57,18 @@ const Checkout = () => {
   };
 
   const applyDiscountCoupon = () => {
-    console.log(coupon);
+    applyCoupon(user.token, coupon)
+      .then(res => {
+        console.log(res.data);
+        setTotalAfterDiscount(res.data);
+        toast.success(`${coupon} applied successfully!`)
+      })
+      .catch(err => {
+        if (err.response.data.err) {
+          console.log(err.response.data.err);
+          toast.error(err.response.data.err);
+        }
+      })
   };
 
   const showAddressField = () => (

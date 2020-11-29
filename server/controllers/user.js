@@ -122,8 +122,9 @@ exports.applyCouponToUserCart = async (req, res) => {
     const { coupon } = req.body;
     const validCoupon = await Coupon.findOne({ name: coupon });
     if (validCoupon === null) {
-      res.json({
-        err: 'Invalid coupon',
+      console.log('no coupon')
+      res.status(400).json({
+        err: 'Invalid coupon code',
       });
     } else {
       const user = await User
