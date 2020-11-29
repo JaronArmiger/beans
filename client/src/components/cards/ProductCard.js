@@ -33,6 +33,10 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
+    if (quantity === 0) {
+      toast.error(`${title} is currently out of stock. Sorry :(`);
+      return;
+    }
     let cart = [];
     if (typeof window !== "undefined") {
       // if cart is in local storage GET it
@@ -108,7 +112,6 @@ const ProductCard = ({ product }) => {
               className='text-link'
             />
             <br />
-            {quantity}
             View
           </Link>,
           <Tooltip title={tooltip}>

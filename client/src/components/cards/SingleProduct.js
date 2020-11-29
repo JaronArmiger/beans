@@ -40,6 +40,10 @@ const SingleProduct = ({
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
+    if (quantity === 0) {
+      toast.error(`${title} is currently out of stock. Sorry :(`);
+      return;
+    }
     let cart = [];
     if (typeof window !== "undefined") {
       // if cart is in local storage GET it
@@ -123,6 +127,11 @@ const SingleProduct = ({
       </div>
       <div className="col-md-5">
         <h1 className='bg-info p-3'>{title}</h1>
+        {quantity === 0 && (
+            <div className="alert alert-danger">
+              OUT OF STOCK
+            </div>
+          )}
         {(product && product.ratings && product.ratings.length > 0) ? (
           showAverage(product.ratings)
         ) : (
@@ -141,7 +150,9 @@ const SingleProduct = ({
                           <br />
                           Remove from Cart
                         </a>) :
-              (<a onClick={handleAddToCart}>
+              (<a onClick={handleAddToCart}
+                  disabled={quantity === 0}
+                >
                           <ShoppingCartOutlined 
                             className='text-success'
                           />
