@@ -51,6 +51,7 @@ const Checkout = () => {
       .then((res) => {
         setProducts([]);
         setTotal(0);
+        setTotalAfterDiscount(0);
         toast.success('Cart emptied');
       })
       .catch((err) => console.log(err));
@@ -61,13 +62,15 @@ const Checkout = () => {
       .then(res => {
         console.log(res.data);
         setTotalAfterDiscount(res.data);
-        toast.success(`${coupon} applied successfully!`)
+        toast.success(`${coupon} applied successfully!`);
+        setCoupon('');
       })
       .catch(err => {
         if (err.response.data.err) {
           console.log(err.response.data.err);
           toast.error(err.response.data.err);
         }
+        setCoupon('');
       })
   };
 
@@ -138,6 +141,11 @@ const Checkout = () => {
   	    {showProductSummary()}
   	    <hr />
   	    <p>Cart Total: ${total}</p>
+        {totalAfterDiscount > 0 && (
+          <p className="bg-success p-2">
+            Discount Applied Total Payable: ${totalAfterDiscount}
+          </p>
+        )}
   	    <div className="row">
   	      <div className="col-md-6">
   	        <button 
