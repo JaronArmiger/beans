@@ -101,6 +101,7 @@ const StripeCheckout = ({ history }) => {
       } else {
         // create order and save in database for admin to process
         // empty user cart from redux store and local storage
+        
         console.log(payload);
         setError(null);
         setProcessing(false);
