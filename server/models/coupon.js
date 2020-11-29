@@ -15,7 +15,7 @@ const CouponSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  discout: {
+  discount: {
     type: Number,
     required: true,
   }

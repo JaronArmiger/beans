@@ -16,6 +16,7 @@ exports.list = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
+    console.log(req.body);
     const { name, expiry, discount } = req.body;
     const coupon = new Coupon({
       name,
