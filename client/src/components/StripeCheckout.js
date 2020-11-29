@@ -13,6 +13,10 @@ import {
   createPaymentIntent,
 } from '../functions/stripe';
 import {
+  createOrder,
+  emptyUserCart,
+} from '../functions/user';
+import {
   Card
 } from 'antd';
 import {
@@ -100,7 +104,27 @@ const StripeCheckout = ({ history }) => {
         setProcessing(false);
       } else {
         // create order and save in database for admin to process
-        // empty user cart from redux store and local storage
+        createOrder(user.token, payload)
+          .then(res => {
+            if (res.data.ok) {
+              if (typeof window !== undefined) {
+                localStorage.removeItem('cart');
+              }
+            }
+            dispatch({ type: 'CLEAR_CART' });
+            dispatch({
+              type: 'COUPON_APPLIED',
+              payload: false
+            });
+            emptyUserCart(user.token)
+              .then((res) => {
+                if (res.data.ok) console.log('cart deleted on backend');
+              })
+              .catch(err => console.log(err.response));
+          })
+          .catch(err => {
+            console.log(err);
+          })
         
         console.log(payload);
         setError(null);
@@ -115,10 +139,10 @@ const StripeCheckout = ({ history }) => {
 
   return (
     <React.Fragment>
-      {(coupon && totalAfterDiscount !== null) ? (
+      {(totalAfterDiscount !== null) ? (
         <div className='alert alert-success'>
           Coupon applied.
-          You saved ${cartTotal - totalAfterDiscount}!
+          You are saving ${cartTotal - totalAfterDiscount}!
         </div>
       ) : (
         <p className='alert alert-info'>No coupon applied</p>

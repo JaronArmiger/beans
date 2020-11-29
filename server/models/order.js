@@ -19,7 +19,7 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     default: 'Not Processed',
     enum: [
-      'Not Procesed',
+      'Not Processed',
       'Processing',
       'Dispatched',
       'Canceled',
