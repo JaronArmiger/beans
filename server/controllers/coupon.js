@@ -35,8 +35,8 @@ exports.create = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    await Coupon.findByIdAndDelete(req.body.id);
-    res.json({ ok: true });
+    const deleted = await Coupon.findByIdAndDelete(req.params.id);
+    res.json(deleted);
   } catch (err) {
   	console.log(err);
   	res.status(400).json({

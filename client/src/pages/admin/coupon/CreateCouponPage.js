@@ -10,6 +10,7 @@ import {
 import 'react-datepicker/dist/react-datepicker.css';
 import {
   DeleteOutlined,
+  LoadingOutlined,
 } from '@ant-design/icons';
 import AdminNav from '../../../components/nav/AdminNav';
 
@@ -23,10 +24,14 @@ const CreateCouponPage = () => {
   const { token } = useSelector(state => state.user);
 
   useEffect(() => {
+    loadCoupons();
+  }, []);
+
+  const loadCoupons = () => {
     getCoupons()
       .then(res => setCoupons(res.data)) 
       .catch(err => console.log(err));
-  }, []);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,8 +47,22 @@ const CreateCouponPage = () => {
  	    setExpiry('');
  	    setDiscount(0);
  	    toast.success(`"${res.data.name}" coupon created`);
+ 	    loadCoupons();
       })
       .catch(err => console.log(err));
+  };
+
+  const handleRemove = (couponId) => {
+    if (window.confirm('Delete this coupon?')) {
+      setLoading(true);
+      removeCoupon(couponId, token)
+        .then(res => {
+          setLoading(false);
+          toast.success(`"${res.data.name}" deleted`);
+          loadCoupons();
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   return (
@@ -54,6 +73,7 @@ const CreateCouponPage = () => {
   	    </div>
   	    <div className="col-md-10">
   	      <h4>Coupon</h4>
+  	      {loading && <LoadingOutlined className='text-warning h1'/>}
   	      <form
   	        onSubmit={handleSubmit}
   	      >
@@ -104,7 +124,37 @@ const CreateCouponPage = () => {
   	      	</button>
   	      </form>
   	      <br />
-  	      {JSON.stringify(coupons)}
+  	      <h4>{coupons.length} Coupon{coupons.length !== 1 ? 's' : ''}</h4>
+  	      <table className="table table-bordered">
+  	        <thead className="thead-light">
+  	          <tr>
+  	          	<th scope='col'>Name</th>
+  	          	<th scope='col'>Expiry</th>
+  	          	<th scope='col'>Discount</th>
+  	          	<th scope='col'>Action</th>
+  	          </tr>
+  	        </thead>
+  	        <tbody>
+  	          {coupons.map((c, idx) => (
+  	          	<tr
+  	          	  key={idx}
+  	          	>
+  	          	  <td>{c.name}</td>
+  	          	  <td>{new Date(c.expiry).toLocaleDateString()}</td>
+  	          	  <td>{c.discount}%</td>
+  	          	  <td
+  	          	    className='text-center'
+  	          	  >
+  	          	    <DeleteOutlined
+  	          	      className='text-danger'
+  	          	      style={{ cursor: 'pointer' }}
+  	          	      onClick={() => handleRemove(c._id)}
+  	          	    />
+  	          	  </td>
+  	          	</tr>
+  	          ))}
+  	        </tbody>
+  	      </table>
   	    </div>
   	  </div>
   	</div>
