@@ -14,6 +14,7 @@ const Checkout = () => {
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState('');
   const [addressSaved, setAddressSaved] = useState(false);
+  const [coupon, setCoupon] = useState('');
 
   const dispatch = useDispatch();
   const { user } = useSelector(state => state);
@@ -53,6 +54,10 @@ const Checkout = () => {
       .catch((err) => console.log(err));
   };
 
+  const applyDiscountCoupon = () => {
+    console.log(coupon);
+  };
+
   const showAddressField = () => (
     <React.Fragment>
       <ReactQuill 
@@ -79,6 +84,26 @@ const Checkout = () => {
     return productDivs;
   };
 
+  const showApplyCoupon = () => (
+    <React.Fragment>
+      <label className="text-muted">
+        Coupon Code
+      </label>
+      <input 
+        type="text"
+        onChange={(e) => setCoupon(e.target.value)}
+        value={coupon}
+        className='form-control'
+      />
+      <button 
+        className="btn btn-primary mt-2"
+        onClick={applyDiscountCoupon}
+      >
+        Apply
+      </button>
+    </React.Fragment>
+  );
+
   return (
     <div className="container-fluid">
   	<div className="row">
@@ -90,7 +115,7 @@ const Checkout = () => {
   	    <hr />
   	    <h4>Have a coupon?</h4>
   	    <br />
-  	    coupon input and apply button
+  	    {showApplyCoupon()}
   	  </div>
   	  <div className="col-md-6">
   	    <h4>Order Summary</h4>
