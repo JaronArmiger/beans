@@ -53,23 +53,40 @@ const Checkout = () => {
       .catch((err) => console.log(err));
   };
 
+  const showAddressField = () => (
+    <React.Fragment>
+      <ReactQuill 
+        theme='snow'
+        value={address}
+        onChange={setAddress}
+      />
+      <button 
+        className="btn btn-primary mt-2"
+        onClick={saveAddressToDb}
+      >
+        Save
+      </button>
+    </React.Fragment>
+  );
+
+  const showProductSummary = () => {
+    const productDivs = products
+      .map((p, idx) => (
+        <div key={idx}>
+          <p>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</p>
+        </div>
+      ));
+    return productDivs;
+  };
+
   return (
+    <div className="container-fluid">
   	<div className="row">
   	  <div className="col-md-6">
   	    <h4>Delivery Address</h4>
   	    <br />
   	    <br />
-  	    <ReactQuill 
-          theme='snow'
-          value={address}
-          onChange={setAddress}
-        />
-  	    <button 
-  	      className="btn btn-primary mt-2"
-  	      onClick={saveAddressToDb}
-  	    >
-  	      Save
-  	    </button>
+  	    {showAddressField()}
   	    <hr />
   	    <h4>Have a coupon?</h4>
   	    <br />
@@ -80,11 +97,7 @@ const Checkout = () => {
   	    <hr />
   	    <p>{products.length} Product{products.length !== 1 ? 's' : ''}</p>
   	    <hr />
-  	    {products.map((p, idx) => (
-          <div key={idx}>
-            <p>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</p>
-          </div>
-        ))}
+  	    {showProductSummary()}
   	    <hr />
   	    <p>Cart Total: ${total}</p>
   	    <div className="row">
@@ -108,6 +121,7 @@ const Checkout = () => {
   	    </div>
   	  </div>
   	</div>
+    </div>
   );
 };
 
