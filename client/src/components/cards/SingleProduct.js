@@ -32,6 +32,7 @@ const SingleProduct = ({
   	images,
   	description,
     _id,
+    quantity,
   } = product;
 
   const [tooltip, setTooltip] = useState('Click to add');
@@ -67,6 +68,7 @@ const SingleProduct = ({
         type: "SET_VISIBLE",
         payload: true,
       });
+      setTooltip("Remove from cart");
       // toast.success(`${title} added to cart!`);
     }
   };
@@ -85,6 +87,7 @@ const SingleProduct = ({
       })
     }
     toast.warning(`${title} removed from cart!`);
+    setTooltip("Click to add");
   };
 
   return (

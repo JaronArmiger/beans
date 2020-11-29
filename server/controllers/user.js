@@ -178,8 +178,7 @@ exports.createOrder = async (req, res) => {
       }
     });
 
-    const updated = await Product.bulkWrite(bulkOption, {});
-    console.log(updated);
+    await Product.bulkWrite(bulkOption, {});
 
     res.json({ ok: true });
   } catch (err) {

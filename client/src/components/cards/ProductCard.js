@@ -24,6 +24,7 @@ const ProductCard = ({ product }) => {
     slug,
     price,
     _id,
+    quantity,
   } = product;
 
   const [tooltip, setTooltip] = useState('Click to add');
@@ -49,7 +50,7 @@ const ProductCard = ({ product }) => {
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));
       // show tooltip
-      setTooltip("Added");
+      setTooltip("Remove from cart");
 
       // add to reeux state
       dispatch({
@@ -78,6 +79,7 @@ const ProductCard = ({ product }) => {
       })
     }
     toast.warning(`${title} removed from cart!`);
+    setTooltip("Click to add");
   };
 
   return (
@@ -106,18 +108,21 @@ const ProductCard = ({ product }) => {
               className='text-link'
             />
             <br />
+            {quantity}
             View
           </Link>,
           <Tooltip title={tooltip}>
             {_.some(cart, product) ?
-              (<a onClick={handleRemoveFromCart}>
+              (<a onClick={handleRemoveFromCart}
+                >
                           <ShoppingCartOutlined 
                             className='text-danger'
                           />
                           <br />
                           Remove from Cart
                         </a>) :
-              (<a onClick={handleAddToCart}>
+              (<a onClick={handleAddToCart}
+                disabled={quantity===0}>
                           <ShoppingCartOutlined 
                             className='text-success'
                           />
