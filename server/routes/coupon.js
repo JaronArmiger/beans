@@ -17,8 +17,6 @@ const {
 // routes
 router.get(
   '/coupons',
-  authCheck,
-  adminCheck,
   list
 );
 router.post(
