@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
 import { userCart } from '../functions/user';
+import { toast } from 'react-toastify';
 
 const Cart = ({ history }) => {
   const { user, cart } = useSelector(state => state);
@@ -20,7 +21,14 @@ const Cart = ({ history }) => {
         console.log('CART POST RES', res);
         if (res.data.ok) history.push('/checkout');
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.response);
+        if (err.response) {
+          if (err.response.statusText === 'Unauthorized') {
+            toast.error('Error: Logout and then log in again.')
+          }
+        }
+      });
   };
 
   const showCartItems = () => (
