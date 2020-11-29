@@ -63,13 +63,21 @@ exports.getUserCart = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     const cart = await Cart
       .findOne({ orderedBy: user._id });
-
-    const { products, cartTotal, totalAfterDiscount } = cart;
-    res.json({
-      products,
-      cartTotal,
-      totalAfterDiscount,
-    })
+    
+    if (cart) {
+      const { products, cartTotal, totalAfterDiscount } = cart;
+      res.json({
+        products,
+        cartTotal,
+        totalAfterDiscount,
+      });
+    } else {
+      res.json({
+        products: [],
+        cartTotal: 0,
+        totalAfterDiscount: 0,
+      });
+    };
   } catch (err) {
     console.log(err);
     res.status(400).json({

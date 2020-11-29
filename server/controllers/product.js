@@ -80,7 +80,7 @@ exports.read = async (req, res) => {
 }
 
 exports.count = async (req, res) => {
-  let count = await Product.count();
+  let count = await Product.countDocuments();
   res.json(count);
 }
 
