@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserNav from '../../components/nav/UserNav';
+import PaymentInfo from '../../components/cards/PaymentInfo';
 import { getUserOrders } from '../../functions/user';
 import { useSelector } from 'react-redux';
 import {
@@ -97,7 +98,7 @@ const History = () => {
         </tbody>
       </table>
     )
-};
+  };
 
   const showOrders = () => (
     orders.map((o, idx) => (
@@ -105,7 +106,9 @@ const History = () => {
         className="m-5 p-3 card"
         key={idx}
       >
-        <p>show payment info</p>
+        <PaymentInfo
+          order={o}
+        />
         {showProductsInOrder(o.products)}
         <div className="row">
           <div className="col">
