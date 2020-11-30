@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import UserNav from '../../components/nav/UserNav';
 import PaymentInfo from '../../components/cards/PaymentInfo';
+import Invoice from '../../components/order/Invoice';
 import { getUserOrders } from '../../functions/user';
 import { useSelector } from 'react-redux';
 import {
@@ -8,6 +9,7 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const History = () => {
   const [orders, setOrders] = useState([]);
@@ -26,6 +28,25 @@ const History = () => {
       .catch(err => {
         console.log(err);
       })
+  };
+
+  const showDownloadLink = (order) => {
+    const date = new Date(order.paymentIntent.created * 1000)
+      .toLocaleDateString();
+
+    return (
+      <PDFDownloadLink
+        document={
+          <Invoice order={order} />
+        }
+        fileName={
+          `invoice${date}.pdf`
+        }
+        className='btn btn-sm btn-outline-primary'
+      >
+        Download PDF of Receipt
+      </PDFDownloadLink>
+    );
   };
 
   const showProductInfo = (product, idx) => {
@@ -115,7 +136,7 @@ const History = () => {
         {showProductsInOrder(o.products)}
         <div className="row">
           <div className="col">
-            <p>Download PDF</p>
+            {showDownloadLink(o)}
           </div>
         </div>
       </div>
@@ -128,7 +149,7 @@ const History = () => {
         <div className="col-md-2">
           <UserNav />
         </div>
-        <div className="col">
+        <div className="col text-center pt-3">
           <h4>
             Your Orders
           </h4>

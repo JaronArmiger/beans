@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const PaymentInfo = ({ order }) => {
   return (
     <div>
