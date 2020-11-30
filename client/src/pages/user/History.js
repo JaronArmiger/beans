@@ -45,7 +45,10 @@ const History = () => {
           <b>{title}</b>
         </td>
         <td>
-          {price}
+          {price && price.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}
         </td>
         <td>
           {brand}

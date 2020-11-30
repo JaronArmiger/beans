@@ -143,7 +143,10 @@ const ProductCard = ({ product }) => {
           description={
             quantity === 0 ?
             'OUT OF STOCK' :
-            `$${price}`
+            `${price ? price.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            }) : ''}`
             // description ? (
             //   (description.length > 30) ?
             //   (`${description.substring(0, 30)}...`)

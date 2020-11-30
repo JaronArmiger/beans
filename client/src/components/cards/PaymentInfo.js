@@ -8,7 +8,8 @@ const PaymentInfo = ({ order }) => {
           Order Id: {order.paymentIntent.id}{' '}
         </span>
         <span>
-          Amount Paid: {(order.paymentIntent.amount / 100)
+          Amount Paid: {order.paymentIntent.amount && 
+            (order.paymentIntent.amount / 100)
             .toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',

@@ -12,6 +12,7 @@ const ProductListItems = ({ product }) => {
   	quantity,
   	sold,
   } = product;
+
   return (
     <ul
       className='list-group'
@@ -19,7 +20,10 @@ const ProductListItems = ({ product }) => {
       <li className="list-group-item">
         Price 
         <span className="label label-default label-pill pull-xs-right">
-          $ {price}
+          {price && price.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}
         </span>
       </li>
       {category && 

@@ -102,7 +102,10 @@ const ProductCardInCheckout = ({ product }) => {
   	  	  </div>
   	  	</td>
   	  	<td>{title}</td>
-  	  	<td>${price}</td>
+  	  	<td>{price && price.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}</td>
   	  	<td>{brand}</td>
   	  	<td>
   	  	  <select 
