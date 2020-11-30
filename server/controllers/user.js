@@ -189,6 +189,21 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+exports.listOrders = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.user.email });
+    const userOrders = await Order
+      .find({ orderedBy: user._id })
+      .populate('products.product');
+    res.json(userOrders);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.mesage,
+    });
+  }
+}
+
 
 
 
