@@ -15,7 +15,13 @@ const Cart = ({ history }) => {
     }, 0)
   };
 
-  const saveOrdertoDb = () => {
+  const saveOrdertoDb = (cod=false) => {
+    if (cod) {
+      dispatch({
+        type: 'COD',
+        payload: true,
+      })
+    };
     userCart(cart, user.token)
       .then((res) => {
         console.log('CART POST RES', res);
@@ -85,13 +91,23 @@ const Cart = ({ history }) => {
   	    <hr />
   	    {
   	      user ? (
-  	        <button
-  	          onClick={saveOrdertoDb}
-  	          className='btn btn-sm btn-primary mt-2 btn-block'
-  	          disabled={cart.length === 0}
-  	        >
-  	          Proceed to checkout
-  	        </button>
+            <React.Fragment>
+    	        <button
+    	          onClick={() => saveOrdertoDb(false)}
+    	          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+    	          disabled={cart.length === 0}
+    	        >
+    	          Proceed to checkout
+    	        </button>
+              <br />
+              <button
+                onClick={() => saveOrdertoDb(true)}
+                className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
+                disabled={cart.length === 0}
+              >
+                Pay Cash on Delivery
+              </button>
+            </React.Fragment>
   	      ) : (
   	        <button
   	          className='btn btn-sm btn-primary mt-2 btn-block'
