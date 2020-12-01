@@ -15,14 +15,14 @@ router.get(
   '/admin/orders',
   authCheck,
   adminCheck,
-  listOrders,
+  listOrders
 );
 
-router.get(
+router.put(
   '/admin/order-status',
   authCheck,
   adminCheck,
-  updateOrderStatus,
+  updateOrderStatus
 );
 
 module.exports = router;

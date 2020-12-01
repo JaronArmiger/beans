@@ -16,7 +16,7 @@ exports.listOrders = async (req, res) => {
   }
 };
 
-exports.udpateOrderStatus = async (req, res) => {
+exports.updateOrderStatus = async (req, res) => {
   try {
     const { orderId, orderStatus } = req.body;
     const updated = await Order
@@ -26,7 +26,7 @@ exports.udpateOrderStatus = async (req, res) => {
         { new: true }
       );
     
-    res.json(updated);
+    res.json({ ok: true });
   } catch (err) {
     console.log(err);
     res.status(400).json({
