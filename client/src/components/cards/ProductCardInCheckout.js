@@ -110,7 +110,6 @@ const ProductCardInCheckout = ({ product }) => {
   	  	<td>
   	  	  <select 
   	  	    name="color" 
-  	  	    id=""
   	  	    className='form-control'
   	  	    style={{ cursor: 'pointer' }}
   	  	    onChange={handleColorChange}

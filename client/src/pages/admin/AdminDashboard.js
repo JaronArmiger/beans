@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminNav from '../../components/nav/AdminNav';
+import AdminOrders from '../../components/order/AdminOrders';
 import {
   getOrders,
   changeOrderStatus,
@@ -30,7 +31,10 @@ const AdminDashboard = () => {
   const handleStatusChange = (orderId, newStatus) => {
     changeOrderStatus(orderId, newStatus, token)
       .then(res => {
-        if (res.data.ok) loadOrders();
+        if (res.data.ok) {
+          loadOrders()
+          toast.success(`Order status updated to "${newStatus}"`)
+        };
       })
       .catch(err => {
         console.log(err);
@@ -43,8 +47,12 @@ const AdminDashboard = () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col">
+        <div className="col text-center">
           <h4>Orders</h4>
+          <AdminOrders 
+            orders={orders}
+            handleStatusChange={handleStatusChange}
+          />
         </div>
       </div>
   	</div>
