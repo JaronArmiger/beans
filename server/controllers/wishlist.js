@@ -22,7 +22,6 @@ exports.createWishlist = async (req, res, next) => {
       err: err.message,
     });
   };
-  // next();
 };
 
 exports.getWishlist = async (req, res) => {
@@ -87,7 +86,7 @@ exports.removeFromWishlist = async (req, res) => {
         }
       );
 
-    res.json(wishlist);
+    res.json({ ok: true });
   } catch (err) {
     console.log(err);
     res.status(400).json({

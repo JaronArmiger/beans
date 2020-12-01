@@ -23,7 +23,7 @@ export const addToWishlist = async (productId, authtoken) => {
   );
 };
 
-export const removeProduct = async (productId, authtoken) => {
+export const removeFromWishlist = async (productId, authtoken) => {
   return await axios.delete(
     `${process.env.REACT_APP_API}/user/wishlist/${productId}`,
     {
