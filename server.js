@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { readdirSync } = require('fs');
 require('dotenv').config();
+var path = require('path');
 
 // app
 const app = express();
@@ -25,7 +26,14 @@ app.use(cors());
 // routes
 readdirSync('./routes').map((r) => {
   return app.use('/api', require(`./routes/${r}`));
-})
+});
+
+const pathway = path.join(__dirname, 'client', 'build');
+app.use(express.static(pathway));
+app.get('*', (req, res) => {
+  res.sendFile('index.html', { pathway });
+  // res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 // port
 const port = process.env.PORT || 8000;
