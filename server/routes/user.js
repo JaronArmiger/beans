@@ -10,6 +10,9 @@ const {
   applyCouponToUserCart,
   createOrder,
   listOrders,
+  getWishlist
+  addToWishlist,
+  removeFromWishlist,
 } = require('../controllers/user');
 
 // router.get('/user', (req, res) => {
@@ -40,7 +43,23 @@ router.post(
   createOrder
 );
 
+router.get(
+  '/user/wishlist',
+  authCheck,
+  getWishlist
+);
 
+router.put(
+  '/user/wishlist',
+  authCheck,
+  addToWishlist
+);
+
+router.delete(
+  '/user/wishlist/:productId',
+  authCheck,
+  removeFromWishlist
+);
 
 
 module.exports = router;
