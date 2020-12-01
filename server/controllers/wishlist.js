@@ -27,7 +27,13 @@ exports.createWishlist = async (req, res, next) => {
 
 exports.getWishlist = async (req, res) => {
   try {
-    res.send('nice');
+    const user = await User
+      .findOne({ email: req.user.email })
+      .select('wishlist');
+    const wishlist = await Wishlist
+      .findById(user.wishlist)
+      .populate('wishlist');
+    res.json(wishlist);
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -44,13 +50,13 @@ exports.addToWishlist = async (req, res) => {
       const user = await User
         .findOne({ email: req.user.email })
         .select('wishlist');
-      const wishlist = await Wishlist
+      await Wishlist
         .findByIdAndUpdate(user.wishlist, {
           $addToSet: {
             wishlist: productId,
           }
-        }, { new: true });
-      res.json(wishlist);
+        });
+      res.json({ ok: true });
     } else {
       res.status(400).json({
         err: 'No productId sent',
@@ -66,7 +72,22 @@ exports.addToWishlist = async (req, res) => {
 
 exports.removeFromWishlist = async (req, res) => {
   try {
+    const { productId } = req.params;
 
+    const user = await User
+      .findOne({ email: req.user.email })
+      .select('wishlist');
+    const wishlist = await Wishlist
+      .findByIdAndUpdate(
+        user.wishlist,
+        {
+          $pull: { wishlist: productId },
+        }, {
+          new: true,
+        }
+      );
+
+    res.json(wishlist);
   } catch (err) {
     console.log(err);
     res.status(400).json({
