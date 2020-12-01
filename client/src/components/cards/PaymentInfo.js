@@ -34,6 +34,7 @@ const PaymentInfo = ({ order, showStatus=true }) => {
         <br />
         {showStatus && <span
                   className='badge bg-primary text-white'
+                  style={{ fontSize: '20px' }}
                 >
                   Order Status: {order.orderStatus}{' '}
                 </span>}

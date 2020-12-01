@@ -15,13 +15,89 @@ const statusOptions = [
 
 
 const AdminOrders = ({ orders, handleStatusChange }) => {
+  const showProductInfo = (product, idx) => {
+    const {
+      title,
+      price,
+      color, 
+      count 
+    } = product;
+    const {
+      brand,
+      shipping,
+    } = product.product;
+    return (
+      <tr key={idx}>
+        <td>
+          <b>{title}</b>
+        </td>
+        <td>
+          {price && price.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}
+        </td>
+        <td>
+          {brand}
+        </td>
+        <td>
+          {color}
+        </td>
+        <td>
+          {count}
+        </td>
+        <td className='text-center'>
+          {shipping === 'Yes' ?
+            <CheckCircleOutlined className='text-success'/> :
+            <CloseCircleOutlined className='text-danger'/>
+          }
+        </td>
+      </tr>
+    );
+  };
+
+  const showProductsInOrder = (products) => {
+    return (
+      <table className="table table-bordered">
+        <thead className='thead-light'>
+          <tr>
+            <th scope='col'>
+              Title
+            </th>
+            <th scope='col'>
+              Price
+            </th>
+            <th scope='col'>
+              Brand
+            </th>
+            <th scope='col'>
+              Color
+            </th>
+            <th scope='col'>
+              Count
+            </th>
+            <th scope='col'>
+              Shipping
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map((p, idx) => (
+            showProductInfo(p, idx)
+          ))}
+        </tbody>
+      </table>
+    )
+  };
+
   const showOrders = () => (
     orders.map((o, idx) => (
       <div key={idx} className="row m-5 p-3 card bg-light">
         <PaymentInfo order={o} showStatus={false}/>
+        {showProductsInOrder(o.products)}
         <div className="row">
           <div className="col-md-4">
-            Delivery Status
+            <h4 style={{ fontSize: '20px' }}>Delivery Status</h4>
           </div>
           <div className="col-md-8">
             <select
