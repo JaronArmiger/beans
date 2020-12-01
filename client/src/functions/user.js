@@ -1,4 +1,5 @@
 import axios from 'axios';
+import uniqid from 'uniqid';
 
 export const userCart = async (cart, authtoken) => {
   return await axios.post(
@@ -61,7 +62,10 @@ export const applyCoupon = async (authtoken, coupon) => {
 export const createOrder = async (authtoken, stripeResponse) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/user/order`,
-    { stripeResponse },
+    { 
+      stripeResponse, 
+      cashOnDelivery: false,
+    },
     {
       headers: {
         authtoken,
@@ -81,7 +85,29 @@ export const getUserOrders = async (authtoken) => {
   );
 };
 
-
+export const createCashOrder = async (authtoken, amount) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/user/order`,
+    {
+      stripeResponse: {
+        paymentIntent: {
+          id: uniqid(),
+          amount,
+          currency: 'usd',
+          status: 'Cash On Delivery',
+          created: Date.now(),
+          payment_method_types: ['cash'],
+        }
+      },
+      cashOnDelivery: true,
+    },
+    {
+      headers: {
+        authtoken,
+      },
+    }
+  );
+};
 
 
 

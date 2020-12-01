@@ -26,7 +26,8 @@ const OrderSchema = new mongoose.Schema({
       'Completed',
     ],
   },
-  orderedBy: { type: ObjectId, ref: 'User' }
+  orderedBy: { type: ObjectId, ref: 'User' },
+  cashOnDelivery: { type: Boolean, default: false },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);

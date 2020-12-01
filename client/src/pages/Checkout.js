@@ -5,6 +5,7 @@ import {
   emptyUserCart,
   saveUserAddress,
   applyCoupon,
+  createCashOrder,
 } from '../functions/user';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
@@ -16,10 +17,10 @@ const Checkout = ({ history }) => {
   const [address, setAddress] = useState('');
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState('');
-  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
 
   const dispatch = useDispatch();
-  const { user } = useSelector(state => state);
+  const { user, COD } = useSelector(state => state);
 
   useEffect(() => {
     getUserCart(user.token)
@@ -51,7 +52,7 @@ const Checkout = ({ history }) => {
       .then((res) => {
         setProducts([]);
         setTotal(0);
-        setTotalAfterDiscount(0);
+        setTotalAfterDiscount(null);
         toast.success('Cart emptied');
       })
       .catch((err) => console.log(err));
@@ -124,6 +125,24 @@ const Checkout = ({ history }) => {
     </React.Fragment>
   );
 
+  const handleOrder = () => {
+    const amount = totalAfterDiscount || total;
+    if (COD) {
+      createCashOrder(user.token, amount)
+        .then(res => {
+          console.log(res.data);
+          // history.push('/payment');
+          return;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    } else {
+      history.push('/payment');
+      return;
+    }
+  };
+
   return (
     <div className="container-fluid">
   	<div className="row">
@@ -145,7 +164,7 @@ const Checkout = ({ history }) => {
   	    {showProductSummary()}
   	    <hr />
   	    <p>Cart Total: ${total}</p>
-        {totalAfterDiscount > 0 && (
+        {totalAfterDiscount && (
           <p className="bg-success p-2">
             Discount Applied Total Payable: ${totalAfterDiscount}
           </p>
@@ -155,7 +174,7 @@ const Checkout = ({ history }) => {
   	        <button 
               className="btn btn-primary"
               disabled={!addressSaved}
-              onClick={() => history.push('/payment')}
+              onClick={handleOrder}
             >
               Place Order
             </button>
