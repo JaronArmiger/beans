@@ -158,6 +158,7 @@ exports.createOrder = async (req, res) => {
     const { products } = await Cart
       .findOne({ orderedBy: user._id})
       .select('products');
+
     const newOrder = new Order({
       products,
       paymentIntent,

@@ -130,8 +130,18 @@ const Checkout = ({ history }) => {
     if (COD) {
       createCashOrder(user.token, amount)
         .then(res => {
-          console.log(res.data);
-          // history.push('/payment');
+          if (res.data.ok) {
+            emptyCart();
+            dispatch({
+              type: 'COUPON_APPLIED',
+              payload: false,
+            });
+            dispatch({
+              type: 'COD',
+              payload: false,
+            });
+          }
+          history.push('/user/history');
           return;
         })
         .catch(err => {

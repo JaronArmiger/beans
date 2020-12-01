@@ -92,7 +92,7 @@ export const createCashOrder = async (authtoken, amount) => {
       stripeResponse: {
         paymentIntent: {
           id: uniqid(),
-          amount,
+          amount: amount * 100,
           currency: 'usd',
           status: 'Cash On Delivery',
           created: Date.now(),
