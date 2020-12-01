@@ -197,6 +197,7 @@ exports.listOrders = async (req, res) => {
     const user = await User.findOne({ email: req.user.email });
     const userOrders = await Order
       .find({ orderedBy: user._id })
+      .sort('-createdAt')
       .populate('products.product');
     res.json(userOrders);
   } catch (err) {
