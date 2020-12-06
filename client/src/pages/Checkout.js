@@ -11,13 +11,20 @@ import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import SelectUSState from 'react-select-us-states';
+import { Collapse } from 'antd';
+import ShippingAddress from './ShippingAddress';
+
+const { Panel } = Collapse;
 
 const initialAddress = {
+  firstName: '',
+  lastName: '',
   streetAddress: '',
   apartment: '',
   city: '',
   state: '',
   zip: '',
+  firstName: '',
 }
 
 const Checkout = ({ history }) => {
@@ -27,6 +34,7 @@ const Checkout = ({ history }) => {
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
+  const [activeKey, setActiveKey] = useState(['1']);
 
   const dispatch = useDispatch();
   const { user, COD } = useSelector(state => state);
@@ -92,54 +100,6 @@ const Checkout = ({ history }) => {
     setAddress({...address, [e.target.name]: e.target.value});
   };
 
-  const showAddressFields = () => (
-    <form>
-      <div className="form-group">
-        <label>Street Address</label>
-        <input 
-          type="text"
-          name='streetAddress'
-          className='form-control'
-          onChange={handleAddressChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>Apartment, suite, etc. (Optional)</label>
-        <input 
-          type="text"
-          name='apartment'
-          className='form-control'
-          onChange={handleAddressChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>City</label>
-        <input 
-          type="text"
-          name='city'
-          className='form-control'
-          onChange={handleAddressChange}
-        />
-      </div>
-      <div className="form-group">
-        <label>State</label>
-        <SelectUSState 
-          className='form-control pointer'
-          onChange={(state) => setAddress({...address, state})} 
-        />
-      </div>
-      <div className="form-group">
-        <label>ZIP / Postal Code</label>
-        <input 
-          type="text"
-          name='zip'
-          className='form-control'
-          onChange={handleAddressChange}
-        />
-      </div>
-    </form>
-  );
-
   const showProductSummary = () => {
     const productDivs = products
       .map((p, idx) => (
@@ -198,54 +158,104 @@ const Checkout = ({ history }) => {
     }
   };
 
+  const handleAddressSubmit = (e) => {
+    e.preventDefault();
+    console.log(address);
+    setActiveKey(['2']);
+  };
+
+  const handleUSStateChange = (stateVal) => {
+    setAddress({...address, state: stateVal })
+  };
+
+  const text = 'fuck';
+
   return (
     <div className="container-fluid">
-  	<div className="row">
-  	  <div className="col-md-6">
-  	    <h4>Delivery Address</h4>
-  	    <br />
-  	    <br />
-  	    {showAddressFields()}
-  	    <hr />
-  	    <h4>Have a coupon?</h4>
-  	    <br />
-  	    {showApplyCoupon()}
-  	  </div>
-  	  <div className="col-md-6">
-  	    <h4>Order Summary</h4>
-  	    <hr />
-  	    <p>{products.length} Product{products.length !== 1 ? 's' : ''}</p>
-  	    <hr />
-  	    {showProductSummary()}
-  	    <hr />
-  	    <p>Cart Total: ${total}</p>
-        {totalAfterDiscount && (
-          <p className="bg-success p-2">
-            Discount Applied Total Payable: ${totalAfterDiscount}
-          </p>
-        )}
-  	    <div className="row">
-  	      <div className="col-md-6">
-  	        <button 
-              className="btn btn-primary"
-              disabled={!addressSaved}
-              onClick={handleOrder}
-            >
-              Place Order
-            </button>
-  	      </div>
-  	      <div className="col-md-6">
-  	        <button 
-              className="btn btn-primary"
-              onClick={emptyCart}
-              disabled={products.length === 0}
-            >
-              Empty Cart
-            </button>
-  	      </div>
-  	    </div>
-  	  </div>
-  	</div>
+      <div className="row justify-content-md-center">
+        <div className="col-md-6">
+          <Collapse
+            activeKey={activeKey}
+            onChange={(key) => setActiveKey(key)}
+          >
+            <Panel 
+              header="Shipping Address" 
+              key="1"
+             >
+              <ShippingAddress
+                handleAddressSubmit={handleAddressSubmit}
+                address={address}
+                handleAddressChange={handleAddressChange}
+                handleUSStateChange={handleUSStateChange}
+              />
+            </Panel>
+            <Panel 
+              header="Apply Coupon" 
+              key="2"
+             >
+              <p>{text}</p>
+            </Panel>
+            <Panel 
+              header="Payment" 
+              key="3"
+             >
+              <p>{text}</p>
+            </Panel>
+          </Collapse>
+        </div>
+      </div>
+    	<div className="row">
+    	  <div className="col-md-6 offset-3">
+    	    <h4>Delivery Address</h4>
+    	    <br />
+    	    <br />
+    	    {/*showAddressFields() */}
+    	    <hr />
+    	  </div>
+    	</div>
+      <div className="row">
+        <div className="col-md-6 offset-3">
+          <h4>Have a coupon?</h4>
+          <br />
+          {showApplyCoupon()}
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6 offset-3">
+          <h4>Order Summary</h4>
+          <hr />
+          <p>{products.length} Product{products.length !== 1 ? 's' : ''}</p>
+          <hr />
+          {showProductSummary()}
+          <hr />
+          <p>Cart Total: ${total}</p>
+          {totalAfterDiscount && (
+            <p className="bg-success p-2">
+              Discount Applied Total Payable: ${totalAfterDiscount}
+            </p>
+          )}
+          <div className="row">
+            <div className="col-md-6">
+              <button 
+                className="btn btn-primary"
+                disabled={!addressSaved}
+                onClick={handleOrder}
+              >
+                Place Order
+              </button>
+            </div>
+            <div className="col-md-6">
+              <button 
+                className="btn btn-primary"
+                onClick={emptyCart}
+                disabled={products.length === 0}
+              >
+                Empty Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

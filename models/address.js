@@ -1,6 +1,14 @@
 const mongoose = require('mongoose');
 
 const AddressSchema = new mongoose.Schema({
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
   streetAddress: {
     type: String,
     required: true,
@@ -24,6 +32,10 @@ const AddressSchema = new mongoose.Schema({
     min: 00000,
     max: 99999,
   },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Address', AddressSchema);
