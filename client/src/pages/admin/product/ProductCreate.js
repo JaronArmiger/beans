@@ -17,12 +17,26 @@ const initialValues = {
   category: '',
   subs: [],
   shipping: '',
-  quantity: '',
+  quantity: '1',
   images: [],
-  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
+  colors: [
+      'Black', 
+      'Brown', 
+      'Silver', 
+      'White',
+      'Red',
+      'Orange',
+      'Yellow',
+      'Green',
+      'Blue',
+      'Purple',
+      'Other',
+    ],
   brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'Asos'],
   color: '',
   brand: '',
+  designer: 'No',
+  size: '',
 }
 
 const ProductCreate = () => {
@@ -45,7 +59,7 @@ const ProductCreate = () => {
       .catch((err) => {
         console.log(err);
       })
-  }
+  };
   
 
   const handleSubmit = (e) => {

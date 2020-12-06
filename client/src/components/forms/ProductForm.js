@@ -23,9 +23,10 @@ const ProductForm = ({
   	quantity,
   	images,
   	colors,
-  	brands,
   	color,
   	brand,
+    designer,
+    size,
   } = values;
 
   return (
@@ -61,7 +62,7 @@ const ProductForm = ({
 	    </div>
 	    <br />
 	    <div className="from-group">
-	      <label>Price</label>
+	      <label>Price ($)</label>
 	      <input 
 	        type="number" 
 	        name="price"
@@ -118,27 +119,17 @@ const ProductForm = ({
 	        })}
 	      </select>
 	    </div>
-	    <br />
-	    <div className="from-group">
-	      <label>Brand</label>
-	      <select 
-	        name="brand"
-	        className='form-control'
-	        onChange={handleChange}
-	        value={brand}
-	      >
-	        <option>** select a brand **</option>
-	        {brands.map((b) => {
-	          return (
-	          	<option 
-	          	  key={b}
-	          	  value={b}>
-	          	  {b}
-	          	</option>
-	          );
-	        })}
-	      </select>
-	    </div>
+      <br />
+      <div className="from-group">
+        <label>Size</label>
+        <input 
+          type="text" 
+          name="size"
+          className='form-control'
+          value={size}
+          onChange={handleChange}
+        />
+      </div>
 	    <br />
 	    <div className="form-group">
         <label>Category</label>
@@ -163,28 +154,45 @@ const ProductForm = ({
       </div>
       <br />
       {(subOptions.length > 0) && 
-      	(<div>
-	      	<label>Sub-Categories</label>
-	      	<Select
-	      	  mode='multiple'
-	      	  style={{width: '100%'}}
-	      	  placeholder='select sub-categories'
-	      	  value={subs}
-	      	  onChange={subsArr => setValues({...values, subs: subsArr})}
-	      	>
-	      	  {subOptions.map((s) => {
-	      	   	return (
-	      	   	  <Option
-	      	   	    key={s._id}
-	      	   	    value={s._id}
-	      	   	  >
-	      	   	  	{s.name}
-	      	   	  </Option>
-	      	   	);
-	      	   })
-	      	  }
-	      	</Select>
-	      </div>)}
+        	(<React.Fragment>
+            <div>
+  	      	<label>Sub-Categories</label>
+  	      	<Select
+  	      	  mode='multiple'
+  	      	  style={{width: '100%'}}
+  	      	  placeholder='select sub-categories'
+  	      	  value={subs}
+  	      	  onChange={subsArr => setValues({...values, subs: subsArr})}
+  	      	>
+  	      	  {subOptions.map((s) => {
+  	      	   	return (
+  	      	   	  <Option
+  	      	   	    key={s._id}
+  	      	   	    value={s._id}
+  	      	   	  >
+  	      	   	  	{s.name}
+  	      	   	  </Option>
+  	      	   	);
+  	      	   })
+  	      	  }
+  	      	</Select>
+  	      </div>
+          <br />
+        </React.Fragment>
+        )}
+      <div className="from-group">
+        <label>Is this a designer piece?</label>
+        <select 
+          name="designer"
+          className='form-control'
+          onChange={handleChange}
+          value={designer}
+        >
+          <option>** select an option **</option>
+          <option value="No">No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
       	<br />
 	    <button
 	      className='btn btn-outline-info'

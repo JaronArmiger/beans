@@ -38,6 +38,7 @@ const ProductSchema = new mongoose.Schema({
   }],
   quantity: {
   	type: Number,
+    default: 1,
   },
   sold: {
   	type: Boolean,
@@ -70,8 +71,8 @@ const ProductSchema = new mongoose.Schema({
     ],
   },
   designer: {
-  	type: Boolean,
-    default: false,
+    type: String,
+    enum: ['Yes', 'No'],
   },
   size: {
     type: String,
