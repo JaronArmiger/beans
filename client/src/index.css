@@ -2,3 +2,17 @@
   max-height: 500px;
   object-fit: cover;
 }
+.my-drawer {
+  position: relative;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.my-drawer .am-drawer-sidebar {
+  background-color: #fff;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.my-drawer .am-drawer-sidebar .am-list {
+  width: 300px;
+  padding: 0;
+}

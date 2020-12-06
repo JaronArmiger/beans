@@ -5,6 +5,7 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
+import 'antd-mobile/dist/antd-mobile.css';
 
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
