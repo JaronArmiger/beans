@@ -12,10 +12,18 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import SelectUSState from 'react-select-us-states';
 
+const initialAddress = {
+  streetAddress: '',
+  apartment: '',
+  city: '',
+  state: '',
+  zip: '',
+}
+
 const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
-  const [address, setAddress] = useState('');
+  const [address, setAddress] = useState(initialAddress);
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
@@ -80,6 +88,10 @@ const Checkout = ({ history }) => {
       })
   };
 
+  const handleAddressChange = (e) => {
+    setAddress({...address, [e.target.name]: e.target.value});
+  };
+
   const showAddressFields = () => (
     <form>
       <div className="form-group">
@@ -88,29 +100,44 @@ const Checkout = ({ history }) => {
           type="text"
           name='streetAddress'
           className='form-control'
+          onChange={handleAddressChange}
+        />
+      </div>
+      <div className="form-group">
+        <label>Apartment, suite, etc. (Optional)</label>
+        <input 
+          type="text"
+          name='apartment'
+          className='form-control'
+          onChange={handleAddressChange}
+        />
+      </div>
+      <div className="form-group">
+        <label>City</label>
+        <input 
+          type="text"
+          name='city'
+          className='form-control'
+          onChange={handleAddressChange}
         />
       </div>
       <div className="form-group">
         <label>State</label>
-        <SelectUSState />
+        <SelectUSState 
+          className='form-control pointer'
+          onChange={(state) => setAddress({...address, state})} 
+        />
+      </div>
+      <div className="form-group">
+        <label>ZIP / Postal Code</label>
+        <input 
+          type="text"
+          name='zip'
+          className='form-control'
+          onChange={handleAddressChange}
+        />
       </div>
     </form>
-  );
-
-  const showAddressField = () => (
-    <React.Fragment>
-      <ReactQuill 
-        theme='snow'
-        value={address}
-        onChange={setAddress}
-      />
-      <button 
-        className="btn btn-primary mt-2"
-        onClick={saveAddressToDb}
-      >
-        Save Address
-      </button>
-    </React.Fragment>
   );
 
   const showProductSummary = () => {

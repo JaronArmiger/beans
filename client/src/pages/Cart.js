@@ -37,6 +37,10 @@ const Cart = ({ history }) => {
       });
   };
 
+  const followNewFlow = () => {
+    history.push('/shipping-address');
+  };
+
   const showCartItems = () => (
     <table className="table table-bordered">
       <thead className="thead-light">
@@ -92,6 +96,14 @@ const Cart = ({ history }) => {
   	    {
   	      user ? (
             <React.Fragment>
+              <button
+                onClick={followNewFlow}
+                className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                disabled={cart.length === 0}
+              >
+                New Flow
+              </button>
+              <br />
     	        <button
     	          onClick={() => saveOrdertoDb(false)}
     	          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'

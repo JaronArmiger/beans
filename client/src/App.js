@@ -28,6 +28,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
+const ShippingAddress = lazy(() => import('./pages/ShippingAddress'));
 const ProductView = lazy(() => import('./pages/ProductView'));
 const Payment = lazy(() => import('./pages/Payment'));
 const CategoryHome = lazy(() => import('./pages/category/CategoryHome'));
@@ -105,6 +106,7 @@ const App = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/register/complete' component={RegisterComplete} />
         <Route exact path='/forgot/password' component={ForgotPassword} />
+        <Route exact path='/shipping-address' component={ShippingAddress} />
         <UserRoute exact path='/user/history' component={History} />
         <UserRoute exact path='/user/password' component={Password} />
         <UserRoute exact path='/user/wishlist' component={Wishlist} />
