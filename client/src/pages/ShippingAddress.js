@@ -17,13 +17,30 @@ const ShippingAddress = ({
   address, 
   handleAddressSubmit,
   handleAddressChange,
-  handleUSStateChange
+  handleUSStateChange,
+  addressErrors,
 }) => {
 
   return (
     <form
       onSubmit={handleAddressSubmit}
-    >
+    >  
+      {addressErrors.length > 0 &&
+        <div
+          className='alert alert-danger'
+        >
+          Errors:
+          <ul>
+            {addressErrors.map((err, i) => (
+              <li
+                key={i}
+              >
+                {err}
+              </li>
+            ))}
+          </ul>
+        </div>
+      }
       <div className="form-group">
         <label>First Name</label>
         <input 
@@ -101,11 +118,19 @@ const ShippingAddress = ({
           required
         />
       </div>
-      <button
-        className='btn btn-outline-info'
-      >
-        Save and Continue
-      </button>
+      <div className="form-group">
+        {addressErrors.length > 0 &&
+          <div
+            className='alert alert-danger'
+          >
+           Invalid input, see errors above
+          </div>}
+        <button
+          className='btn btn-outline-info'
+        >
+          Save and Continue
+        </button>
+      </div>
     </form>
   );
 

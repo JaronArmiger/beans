@@ -4,10 +4,12 @@ const AddressSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
+    maxLength: 30,
   },
   lastName: {
     type: String,
     required: true,
+    maxLength: 30,
   },
   streetAddress: {
     type: String,

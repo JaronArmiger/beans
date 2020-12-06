@@ -7,12 +7,14 @@ import {
   applyCoupon,
   createCashOrder,
 } from '../functions/user';
+import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import SelectUSState from 'react-select-us-states';
 import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
+
 
 const { Panel } = Collapse;
 
@@ -35,6 +37,7 @@ const Checkout = ({ history }) => {
   const [coupon, setCoupon] = useState('');
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
   const [activeKey, setActiveKey] = useState(['1']);
+  const [addressErrors, setAddressErrors] = useState([]);
 
   const dispatch = useDispatch();
   const { user, COD } = useSelector(state => state);
@@ -161,7 +164,12 @@ const Checkout = ({ history }) => {
   const handleAddressSubmit = (e) => {
     e.preventDefault();
     console.log(address);
-    setActiveKey(['2']);
+    const errorResult = validateAddress(address);
+    setAddressErrors(errorResult);
+
+    if (errorResult.length === 0) {
+      setActiveKey(['2']);
+    }
   };
 
   const handleUSStateChange = (stateVal) => {
@@ -185,6 +193,7 @@ const Checkout = ({ history }) => {
               <ShippingAddress
                 handleAddressSubmit={handleAddressSubmit}
                 address={address}
+                addressErrors={addressErrors}
                 handleAddressChange={handleAddressChange}
                 handleUSStateChange={handleUSStateChange}
               />
