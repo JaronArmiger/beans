@@ -34,7 +34,8 @@ const CategoryHome = lazy(() => import('./pages/category/CategoryHome'));
 const SubHome = lazy(() => import('./pages/sub/SubHome'));
 
 const Header = lazy(() => import('./components/nav/Header'));
-const MobileHeader = lazy(() => import('./components/nav/MobileHeader'));
+// const MobileHeader = lazy(() => import('./components/nav/MobileHeader'));
+const AltMobileHeader = lazy(() => import('./components/nav/AltMobileHeader'));
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
 const AdminRoute = lazy(() => import('./components/routes/AdminRoute'));
 const SideDrawer = lazy(() => import('./components/drawer/SideDrawer'));
@@ -93,7 +94,7 @@ const App = () => {
     >
       {windowWidth > 900 ? 
          (<Header />) : 
-         (<MobileHeader />)
+         (<AltMobileHeader />)
       }
       <SideDrawer />
       <ToastContainer />

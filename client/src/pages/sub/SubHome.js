@@ -22,7 +22,7 @@ const SubHome = ({ match }) => {
       	setLoading(false);
       	console.log(err);
       })
-  }, []);
+  }, [slug]);
 
   return (
   	<div className="container-fluid">

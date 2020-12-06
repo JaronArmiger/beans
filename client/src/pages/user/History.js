@@ -8,7 +8,6 @@ import {
   CheckCircleOutlined,
   CloseCircleOutlined,
 } from '@ant-design/icons';
-import { toast } from 'react-toastify';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const History = () => {
