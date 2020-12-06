@@ -25,7 +25,7 @@ export const Search = () => {
 
   return (
     <form 
-      className="form-inline my-2 mx-lg-0"
+      className="form-inline my-2 mx-lg-1"
       onSubmit={handleSubmit}
     >
       <input 

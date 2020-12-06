@@ -34,6 +34,7 @@ const CategoryHome = lazy(() => import('./pages/category/CategoryHome'));
 const SubHome = lazy(() => import('./pages/sub/SubHome'));
 
 const Header = lazy(() => import('./components/nav/Header'));
+// const AltMainHeader = lazy(() => import('./components/nav/AltMainHeader'));
 // const MobileHeader = lazy(() => import('./components/nav/MobileHeader'));
 const AltMobileHeader = lazy(() => import('./components/nav/AltMobileHeader'));
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
