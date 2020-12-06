@@ -25,7 +25,8 @@ export const Search = () => {
 
   return (
     <form 
-      className="form-inline my-2 mx-lg-1"
+      className="form-inline my-2 mx-lg-1 p-3"
+      style={{ backgroundColor: 'white' }}
       onSubmit={handleSubmit}
     >
       <input 
