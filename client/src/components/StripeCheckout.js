@@ -152,7 +152,8 @@ const StripeCheckout = ({ history }) => {
       <div className="text-center pb-5">
         <Card 
           cover={
-            <img 
+            <img
+              alt={'Pilsen Vintage Store'}
               src={pilsen}
               style={{
                 height: '200px',

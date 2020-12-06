@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Drawer,
-  Button,
 } from 'antd';
 
 import { useSelector, useDispatch } from 'react-redux';

@@ -19,7 +19,6 @@ const { Meta } = Card;
 const ProductCard = ({ product }) => {
   const {
     title,
-    description,
     images,
     slug,
     price,

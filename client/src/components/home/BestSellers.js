@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { getProducts, getProductsCount } from '../../functions/product';
 import ProductCard from '../cards/ProductCard';
 import LoadingCards from '../cards/LoadingCards';
-import Jumbotron from '../cards/Jumbotron';
-import { LoadingOutlined } from '@ant-design/icons';
 import { Pagination } from 'antd'; 
 
 const BestSellers = () => {

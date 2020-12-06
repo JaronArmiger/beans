@@ -40,8 +40,11 @@ const ProductSchema = new mongoose.Schema({
   	type: Number,
   },
   sold: {
-  	type: Number,
-  	default: 0,
+  	type: Boolean,
+  	default: false,
+  },
+  soldDate: {
+    type: Date,
   },
   images: {
   	type: Array,
@@ -52,16 +55,27 @@ const ProductSchema = new mongoose.Schema({
   },
   color: {
   	type: String,
-  	enum: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
+  	enum: [
+      'Black', 
+      'Brown', 
+      'Silver', 
+      'White',
+      'Red',
+      'Orange',
+      'Yellow',
+      'Green',
+      'Blue',
+      'Purple',
+      'Other',
+    ],
   },
-  brand: {
-  	type: String,
-  	enum: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'Asos'],
+  designer: {
+  	type: Boolean,
+    default: false,
   },
-  ratings: [{
-  	star: Number,
-  	postedBy: { type: ObjectId, ref: 'User' },
-  }]
+  size: {
+    type: String,
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Product', ProductSchema);

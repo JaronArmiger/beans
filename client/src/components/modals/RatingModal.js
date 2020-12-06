@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, Button } from 'antd';
+import { Modal } from 'antd';
 import { toast } from 'react-toastify';
 import { useHistory, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
