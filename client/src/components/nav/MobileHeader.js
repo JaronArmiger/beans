@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { NavBar } from 'antd-mobile';
 import {
   Drawer,
+  Badge,
 } from 'antd';
 import {
   LeftCircleOutlined,
   MenuOutlined,
 } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const categories = [
   {
@@ -98,6 +100,7 @@ const MobileHeader = () => {
   const [open, setOpen] = useState(false);
   const [showSubs, setShowSubs] = useState(false);
   const [subs, setSubs] = useState([]);
+  const { cart } = useSelector(state => state);
 
   const toggleOpen = () => {
     setOpen(!open);
@@ -191,6 +194,20 @@ const MobileHeader = () => {
             >
               <Link to='/shop'>
                 Shop
+              </Link>
+            </div>
+            <div
+              className='p-3'
+              style={{ cursor: 'pointer' }}
+              onClick={handleClick}
+            >
+              <Link to='/cart'>
+                <Badge 
+                  count={cart.length}
+                  offset={[9, 0]}
+                >
+                  Cart
+                </Badge>
               </Link>
             </div>
           </React.Fragment>
