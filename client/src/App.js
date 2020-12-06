@@ -1,4 +1,4 @@
-import React, { useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -34,6 +34,7 @@ const CategoryHome = lazy(() => import('./pages/category/CategoryHome'));
 const SubHome = lazy(() => import('./pages/sub/SubHome'));
 
 const Header = lazy(() => import('./components/nav/Header'));
+const MobileHeader = lazy(() => import('./components/nav/MobileHeader'));
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
 const AdminRoute = lazy(() => import('./components/routes/AdminRoute'));
 const SideDrawer = lazy(() => import('./components/drawer/SideDrawer'));
@@ -41,7 +42,17 @@ const SideDrawer = lazy(() => import('./components/drawer/SideDrawer'));
 
 
 const App = () => {
+  const intialWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
+  const [windowWidth, setWindowWidth] = useState(intialWidth);
+
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => {
+      setWindowWidth(window.innerWidth);
+    })
+    }
+  }, []);
   // to check fireabse auth state
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -80,7 +91,10 @@ const App = () => {
         </div>
       }
     >
-      <Header />
+      {windowWidth > 900 ? 
+         (<Header />) : 
+         (<MobileHeader />)
+      }
       <SideDrawer />
       <ToastContainer />
       <Switch>
