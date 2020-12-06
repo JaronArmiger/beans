@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
 import SubHeader from './SubHeader';
-import logo from '../../images/pilsen_logo2.png';
+import logo from '../../images/pilsen_logo.png';
 
 const { SubMenu, Item } = Menu;
 
@@ -235,7 +235,8 @@ const Header = () => {
         </Item>
       </Menu>
       <div
-        className='d-flex justify-content-center py-3'
+        className='d-flex justify-content-center py-1'
+        style={{ backgroundColor: '#03fca1' }}
       >
         <Link
           to='/'
@@ -244,7 +245,7 @@ const Header = () => {
             src={logo} 
             alt="logo" 
             style={{ 
-              width: '300px',
+              width: '250px',
               height: 'auto',
             }}
           />

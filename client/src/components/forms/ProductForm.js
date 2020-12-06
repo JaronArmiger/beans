@@ -39,7 +39,7 @@ const ProductForm = ({
 	        setValues={setValues}
 	      />
 	    </div>
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Title</label>
 	      <input 
 	        type="text" 
@@ -50,7 +50,7 @@ const ProductForm = ({
 	      />
 	    </div>
 	    <br />
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Description</label>
 	      <input 
 	        type="text" 
@@ -61,7 +61,7 @@ const ProductForm = ({
 	      />
 	    </div>
 	    <br />
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Price ($)</label>
 	      <input 
 	        type="number" 
@@ -73,7 +73,7 @@ const ProductForm = ({
 	      />
 	    </div>
 	    <br />
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Shipping</label>
 	      <select 
 	        name="shipping"
@@ -87,7 +87,7 @@ const ProductForm = ({
 	      </select>
 	    </div>
 	    <br />
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Quantity</label>
 	      <input 
 	        type="number" 
@@ -99,7 +99,7 @@ const ProductForm = ({
 	      />
 	    </div>
 	    <br />
-	    <div className="from-group">
+	    <div className="form-group">
 	      <label>Color</label>
 	      <select 
 	        name="color"
@@ -120,7 +120,7 @@ const ProductForm = ({
 	      </select>
 	    </div>
       <br />
-      <div className="from-group">
+      <div className="form-group">
         <label>Size</label>
         <input 
           type="text" 
@@ -180,7 +180,7 @@ const ProductForm = ({
           <br />
         </React.Fragment>
         )}
-      <div className="from-group">
+      <div className="form-group">
         <label>Is this a designer piece?</label>
         <select 
           name="designer"

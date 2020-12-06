@@ -10,6 +10,7 @@ import {
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import SelectUSState from 'react-select-us-states';
 
 const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
@@ -78,6 +79,23 @@ const Checkout = ({ history }) => {
         setCoupon('');
       })
   };
+
+  const showAddressFields = () => (
+    <form>
+      <div className="form-group">
+        <label>Street Address</label>
+        <input 
+          type="text"
+          name='streetAddress'
+          className='form-control'
+        />
+      </div>
+      <div className="form-group">
+        <label>State</label>
+        <SelectUSState />
+      </div>
+    </form>
+  );
 
   const showAddressField = () => (
     <React.Fragment>
@@ -160,7 +178,7 @@ const Checkout = ({ history }) => {
   	    <h4>Delivery Address</h4>
   	    <br />
   	    <br />
-  	    {showAddressField()}
+  	    {showAddressFields()}
   	    <hr />
   	    <h4>Have a coupon?</h4>
   	    <br />

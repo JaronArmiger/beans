@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
+import logo from '../../images/pilsen_logo.png';
 
 
 const { SubMenu, Item } = Menu;
@@ -176,14 +177,24 @@ const AltMobileHeader = () => {
     <React.Fragment>
       <NavBar
         onLeftClick={toggleOpen}
-        style={{ cursor: 'pointer' }}
-        leftContent={<MenuOutlined />}
+        style={{ 
+          cursor: 'pointer', 
+          backgroundColor: '#03fca1',
+        }}
+        leftContent={<MenuOutlined style={{ color: 'black' }}/>}
       >
-        Pilsen Vintage
+        <img 
+          src={logo} 
+          alt="" 
+          style={{ 
+            width: '150px', 
+            height: 'auto', 
+            padding: '5px'
+          }}
+        />
       </NavBar>
       <Drawer
         visible={drawerOpen}
-        title={'Menu'}
         placement='left'
         onClose={toggleOpen}
       >
