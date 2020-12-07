@@ -168,6 +168,10 @@ const Checkout = ({ history }) => {
     setAddressErrors(errorResult);
 
     if (errorResult.length === 0) {
+      dispatch({
+        type: 'SAVE_ADDRESS',
+        payload: address,
+      });
       setActiveKey(['2']);
     }
   };
@@ -202,7 +206,9 @@ const Checkout = ({ history }) => {
               header="Apply Coupon" 
               key="2"
              >
-              <p>{text}</p>
+              <h4>Have a coupon?</h4>
+              <br />
+              {showApplyCoupon()}
             </Panel>
             <Panel 
               header="Payment" 
