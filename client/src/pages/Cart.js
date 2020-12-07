@@ -48,7 +48,11 @@ const Cart = ({ history }) => {
       })
     };
 
-    history.push('/pre-checkout');
+    if (user) {
+      history.push('/beta-checkout');
+    } else {
+      history.push('/pre-checkout');
+    }
 
     // write alternative method to save cart
 

@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import { createCart } from '../functions/cart';
 import { useSelector, useDispatch } from 'react-redux';
 
-const PreCheckout = () => {
+const PreCheckout = ({ history }) => {
   const [email, setEmail] = useState('');
-  const { cart, cartId } = useSelector(state => state);
+  const { cart, cartId, user } = useSelector(state => state);
+
+  useEffect(() => {
+    if (user) history.push('/beta-checkout');
+  }, [user]);
 
   const dispatch = useDispatch();
   // need to save cart from here too
@@ -16,11 +20,14 @@ const PreCheckout = () => {
     e.preventDefault();
     createCart(cart, email, cartId)
       .then((res) => {
-        console.log(res.data);
         dispatch({
           type: 'MODIFY_CART_ID',
           payload: res.data.cartId,
         });
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("cartId", res.data.cartId);
+        }
+        history.push('/beta-checkout');
       })
       .catch(err => {
         console.log(err);

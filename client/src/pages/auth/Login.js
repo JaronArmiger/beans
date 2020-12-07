@@ -13,14 +13,13 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [intended, setIntended] = useState(null);
   
   let dispatch = useDispatch();
   const { user } = useSelector(state => state);
   
   useEffect(() => {
+    console.log(history.location.state);
     const fromState = history.location.state;
-    setIntended(fromState);
     if (fromState) return;
     if (user && user.token) history.push('/');
   }, [user, history]);
@@ -28,7 +27,7 @@ const Login = ({ history }) => {
   const roleBasedRedirect = (res) => {
     const fromState = history.location.state;
     if (fromState) {
-      history.push(intended.fromState);
+      history.push(fromState.from);
     } else {
       if (res.data.role === 'admin') {
       history.push('/admin/dashboard');

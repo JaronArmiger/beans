@@ -8,9 +8,9 @@ exports.userCart = async (req, res) => {
 	try {
 	  const { cart } = req.body;
 
-	  const user = await User.findOne({ email: req.user.email });
+	  // const user = await User.findOne({ email: req.user.email });
 
-	  const existingCart = await Cart.findOne({ orderedBy: user._id });
+	  const existingCart = await Cart.findOne({ userEmail: req.user.email });
 
 	  if (existingCart) {
 	  	existingCart.remove();
@@ -18,7 +18,7 @@ exports.userCart = async (req, res) => {
 	  }
 
 	  const products = [];
-	  console.log('cart', cart);
+	  // console.log('cart', cart);
 
 	  for (let i = 0; i < cart.length; i++) {
 	    const p = {};
@@ -26,7 +26,7 @@ exports.userCart = async (req, res) => {
 	      .findById(cart[i]._id)
 	      .select('price');
 
-	    p.productId = cart[i]._id;
+	    p.product = cart[i]._id;
 	    p.count = cart[i].count;
 	    // p.color = cart[i].color;
 	    // p.title = cart[i].title;
@@ -39,8 +39,8 @@ exports.userCart = async (req, res) => {
         return acc + (p.price * p.count);
 	  }, 0);
 
-	  console.log('products', products);
-	  console.log('cartTotal', cartTotal);
+	  // console.log('products', products);
+	  // console.log('cartTotal', cartTotal);
 
 	  const newCart = new Cart({
 	  	products,
@@ -49,9 +49,12 @@ exports.userCart = async (req, res) => {
 	  });
 
 	  await newCart.save();
-	  console.log(newCart);
+    const populatedCart = await Cart
+      .findById(newCart._id)
+      .populate('products.product');
+	  // console.log(newCart);
 
-	  res.json({ ok: true });
+	  res.json(populatedCart);
 	} catch (err) {
 	  res.status(400).json({
         err: err.message,

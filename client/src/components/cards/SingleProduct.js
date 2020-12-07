@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Card, 
   Tabs, 
@@ -17,7 +17,6 @@ import { showAverage } from '../../functions/rating';
 import { addToWishlist } from '../../functions/wishlist';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const { TabPane } = Tabs;
@@ -38,7 +37,6 @@ const SingleProduct = ({
   const { cart, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const history = useHistory();
 
   const handleAddToCart = () => {
     if (quantity === 0) {

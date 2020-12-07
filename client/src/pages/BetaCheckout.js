@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { 
-  getUserCart,
+import {
+  userCart,
+  // getUserCart,
   emptyUserCart,
   saveUserAddress,
   applyCoupon,
   createCashOrder,
 } from '../functions/user';
+import {
+  getCart,
+} from '../functions/cart';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
@@ -42,9 +46,39 @@ const BetaCheckout = ({ history }) => {
   const [addressErrors, setAddressErrors] = useState([]);
 
   const dispatch = useDispatch();
-  const { user, COD } = useSelector(state => state);
+  const { 
+    user, 
+    cart,
+    COD,
+    cartId,
+  } = useSelector(state => state);
 
   useEffect(() => {
+    console.log(user);
+    if (user) {
+      console.log('user part ran')
+      userCart(cart, user.token)
+        .then((res) => {
+          setProducts(res.data.products);
+          console.log(res.data);
+          setTotal(res.data.cartTotal);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    } else {
+      if (cartId) {
+        getCart(cartId)
+          .then((res) => {
+            console.log(res.data);
+            setProducts(res.data.products);
+            setTotal(res.data.cartTotal);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
+    }
     // getUserCart(user.token)
     //   .then((res) => {
     //     setProducts(res.data.products);
@@ -53,7 +87,7 @@ const BetaCheckout = ({ history }) => {
     //   .catch((err) => {
     //     console.log(err);
     //   })
-  }, []);
+  }, [user]);
 
   const saveAddressToDb = () => {
     saveUserAddress(user.token, address)
@@ -107,19 +141,34 @@ const BetaCheckout = ({ history }) => {
 
   const showProductSummary = () => {
     const productDivs = products
-      .map((p, idx) => (
-        <div 
-          key={idx}
-          className='d-flex justify-content-between align-items-center'
-        >
-          <img
-              src={(p.images && p.images[0]) ? p.images[0].url : defaultImage}
-              alt={`${p.title}`}
-              style={{ maxWidth: '100px', height: 'auto' }}
-            />
-          <span>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</span>
-        </div>
-      ));
+      .map((p, idx) => {
+        const {
+          images,
+          title,
+          price,
+        } = p.product
+
+        return (
+          <React.Fragment
+            key={idx}
+          >
+            <div 
+              className='d-flex justify-content-between align-items-center'
+            > 
+              <img
+                  src={(images && images[0]) ? images[0].url : defaultImage}
+                  alt={`${title}`}
+                  style={{ maxWidth: '100px', height: 'auto' }}
+                />
+              <span>{title} x {p.count} = {(p.price * p.count).toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}</span>
+            </div>
+            <hr />
+          </React.Fragment>
+        );
+      });
     return productDivs;
   };
 
@@ -236,8 +285,10 @@ const BetaCheckout = ({ history }) => {
           <p>({products.length} Item{products.length !== 1 ? 's' : ''})</p>
           <hr />
           {showProductSummary()}
-          <hr />
-          <p>Cart Total: ${total}</p>
+          <p>Cart Total: {total.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}</p>
           {totalAfterDiscount && (
             <p className="bg-success p-2">
               Discount Applied Total Payable: ${totalAfterDiscount}

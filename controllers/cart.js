@@ -2,7 +2,20 @@ const Cart = require('../models/cart');
 const Product = require('../models/product');
 
 exports.read = async (req, res) => {
-  
+  try {
+    const { cartId } = req.params;
+    const cart = await Cart
+      .findById(cartId)
+      .populate('products.product');
+    res.json(cart);
+  } catch (err) {
+    console.log(err);
+    res
+      .status(400)
+      .json({
+        err: err.message,
+      });
+  }
 };
 
 exports.create = async (req, res) => {
@@ -12,8 +25,16 @@ exports.create = async (req, res) => {
     if (cartId) {
       const existingCart = await Cart.findById(cartId);
       if (existingCart) {
-        existingCart.remove();
-        console.log('removed old cart');
+        await existingCart.remove();
+        console.log('removed old cart by id');
+      }
+    }
+
+    if (userEmail) {
+      const existingCart = await Cart.find({ userEmail });
+      if (existingCart.length > 0) {
+        await existingCart.remove();
+        console.log('removed old cart by email');
       }
     }
 
@@ -25,7 +46,7 @@ exports.create = async (req, res) => {
         .findById(cart[i]._id)
         .select('price');
 
-      p.productId = cart[i]._id;
+      p.product = cart[i]._id;
       p.count = cart[i].count;
       // p.color = cart[i].color;
       // p.title = cart[i].title;
