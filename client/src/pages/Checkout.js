@@ -14,6 +14,8 @@ import 'react-quill/dist/quill.snow.css';
 import SelectUSState from 'react-select-us-states';
 import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
+import defaultImage from '../images/snake.jpg';
+import ModalImage from 'react-modal-image';
 
 
 const { Panel } = Collapse;
@@ -106,8 +108,16 @@ const Checkout = ({ history }) => {
   const showProductSummary = () => {
     const productDivs = products
       .map((p, idx) => (
-        <div key={idx}>
-          <p>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</p>
+        <div 
+          key={idx}
+          className='d-flex justify-content-between align-items-center'
+        >
+          <img
+              src={(p.images && p.images[0]) ? p.images[0].url : defaultImage}
+              alt={`${p.title}`}
+              style={{ maxWidth: '100px', height: 'auto' }}
+            />
+          <span>{p.title} ({p.color}) x {p.count} = ${p.price * p.count}</span>
         </div>
       ));
     return productDivs;
@@ -219,27 +229,11 @@ const Checkout = ({ history }) => {
           </Collapse>
         </div>
       </div>
-    	<div className="row">
-    	  <div className="col-md-6 offset-3">
-    	    <h4>Delivery Address</h4>
-    	    <br />
-    	    <br />
-    	    {/*showAddressFields() */}
-    	    <hr />
-    	  </div>
-    	</div>
-      <div className="row">
-        <div className="col-md-6 offset-3">
-          <h4>Have a coupon?</h4>
-          <br />
-          {showApplyCoupon()}
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 offset-3">
-          <h4>Order Summary</h4>
+      <div className="row justify-content-md-center">
+        <div className="col-md-6">
+          <h4 className='pt-2'>Order Summary</h4>
           <hr />
-          <p>{products.length} Product{products.length !== 1 ? 's' : ''}</p>
+          <p>({products.length} Item{products.length !== 1 ? 's' : ''})</p>
           <hr />
           {showProductSummary()}
           <hr />
