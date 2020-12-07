@@ -38,91 +38,82 @@ const Cart = ({ history }) => {
   };
 
   const showCartItems = () => (
-    <table className="table table-bordered">
-      <thead className="thead-light">
-        <tr>
-          <th scope='col'>Image</th>
-          <th scope='col'>Title</th>
-          <th scope='col'>Price</th>
-          <th scope='col'>Brand</th>
-          <th scope='col'>Color</th>
-          <th scope='col'>Count</th>
-          <th scope='col'>Shipping</th>
-          <th scope='col'>Remove</th>
-        </tr>
-      </thead>
+    <React.Fragment>
       {cart && cart.map((p) => (
       	<ProductCardInCheckout
       	  key={p._id}
       	  product={p}
       	/>
       ))}
-    </table>
+      </React.Fragment>
   );
 
   return (
   	<div className="container-fluid pt-2">
-  	  <div className="row">
-  	  <div className="col-md-8">
-  	    <h4>
-  	      Cart / {cart.length} product
-  	      {cart.length !== 1 ? 's' : ''}
-  	    </h4>
-  	    {cart.length === 0 ? (
-  	      <p>No products in cart</p>
-  	      ) : (
-  	      showCartItems()
-  	    )}
-  	  </div>
-  	  <div className="col-md-4">
-  	    <h4>Order Summary</h4>
-  	    <hr />
-  	    <p>Products</p>
-  	    {cart.map((c, idx) => (
-  		  <div 
-  		    key={idx}
-  		    className=""
-  		  >
-  		    <p>{c.title} x {c.count} = ${c.price * c.count}</p>
-  		  </div>
-  	    ))}
-  	    <hr />
-  	      Total: <b>${getTotal()}</b>
-  	    <hr />
-  	    {
-  	      user ? (
-            <React.Fragment>
+  	  <div className="row justify-content-center">
+    	  <div className="col">
+    	    <h4>
+    	      Cart / {cart.length} product
+    	      {cart.length !== 1 ? 's' : ''}
+    	    </h4>
+          <hr />
+    	    {cart.length === 0 ? (
+    	      <p>No products in cart</p>
+    	      ) : (
+    	      showCartItems()
+    	    )}
+    	  </div>
+      </div>
+      <div className="row justify-content-center">
+    	  <div className="col">
+    	    <h4>Order Summary</h4>
+    	    <hr />
+    	    <p>Products</p>
+    	    {cart.map((c, idx) => (
+    		  <div 
+    		    key={idx}
+    		    className=""
+    		  >
+    		    <p>{c.title} x {c.count} = ${c.price * c.count}</p>
+    		  </div>
+    	    ))}
+    	    <hr />
+    	      Total: <b>${getTotal()}</b>
+    	    <hr />
+    	    {
+    	      user ? (
+              <React.Fragment>
+      	        <button
+      	          onClick={() => saveOrdertoDb(false)}
+      	          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+      	          disabled={cart.length === 0}
+      	        >
+      	          Proceed to checkout
+      	        </button>
+                <br />
+                <button
+                  onClick={() => saveOrdertoDb(true)}
+                  className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
+                  disabled={cart.length === 0}
+                >
+                  Pay Cash on Delivery
+                </button>
+              </React.Fragment>
+    	      ) : (
     	        <button
-    	          onClick={() => saveOrdertoDb(false)}
-    	          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-    	          disabled={cart.length === 0}
+    	          className='btn btn-sm btn-primary mt-2 btn-block'
     	        >
-    	          Proceed to checkout
+    	          <Link to={{
+    	          	pathname: '/login',
+    	          	state: { from: '/cart' }
+    	            }}
+    	          >
+    	          	Log in to checkout
+    	          </Link>
     	        </button>
-              <br />
-              <button
-                onClick={() => saveOrdertoDb(true)}
-                className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
-                disabled={cart.length === 0}
-              >
-                Pay Cash on Delivery
-              </button>
-            </React.Fragment>
-  	      ) : (
-  	        <button
-  	          className='btn btn-sm btn-primary mt-2 btn-block'
-  	        >
-  	          <Link to={{
-  	          	pathname: '/login',
-  	          	state: { from: '/cart' }
-  	            }}
-  	          >
-  	          	Log in to checkout
-  	          </Link>
-  	        </button>
-  	      )
-  	    }
-  	  </div>
+    	      )
+    	    }
+    	  </div>
   	  </div>
   	</div>
   );

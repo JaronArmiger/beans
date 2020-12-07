@@ -89,68 +89,52 @@ const ProductCardInCheckout = ({ product }) => {
   };
 
   return (
-  	<tbody>
-  	  <tr>
-  	  	<td>
-  	  	  <div 
-  	  	    style={{maxWidth: '150px', height: 'auto'}}
-  	  	  >
-  	        <ModalImage
-  	      	  small={images[0] ? images[0].url : defaultImage}
-  	      	  large={images[0] ? images[0].url : defaultImage}
-            />
-  	  	  </div>
-  	  	</td>
-  	  	<td>{title}</td>
-  	  	<td>{price && price.toLocaleString('en-US',{
+    <React.Fragment>
+      <div
+        className='d-flex justify-content-around'
+      >
+        <div
+          style={{ maxWidth: '150px', height: 'auto' }}
+          className='d-flex justify-content-start'
+        >
+          <ModalImage
+            className='float-right'
+        	  small={images[0] ? images[0].url : defaultImage}
+        	  large={images[0] ? images[0].url : defaultImage}
+          />
+        </div>
+        <div>
+    	  	<p>{title}</p>
+    	  	<p>
+            {price && price.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
-            })}</td>
-  	  	<td>{brand}</td>
-  	  	<td>
-  	  	  <select 
-  	  	    name="color" 
-  	  	    className='form-control'
-  	  	    style={{ cursor: 'pointer' }}
-  	  	    onChange={handleColorChange}
-  	  	    defaultValue={color}
-  	  	  >
-  	  	    {colors.map((c, idx) => (
-  	  	      <option 
-  	  	        value={c}
-  	  	        key={idx}
-  	  	      >{c}
-  	  	      </option>
-  	  	    ))}
-  	  	  </select>
-  	  	</td>
-  	  	<td>
-  	  	  <input 
-  	  	    style={{ maxWidth: '50px' }}
-  	  	    type="number"
-  	  	    className='form-control'
-  	  	    value={count}
-  	  	    min='1'
-  	  	    max={quantity}
-  	  	    onChange={handleQuantityChange}
-  	  	  />
-  	  	</td>
-        <td className='text-center'>
-          {(shipping && shipping ==='Yes') ? (
-          	<CheckCircleOutlined className='text-success' />
-          ) : (
-            <CloseCircleOutlined className='text-danger' />
-          )}
-        </td>
-        <td className='text-center'>
-          <CloseOutlined 
-            onClick={handleRemove}
-            className='text-danger'
-            style={{ cursor: 'pointer' }}
-          />
-        </td>
-  	  </tr>
-  	</tbody>
+            })}
+          </p>
+          <div>
+          <div className="d-flex align-items-center">
+            <span>QTY: </span>
+            <input 
+              style={{ maxWidth: '50px' }}
+              type="number"
+              className='form-control'
+              value={count}
+              min='1'
+              max={quantity}
+              onChange={handleQuantityChange}
+            />
+          </div>
+            <span>Remove</span>
+            <CloseOutlined 
+              onClick={handleRemove}
+              className='text-danger'
+              style={{ cursor: 'pointer' }}
+            />
+        </div>
+        </div>
+      </div>
+      <hr />
+    </React.Fragment>
   );
 };
 
