@@ -26,10 +26,10 @@ exports.userCart = async (req, res) => {
 	      .findById(cart[i]._id)
 	      .select('price');
 
-	    p.product = cart[i]._id;
+	    p.productId = cart[i]._id;
 	    p.count = cart[i].count;
-	    p.color = cart[i].color;
-	    p.title = cart[i].title;
+	    // p.color = cart[i].color;
+	    // p.title = cart[i].title;
 	    p.price = price;
 	    
 	    products.push(p);
@@ -45,7 +45,7 @@ exports.userCart = async (req, res) => {
 	  const newCart = new Cart({
 	  	products,
 	  	cartTotal,
-	  	orderedBy: user._id,
+	  	userEmail: req.user.email,
 	  });
 
 	  await newCart.save();

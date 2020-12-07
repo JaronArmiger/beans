@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../../firebase';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 
 const Register = ({ history }) => {
   const [email, setEmail] = useState('');
@@ -51,6 +51,11 @@ const Register = ({ history }) => {
  	    <div className="col-md-6 offset-md-4">
  	      <h4>Register</h4>
  	      {registerForm()}
+        <Link 
+            to='/login'
+        >
+          I already have an account
+        </Link>
  	    </div>
  	  </div>
     </div>

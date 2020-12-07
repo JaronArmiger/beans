@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { 
   Card, 
-  Tooltip 
 } from 'antd';
 import {
   EyeOutlined,
@@ -26,7 +25,6 @@ const ProductCard = ({ product }) => {
     quantity,
   } = product;
 
-  const [tooltip, setTooltip] = useState('Click to add');
   const { cart } = useSelector(state => state);
 
   const dispatch = useDispatch();
@@ -52,8 +50,6 @@ const ProductCard = ({ product }) => {
       // save to local storage
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));
-      // show tooltip
-      setTooltip("Remove from cart");
 
       // add to reeux state
       dispatch({
@@ -82,7 +78,6 @@ const ProductCard = ({ product }) => {
       })
     }
     toast.warning(`${title} removed from cart!`);
-    setTooltip("Click to add");
   };
 
   return (
@@ -113,7 +108,7 @@ const ProductCard = ({ product }) => {
             <br />
             View
           </Link>,
-          <Tooltip title={tooltip}>
+          <React.Fragment>
             {_.some(cart, product) ?
               (<a onClick={handleRemoveFromCart}
                 >
@@ -123,15 +118,17 @@ const ProductCard = ({ product }) => {
                           <br />
                           Remove from Cart
                         </a>) :
-              (<a onClick={handleAddToCart}
-                disabled={quantity===0}>
-                          <ShoppingCartOutlined 
-                            className='text-success'
-                          />
-                          <br />
-                          Add to Cart
-                        </a>)}
-          </Tooltip>
+              (<a 
+                  onClick={handleAddToCart}
+                  disabled={quantity===0}
+                >
+                    <ShoppingCartOutlined 
+                      className='text-success'
+                    />
+                    <br />
+                    Add to Cart
+                  </a>)}
+            </React.Fragment>
         ]}
       >
         <Meta

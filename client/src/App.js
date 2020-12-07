@@ -28,6 +28,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
+const PreCheckout = lazy(() => import('./pages/PreCheckout'));
 const BetaCheckout = lazy(() => import('./pages/BetaCheckout'));
 const ProductView = lazy(() => import('./pages/ProductView'));
 const Payment = lazy(() => import('./pages/Payment'));
@@ -141,6 +142,7 @@ const App = () => {
         <Route exact path='/sub/:slug' component={SubHome} />
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/cart' component={Cart} />
+        <Route exact path='/pre-checkout' component={PreCheckout} />
         <Route exact path='/beta-checkout' component={BetaCheckout} />
       </Switch>
     </Suspense>

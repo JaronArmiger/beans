@@ -48,7 +48,7 @@ const Cart = ({ history }) => {
       })
     };
 
-    history.push('/beta-checkout');
+    history.push('/pre-checkout');
 
     // write alternative method to save cart
 

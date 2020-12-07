@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Card, 
   Tabs, 
-  Tooltip,
 } from 'antd';
 import {
   HeartOutlined,
@@ -36,7 +35,6 @@ const SingleProduct = ({
     quantity,
   } = product;
 
-  const [tooltip, setTooltip] = useState('Click to add');
   const { cart, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
@@ -63,9 +61,6 @@ const SingleProduct = ({
       // save to local storage
       // console.log('unique', unique)
       localStorage.setItem("cart", JSON.stringify(unique));
-      // show tooltip
-      setTooltip("Added");
-
       // add to reeux state
       dispatch({
         type: "MODIFY_CART",
@@ -75,7 +70,6 @@ const SingleProduct = ({
         type: "SET_VISIBLE",
         payload: true,
       });
-      setTooltip("Remove from cart");
       // toast.success(`${title} added to cart!`);
     }
   };
@@ -94,7 +88,6 @@ const SingleProduct = ({
       })
     }
     toast.warning(`${title} removed from cart!`);
-    setTooltip("Click to add");
   };
 
   const handleAddToWishlist = (e) => {
@@ -157,25 +150,25 @@ const SingleProduct = ({
         )}
         <Card
           actions={[
-          	<Tooltip title={tooltip}>
+            <React.Fragment>
             {_.some(cart, product) ?
               (<a onClick={handleRemoveFromCart}>
-                          <ShoppingCartOutlined 
-                            className='text-danger'
-                          />
-                          <br />
-                          Remove from Cart
-                        </a>) :
+                  <ShoppingCartOutlined 
+                    className='text-danger'
+                  />
+                  <br />
+                  Remove from Cart
+                </a>) :
               (<a onClick={handleAddToCart}
                   disabled={quantity === 0}
                 >
-                          <ShoppingCartOutlined 
-                            className='text-success'
-                          />
-                          <br />
-                          Add to Cart
-                        </a>)}
-          </Tooltip>,
+                  <ShoppingCartOutlined 
+                    className='text-success'
+                  />
+                  <br />
+                  Add to Cart
+                </a>)}
+            </React.Fragment>,
           	<a onClick={handleAddToWishlist}>
           	  <HeartOutlined className='text-info'/>
           	  <br />

@@ -4,19 +4,20 @@ const { ObjectId } = mongoose.Schema;
 const CartSchema = new mongoose.Schema({
   products: [
     {
-      product: {
+      productId: {
       	type: ObjectId,
       	ref: 'Product',
       },
       count: Number,
       // color: String,
       // title: String,
-      // price: Number,
+      price: Number,
     }
   ],
   cartTotal: Number,
   totalAfterDiscount: Number,
-  orderedBy: { type: ObjectId, ref: 'User' },
+  // orderedBy: { type: ObjectId, ref: 'User' },
+  userEmail: String,
 }, { timestamps: true });
 
 module.exports = mongoose.model('Cart', CartSchema);

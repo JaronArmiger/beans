@@ -13,20 +13,22 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [intended, setIntended] = useState(null);
   
   let dispatch = useDispatch();
   const { user } = useSelector(state => state);
   
   useEffect(() => {
-    const intended = history.location.state;
-    if (intended) return;
+    const fromState = history.location.state;
+    setIntended(fromState);
+    if (fromState) return;
     if (user && user.token) history.push('/');
   }, [user, history]);
 
   const roleBasedRedirect = (res) => {
-    const intended = history.location.state;
-    if (intended) {
-      history.push(intended.from);
+    const fromState = history.location.state;
+    if (fromState) {
+      history.push(intended.fromState);
     } else {
       if (res.data.role === 'admin') {
       history.push('/admin/dashboard');
@@ -156,12 +158,16 @@ const Login = ({ history }) => {
           >
       	  Login with Google
         </Button>
-        <Link 
-          to='/forgot/password' 
-          className='float-right text-danger'
+        <div
+          className='d-flex flex-column align-items-end'
         >
-          Forgot Password
-        </Link>
+          <Link 
+            to='/forgot/password' 
+            className='text-danger'
+          >
+            Forgot Password
+          </Link>
+        </div>
  	    </div>
  	  </div>
     </div>

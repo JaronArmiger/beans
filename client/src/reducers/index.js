@@ -6,6 +6,7 @@ import { drawerReducer } from './drawerReducer';
 import { couponReducer } from './couponReducer';
 import { codReducer } from './codReducer';
 import { addressReducer } from './addressReducer';
+import { cartIdReducer } from './cartIdReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   coupon: couponReducer,
   COD: codReducer,
   address: addressReducer,
+  cartId: cartIdReducer,
 });
 
 export default rootReducer;
