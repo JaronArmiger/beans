@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
-  CloseOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
@@ -103,34 +103,35 @@ const ProductCardInCheckout = ({ product }) => {
         	  large={images[0] ? images[0].url : defaultImage}
           />
         </div>
-        <div>
-    	  	<p>{title}</p>
-    	  	<p>
-            {price && price.toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            })}
-          </p>
+        <div
+          className='d-flex flex-column justify-content-around'
+        >
           <div>
-          <div className="d-flex align-items-center">
-            <span>QTY: </span>
-            <input 
-              style={{ maxWidth: '50px' }}
-              type="number"
-              className='form-control'
-              value={count}
-              min='1'
-              max={quantity}
-              onChange={handleQuantityChange}
-            />
+      	  	<p>{title}</p>
+      	  	<p>
+              {price && price.toLocaleString('en-US',{
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </p>
+            <div className="d-flex align-items-center pb-1">
+              <span>QTY: </span>
+              <input 
+                style={{ maxWidth: '50px' }}
+                type="number"
+                className='form-control text-center'
+                value={count}
+                min='1'
+                max={quantity}
+                onChange={handleQuantityChange}
+              />
+            </div>
           </div>
-            <span>Remove</span>
-            <CloseOutlined 
-              onClick={handleRemove}
-              className='text-danger'
-              style={{ cursor: 'pointer' }}
-            />
-        </div>
+          <DeleteOutlined 
+            onClick={handleRemove}
+            className='text-danger h-3 align-self-end'
+            style={{ cursor: 'pointer' }}
+          />
         </div>
       </div>
       <hr />

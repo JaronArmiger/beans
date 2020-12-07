@@ -12,7 +12,10 @@ const Cart = ({ history }) => {
   const getTotal = () => {
     return cart.reduce((acc, c) => {
       return acc + (c.count * c.price);
-    }, 0)
+    }, 0).toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            });
   };
 
   const saveOrdertoDb = (cod=false) => {
@@ -51,7 +54,7 @@ const Cart = ({ history }) => {
   return (
   	<div className="container-fluid pt-2">
   	  <div className="row justify-content-center">
-    	  <div className="col">
+    	  <div className="col-lg-6">
     	    <h4>
     	      Cart / {cart.length} product
     	      {cart.length !== 1 ? 's' : ''}
@@ -63,33 +66,36 @@ const Cart = ({ history }) => {
     	      showCartItems()
     	    )}
     	  </div>
-      </div>
-      <div className="row justify-content-center">
-    	  <div className="col">
-    	    <h4>Order Summary</h4>
-    	    <hr />
-    	    <p>Products</p>
-    	    {cart.map((c, idx) => (
-    		  <div 
-    		    key={idx}
-    		    className=""
-    		  >
-    		    <p>{c.title} x {c.count} = ${c.price * c.count}</p>
-    		  </div>
-    	    ))}
-    	    <hr />
-    	      Total: <b>${getTotal()}</b>
-    	    <hr />
-    	    {
-    	      user ? (
+        <div className="col-lg-6">
+          <h4>Order Summary</h4>
+          <hr />
+          <p>Products</p>
+          {cart.map((c, idx) => (
+          <div 
+            key={idx}
+            className=""
+          >
+            <p>
+              {c.title} x {c.count} = {(c.price * c.count).toLocaleString('en-US',{
+                style: 'currency',
+                currency: 'USD',
+              })}
+            </p>
+          </div>
+          ))}
+          <hr />
+            Total: <b>${getTotal()}</b>
+          <hr />
+          {
+            user ? (
               <React.Fragment>
-      	        <button
-      	          onClick={() => saveOrdertoDb(false)}
-      	          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-      	          disabled={cart.length === 0}
-      	        >
-      	          Proceed to checkout
-      	        </button>
+                <button
+                  onClick={() => saveOrdertoDb(false)}
+                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                  disabled={cart.length === 0}
+                >
+                  Proceed to checkout
+                </button>
                 <br />
                 <button
                   onClick={() => saveOrdertoDb(true)}
@@ -99,21 +105,24 @@ const Cart = ({ history }) => {
                   Pay Cash on Delivery
                 </button>
               </React.Fragment>
-    	      ) : (
-    	        <button
-    	          className='btn btn-sm btn-primary mt-2 btn-block'
-    	        >
-    	          <Link to={{
-    	          	pathname: '/login',
-    	          	state: { from: '/cart' }
-    	            }}
-    	          >
-    	          	Log in to checkout
-    	          </Link>
-    	        </button>
-    	      )
-    	    }
-    	  </div>
+            ) : (
+              <button
+                className='btn btn-sm btn-primary mt-2 btn-block'
+              >
+                <Link to={{
+                  pathname: '/login',
+                  state: { from: '/cart' }
+                  }}
+                >
+                  Log in to checkout
+                </Link>
+              </button>
+            )
+          }
+        </div>
+      </div>
+      <div className="row justify-content-center">
+
   	  </div>
   	</div>
   );
