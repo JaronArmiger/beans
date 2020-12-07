@@ -40,6 +40,33 @@ const Cart = ({ history }) => {
       });
   };
 
+  const saveOrdertoDbBeta = (cod=false) => {
+    if (cod) {
+      dispatch({
+        type: 'COD',
+        payload: true,
+      })
+    };
+
+    history.push('/beta-checkout');
+
+    // write alternative method to save cart
+
+    // userCart(cart, user.token)
+    //   .then((res) => {
+    //     console.log('CART POST RES', res);
+    //     if (res.data.ok) history.push('/beta-checkout');
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //     if (err.response) {
+    //       if (err.response.statusText === 'Unauthorized') {
+    //         toast.error('Error: Logout and then log in again.')
+    //       }
+    //     }
+    //   });
+  };
+
   const showCartItems = () => (
     <React.Fragment>
       {cart && cart.map((p) => (
@@ -84,17 +111,23 @@ const Cart = ({ history }) => {
           </div>
           ))}
           <hr />
-            Total: <b>${getTotal()}</b>
+            Total: <b>{getTotal()}</b>
           <hr />
-          {
-            user ? (
               <React.Fragment>
+                <button
+                  onClick={() => saveOrdertoDbBeta(false)}
+                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                  disabled={cart.length === 0}
+                >
+                  BetaCheckout
+                </button>
+                <br />
                 <button
                   onClick={() => saveOrdertoDb(false)}
                   className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
                   disabled={cart.length === 0}
                 >
-                  Proceed to checkout
+                  Checkout
                 </button>
                 <br />
                 <button
@@ -105,20 +138,6 @@ const Cart = ({ history }) => {
                   Pay Cash on Delivery
                 </button>
               </React.Fragment>
-            ) : (
-              <button
-                className='btn btn-sm btn-primary mt-2 btn-block'
-              >
-                <Link to={{
-                  pathname: '/login',
-                  state: { from: '/cart' }
-                  }}
-                >
-                  Log in to checkout
-                </Link>
-              </button>
-            )
-          }
         </div>
       </div>
       <div className="row justify-content-center">
