@@ -62,6 +62,13 @@ const BetaCheckout = ({ history }) => {
           setProducts(res.data.products);
           console.log(res.data);
           setTotal(res.data.cartTotal);
+          dispatch({
+            type: 'MODIFY_CART_ID',
+            payload: res.data._id,
+          });
+          if (typeof window !== 'undefined') {
+            localStorage.setItem("cartId", res.data._id);
+          }
         })
         .catch(err => {
           console.log(err);
@@ -73,6 +80,13 @@ const BetaCheckout = ({ history }) => {
             console.log(res.data);
             setProducts(res.data.products);
             setTotal(res.data.cartTotal);
+            dispatch({
+              type: 'MODIFY_CART_ID',
+              payload: res.data._id,
+            });
+            if (typeof window !== 'undefined') {
+              localStorage.setItem("cartId", res.data._id);
+            }
           })
           .catch(err => {
             console.log(err);
