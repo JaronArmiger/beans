@@ -4,9 +4,11 @@ import {
   getUserCart,
   emptyUserCart,
   saveUserAddress,
-  applyCoupon,
   createCashOrder,
 } from '../functions/user';
+import { 
+  applyCoupon,
+} from '../functions/cart';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';

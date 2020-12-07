@@ -121,38 +121,6 @@ exports.saveAddress = async (req, res) => {
   };
 };
 
-exports.applyCouponToUserCart = async (req, res) => {
-  try {
-    const { coupon } = req.body;
-    const validCoupon = await Coupon.findOne({ name: coupon });
-    if (validCoupon === null) {
-      console.log('no coupon')
-      res.status(400).json({
-        err: 'Invalid coupon code',
-      });
-    } else {
-      const user = await User
-        .findOne({ email: req.user.email })
-        .select('_id');
-      const cart = await Cart
-        .findOne({ orderedBy: user._id });
-      const { products, cartTotal } = cart;
-      const { discount } = validCoupon;
-      const totalAfterDiscount = (cartTotal * (1 - discount / 100))
-        .toFixed(2);
-
-      cart.totalAfterDiscount = totalAfterDiscount;
-      await cart.save();
-      res.json(totalAfterDiscount);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(400).json({
-      err: err.mesage,
-    });
-  }
-};
-
 exports.createOrder = async (req, res) => {
   try {
     const { cashOnDelivery } = req.body;

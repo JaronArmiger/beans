@@ -5,11 +5,11 @@ import {
   // getUserCart,
   emptyUserCart,
   saveUserAddress,
-  applyCoupon,
   createCashOrder,
 } from '../functions/user';
 import {
   getCart,
+  applyCoupon,
 } from '../functions/cart';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
@@ -54,14 +54,12 @@ const BetaCheckout = ({ history }) => {
   } = useSelector(state => state);
 
   useEffect(() => {
-    console.log(user);
     if (user) {
-      console.log('user part ran')
       userCart(cart, user.token)
         .then((res) => {
           setProducts(res.data.products);
-          console.log(res.data);
           setTotal(res.data.cartTotal);
+          setTotalAfterDiscount(res.data.totalAfterDiscount);
           dispatch({
             type: 'MODIFY_CART_ID',
             payload: res.data._id,
@@ -77,9 +75,9 @@ const BetaCheckout = ({ history }) => {
       if (cartId) {
         getCart(cartId)
           .then((res) => {
-            console.log(res.data);
             setProducts(res.data.products);
             setTotal(res.data.cartTotal);
+            setTotalAfterDiscount(res.data.totalAfterDiscount);
             dispatch({
               type: 'MODIFY_CART_ID',
               payload: res.data._id,
@@ -93,14 +91,6 @@ const BetaCheckout = ({ history }) => {
           });
       }
     }
-    // getUserCart(user.token)
-    //   .then((res) => {
-    //     setProducts(res.data.products);
-    //     setTotal(res.data.cartTotal);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   })
   }, [user]);
 
   const saveAddressToDb = () => {
@@ -129,7 +119,7 @@ const BetaCheckout = ({ history }) => {
   };
 
   const applyDiscountCoupon = () => {
-    applyCoupon(user.token, coupon)
+    applyCoupon(cartId, coupon)
       .then(res => {
         console.log(res.data);
         setTotalAfterDiscount(res.data);
@@ -143,7 +133,7 @@ const BetaCheckout = ({ history }) => {
       .catch(err => {
         if (err.response.data.err) {
           console.log(err.response.data.err);
-          toast.error(err.response.data.err);
+          toast.warning(err.response.data.err);
         }
         setCoupon('');
       })
@@ -202,6 +192,12 @@ const BetaCheckout = ({ history }) => {
         onClick={applyDiscountCoupon}
       >
         Apply
+      </button>
+      <button 
+        className="btn btn-primary mt-2"
+        onClick={() => setActiveKey(['3'])}
+      >
+        Continue
       </button>
     </React.Fragment>
   );

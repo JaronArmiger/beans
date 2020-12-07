@@ -1,5 +1,6 @@
 const Cart = require('../models/cart');
 const Product = require('../models/product');
+const Coupon = require('../models/coupon');
 
 exports.read = async (req, res) => {
   try {
@@ -33,7 +34,7 @@ exports.create = async (req, res) => {
     if (userEmail) {
       const existingCart = await Cart.find({ userEmail });
       if (existingCart.length > 0) {
-        await existingCart.remove();
+        await existingCart[0].remove();
         console.log('removed old cart by email');
       }
     }
@@ -82,3 +83,56 @@ exports.create = async (req, res) => {
       });
   }
 };
+
+exports.applyCouponToCart = async (req, res) => {
+  try {
+    const { 
+      coupon,
+      cartId,
+    } = req.body;
+    const validCoupon = await Coupon.findOne({ name: coupon });
+    if (validCoupon === null) {
+      console.log('no coupon')
+      res.status(400).json({
+        err: 'Invalid coupon code (no discount applied)',
+      });
+    } else {
+      const { expiry } = validCoupon;
+      if (expiry < Date.now()) {
+        console.log('coupon expired');
+        res.status(400).json({
+          err: 'Coupon expired (no discount applied)',
+        });
+      }
+      const cart = await Cart.findById(cartId);
+      const { products, cartTotal } = cart;
+      const { discount } = validCoupon;
+      const totalAfterDiscount = (cartTotal * (1 - discount / 100))
+        .toFixed(2);
+
+      cart.totalAfterDiscount = totalAfterDiscount;
+      await cart.save();
+      res.json(totalAfterDiscount);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.mesage,
+    });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

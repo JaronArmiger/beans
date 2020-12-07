@@ -85,7 +85,7 @@ const SingleProduct = ({
         payload: newCart,
       })
     }
-    toast.warning(`${title} removed from cart!`);
+    toast.info(`${title} removed from cart!`);
   };
 
   const handleAddToWishlist = (e) => {

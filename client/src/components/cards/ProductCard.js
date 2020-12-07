@@ -77,7 +77,7 @@ const ProductCard = ({ product }) => {
         payload: newCart,
       })
     }
-    toast.warning(`${title} removed from cart!`);
+    toast.info(`${title} removed from cart!`);
   };
 
   return (

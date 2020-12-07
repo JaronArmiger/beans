@@ -100,6 +100,7 @@ const CreateCouponPage = () => {
   	      	    onChange={(e) => setDiscount(e.target.value)}
   	      	    value={discount}
   	      	    min='0'
+                max='99'
   	      	    required
   	      	  />
   	      	</div>

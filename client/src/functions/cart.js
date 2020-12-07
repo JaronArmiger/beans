@@ -14,3 +14,29 @@ export const createCart = async (cart, userEmail, cartId=null) => {
     }
   );
 };
+
+export const applyCoupon = async (cartId, coupon) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/cart/coupon`,
+    { 
+      coupon,
+      cartId
+    },
+  );
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
