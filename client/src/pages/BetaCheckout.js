@@ -11,6 +11,9 @@ import {
   getCart,
   applyCoupon,
 } from '../functions/cart';
+import {
+  createOrder,
+} from '../functions/order';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
@@ -55,6 +58,7 @@ const BetaCheckout = ({ history }) => {
     COD,
     cartId,
     paymentStatus,
+    paymentId,
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -157,6 +161,26 @@ const BetaCheckout = ({ history }) => {
     setAddress({...address, [e.target.name]: e.target.value});
   };
 
+  const handleUSStateChange = (stateVal) => {
+    setAddress({...address, state: stateVal })
+  };
+
+  const handleAddressSubmit = (e) => {
+    e.preventDefault();
+    console.log(address);
+    const errorResult = validateAddress(address);
+    setAddressErrors(errorResult);
+
+    if (errorResult.length === 0) {
+      dispatch({
+        type: 'SAVE_ADDRESS',
+        payload: address,
+      });
+      setActiveKey(['2']);
+      setAddressSaved(true);
+    }
+  };
+
   const showProductSummary = () => {
     const productDivs = products
       .map((p, idx) => {
@@ -226,51 +250,13 @@ const BetaCheckout = ({ history }) => {
   );
 
   const handleOrder = () => {
-    const amount = totalAfterDiscount || cartTotal;
-    if (COD) {
-      createCashOrder(user.token, amount)
-        .then(res => {
-          if (res.data.ok) {
-            emptyCart();
-            dispatch({
-              type: 'COUPON_APPLIED',
-              payload: false,
-            });
-            dispatch({
-              type: 'COD',
-              payload: false,
-            });
-          }
-          history.push('/user/history');
-          return;
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    } else {
-      history.push('/payment');
-      return;
-    }
-  };
-
-  const handleAddressSubmit = (e) => {
-    e.preventDefault();
-    console.log(address);
-    const errorResult = validateAddress(address);
-    setAddressErrors(errorResult);
-
-    if (errorResult.length === 0) {
-      dispatch({
-        type: 'SAVE_ADDRESS',
-        payload: address,
+    createOrder(paymentId)
+      .then(res => {
+        if (res.data.ok) console.log('payment successful');
+      })
+      .catch(err => {
+        console.log(err);
       });
-      setActiveKey(['2']);
-      setAddressSaved(true);
-    }
-  };
-
-  const handleUSStateChange = (stateVal) => {
-    setAddress({...address, state: stateVal })
   };
 
 
@@ -334,7 +320,7 @@ const BetaCheckout = ({ history }) => {
             <div className="col d-flex justify-content-center">
               <button 
                 className="btn btn-outline-primary"
-                disabled={(paymentStatus !== 'confirmed') || !addressSaved}
+                disabled={(paymentStatus !== 'confirmed') || !addressSaved || !paymentId}
                 onClick={handleOrder}
               >
                 Place Order
