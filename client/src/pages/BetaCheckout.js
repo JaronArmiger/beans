@@ -20,6 +20,7 @@ import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
 import defaultImage from '../images/snake.jpg';
 import ModalImage from 'react-modal-image';
+import SquareContainer from '../components/square/SquareContainer';
 
 
 const { Panel } = Collapse;
@@ -249,7 +250,6 @@ const BetaCheckout = ({ history }) => {
     setAddress({...address, state: stateVal })
   };
 
-  const text = 'fuck';
 
   return (
     <div className="container-fluid">
@@ -283,7 +283,7 @@ const BetaCheckout = ({ history }) => {
               header="Payment" 
               key="3"
              >
-              <p>{text}</p>
+              <SquareContainer />
             </Panel>
           </Collapse>
         </div>
