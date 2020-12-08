@@ -111,14 +111,6 @@ const BetaCheckout = ({ history }) => {
     setChargeAmount(totalAfterDiscount || cartTotal);
   }, [cartTotal, totalAfterDiscount]);
 
-  const saveAddressToDb = () => {
-    saveUserAddress(user.token, address)
-      .then(res => {
-        if (res.data.ok) setAddressSaved(true);
-        toast.success('Address saved')
-      })
-      .catch(err => console.log(err));
-  };
 
   const emptyCart = () => {
     if (typeof window !== 'undefined') {
@@ -281,7 +273,7 @@ const BetaCheckout = ({ history }) => {
   return (
     <div className="container-fluid">
       <div className="row justify-content-md-center">
-        <div className="col-md-6">
+        <div className="col-md-6 pt-3">
           <Collapse
             activeKey={activeKey}
             onChange={(key) => setActiveKey(key)}

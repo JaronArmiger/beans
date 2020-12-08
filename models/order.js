@@ -9,12 +9,13 @@ const OrderSchema = new mongoose.Schema({
         ref: 'Product',
       },
       count: Number,
-      color: String,
-      title: String,
       price: Number,
     },
   ],
-  paymentIntent: {},
+  paid: {
+    type: Boolean,
+    default: false,
+  },
   orderStatus: {
     type: String,
     default: 'Not Processed',
@@ -26,7 +27,10 @@ const OrderSchema = new mongoose.Schema({
       'Completed',
     ],
   },
-  orderedBy: { type: ObjectId, ref: 'User' },
+  userEmail: { 
+    type: String, 
+    required: true 
+  },
   cashOnDelivery: { type: Boolean, default: false },
 }, { timestamps: true });
 
