@@ -1,4 +1,4 @@
-const PaymentDetail = require('../models/PaymentDetail');
+const PaymentDetail = require('../models/paymentDetail');
 
 exports.confirmPaymentDetails = async (req, res) => {
   try {
