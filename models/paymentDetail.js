@@ -1,43 +1,24 @@
 const mongoose = require('mongoose');
+const { ObjectId } = mongoose.Schema;
 
-const AddressSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    required: true,
-    maxLength: 30,
-  },
-  lastName: {
-    type: String,
-    required: true,
-    maxLength: 30,
-  },
-  streetAddress: {
-    type: String,
-    required: true,
-    maxLength: [50, 'Max length is 50 chars'],
-  },
-  apartment: {
-    type: String,
-    maxLength: [50, 'Max length is 50 chars'],
-  },
-  city: {
+const PaymentDetailSchema = new mongoose.Schema({
+  nonce: {
     type: String,
     required: true,
   },
-  state: {
+  idempotency_key: {
     type: String,
     required: true,
   },
-  zip: {
-    type: Number,
+  location_id: {
+    type: String,
     required: true,
-    min: 00000,
-    max: 99999,
   },
-  phoneNumber: {
-    type: Number,
+  cartId: {
+    type: ObjectId,
+    ref: 'Product',
     required: true,
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Address', AddressSchema);
+module.exports = mongoose.model('PaymentDetail', PaymentDetailSchema);

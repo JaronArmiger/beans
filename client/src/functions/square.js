@@ -6,6 +6,6 @@ export const confirmPaymentDetails = (cartId, squareInfo) => {
   // console.log('location_id', body.location_id);
   return axios.post(
     `${process.env.REACT_APP_API}/confirm-payment-details`,
-    { squareInfo }
+    { squareInfo, cartId }
   );
 }

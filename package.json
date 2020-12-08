@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn && yarn run build",
+    "heroku-postbuild": "cd client && npm && npm run build",
     "devstart": "nodemon server.js"
   },
   "license": "MIT",
@@ -21,6 +21,7 @@
     "morgan": "^1.10.0",
     "nodemon": "^2.0.6",
     "slugify": "^1.4.6",
+    "square": "^7.0.0",
     "stripe": "^8.126.0"
   }
 }
