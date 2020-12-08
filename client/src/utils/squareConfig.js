@@ -26,7 +26,27 @@ const createPayment = (nonce) => {
     location_id: process.env.REACT_APP_SQUARE_LOCATION_ID,
   };
 
-  confirmPaymentDetails(cartId, squareInfo);
+  confirmPaymentDetails(cartId, squareInfo)
+    .then((res) => {
+      if (res.data.ok) {
+        store.dispatch({
+          type: 'SET_PAYMENT_STATUS',
+          payload: 'confirmed',
+        });
+      } else {
+        store.dispatch({
+          type: 'SET_PAYMENT_STATUS',
+          payload: 'error',
+        });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      store.dispatch({
+        type: 'SET_PAYMENT_STATUS',
+        payload: 'error',
+      });
+    });
   
 
   // fetch(`${process.env.REACT_APP_API}/process-square-payment`, {
