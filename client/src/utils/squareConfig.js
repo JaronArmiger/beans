@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
 import store from '../store';
+import { confirmPaymentDetails } from '../functions/square';
 
 const idempotency_key = v4();
 
@@ -16,10 +17,18 @@ const cardNonceResponseReceived = (errors, nonce, cardData) => {
 };
 
 const createPayment = (nonce) => {
-  console.log('createPayment');
   const state = store.getState();
   const { cartId } = state;
-  console.log(cartId);
+
+  const body = {
+    nonce,
+    idempotency_key,
+    location_id: process.env.REACT_APP_SQUARE_LOCATION_ID,
+  };
+
+  confirmPaymentDetails(cartId, body);
+  
+
   // fetch(`${process.env.REACT_APP_API}/process-square-payment`, {
   //   method: 'POST',
   //   headers: {

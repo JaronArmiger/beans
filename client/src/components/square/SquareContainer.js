@@ -20,10 +20,15 @@ const SquareContainer = React.memo(({ chargeAmount }) => {
 
   return(
     <React.Fragment>
+      <p className='text-center'>
+        <b>Charge Amount:</b> {chargeAmount.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          })}
+      </p>
       {!loading && 
         <SquarePaymentForm 
           paymentForm={ window.SqPaymentForm }
-          chargeAmount={chargeAmount}
         />
       }
     </React.Fragment>
