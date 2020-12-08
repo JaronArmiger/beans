@@ -17,7 +17,10 @@ exports.confirmPaymentDetails = async (req, res) => {
     });
 
     await newPaymentDetail.save();
-    res.json({ ok: true });
+    res.json({ 
+      ok: true,
+      paymentId: newPaymentDetail._id,
+    });
   } catch(err) {
     console.log(err);
     res.status(400).json({

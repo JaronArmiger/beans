@@ -54,6 +54,7 @@ const BetaCheckout = ({ history }) => {
     cart,
     COD,
     cartId,
+    paymentStatus,
   } = useSelector(state => state);
 
   useEffect(() => {
@@ -95,6 +96,16 @@ const BetaCheckout = ({ history }) => {
       }
     }
   }, [user]);
+
+  useEffect(() => {
+    if (paymentStatus) {
+      if (paymentStatus === 'confirmed') {
+        toast.success('Payment details confirmed.');
+      } else if (paymentStatus === 'error') {
+        toast.warning('Error confirming payment details.');
+      }
+    }
+  }, [paymentStatus])
 
   useEffect(() => {
     setChargeAmount(totalAfterDiscount || cartTotal);

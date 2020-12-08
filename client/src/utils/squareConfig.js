@@ -33,6 +33,10 @@ const createPayment = (nonce) => {
           type: 'SET_PAYMENT_STATUS',
           payload: 'confirmed',
         });
+        store.dispatch({
+          type: 'SET_PAYMENT_ID',
+          payload: res.data.paymentId,
+        });
       } else {
         store.dispatch({
           type: 'SET_PAYMENT_STATUS',
