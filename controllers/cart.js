@@ -6,9 +6,13 @@ exports.read = async (req, res) => {
   try {
     const { cartId } = req.params;
     const cart = await Cart
+      .findById(cartId);
+    cart.totalAfterDiscount = null;
+    await cart.save();
+    const cartToSend = await Cart
       .findById(cartId)
       .populate('products.product');
-    res.json(cart);
+    res.json(cartToSend);
   } catch (err) {
     console.log(err);
     res
@@ -108,7 +112,7 @@ exports.applyCouponToCart = async (req, res) => {
       const { products, cartTotal } = cart;
       const { discount } = validCoupon;
       const totalAfterDiscount = (cartTotal * (1 - discount / 100))
-        .toFixed(2);
+        .toFixed(0);
 
       cart.totalAfterDiscount = totalAfterDiscount;
       await cart.save();

@@ -7,13 +7,14 @@ import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import 'antd-mobile/dist/antd-mobile.css';
 
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './reducers';
+import store from './store';
+// import { composeWithDevTools } from 'redux-devtools-extension';
+// import rootReducer from './reducers';
 
 // store
-const store = createStore(rootReducer, composeWithDevTools());
+// const store = createStore(rootReducer, composeWithDevTools());
 
 ReactDOM.render(
   // <React.StrictMode>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SquarePaymentForm from './SquarePaymentForm';
 
-const SquareContainer = () => {
+const SquareContainer = React.memo(({ chargeAmount }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,10 +21,13 @@ const SquareContainer = () => {
   return(
     <React.Fragment>
       {!loading && 
-        <SquarePaymentForm paymentForm={ window.SqPaymentForm }/>
+        <SquarePaymentForm 
+          paymentForm={ window.SqPaymentForm }
+          chargeAmount={chargeAmount}
+        />
       }
     </React.Fragment>
   );
-}
+})
 
 export default SquareContainer;

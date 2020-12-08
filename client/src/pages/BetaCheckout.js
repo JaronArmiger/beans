@@ -38,13 +38,15 @@ const initialAddress = {
 
 const BetaCheckout = ({ history }) => {
   const [products, setProducts] = useState([]);
-  const [total, setTotal] = useState(0);
+  const [cartTotal, setCartTotal] = useState(0);
   const [address, setAddress] = useState(initialAddress);
   const [addressSaved, setAddressSaved] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
   const [activeKey, setActiveKey] = useState(['1']);
   const [addressErrors, setAddressErrors] = useState([]);
+  const [chargeAmount, setChargeAmount] = useState(0);
+  const [couponApplied, setCouponApplied] = useState(false);
 
   const dispatch = useDispatch();
   const { 
@@ -59,8 +61,8 @@ const BetaCheckout = ({ history }) => {
       userCart(cart, user.token)
         .then((res) => {
           setProducts(res.data.products);
-          setTotal(res.data.cartTotal);
-          setTotalAfterDiscount(res.data.totalAfterDiscount);
+          setCartTotal(res.data.cartTotal);
+          setTotalAfterDiscount(parseInt(res.data.totalAfterDiscount));
           dispatch({
             type: 'MODIFY_CART_ID',
             payload: res.data._id,
@@ -77,7 +79,7 @@ const BetaCheckout = ({ history }) => {
         getCart(cartId)
           .then((res) => {
             setProducts(res.data.products);
-            setTotal(res.data.cartTotal);
+            setCartTotal(res.data.cartTotal);
             setTotalAfterDiscount(res.data.totalAfterDiscount);
             dispatch({
               type: 'MODIFY_CART_ID',
@@ -93,6 +95,10 @@ const BetaCheckout = ({ history }) => {
       }
     }
   }, [user]);
+
+  useEffect(() => {
+    setChargeAmount(totalAfterDiscount || cartTotal);
+  }, [cartTotal, totalAfterDiscount]);
 
   const saveAddressToDb = () => {
     saveUserAddress(user.token, address)
@@ -112,7 +118,7 @@ const BetaCheckout = ({ history }) => {
     emptyUserCart(user.token)
       .then((res) => {
         setProducts([]);
-        setTotal(0);
+        setCartTotal(0);
         setTotalAfterDiscount(null);
         toast.success('Cart emptied');
       })
@@ -123,12 +129,13 @@ const BetaCheckout = ({ history }) => {
     applyCoupon(cartId, coupon)
       .then(res => {
         console.log(res.data);
-        setTotalAfterDiscount(res.data);
+        setTotalAfterDiscount(parseInt(res.data));
         dispatch({
           type: 'COUPON_APPLIED',
           payload: true,
         });
         toast.success(`${coupon} applied successfully!`);
+        setCouponApplied(true);
         setCoupon('');
       })
       .catch(err => {
@@ -188,23 +195,32 @@ const BetaCheckout = ({ history }) => {
         value={coupon}
         className='form-control'
       />
-      <button 
-        className="btn btn-primary mt-2"
-        onClick={applyDiscountCoupon}
-      >
-        Apply
-      </button>
-      <button 
-        className="btn btn-primary mt-2"
-        onClick={() => setActiveKey(['3'])}
-      >
-        Continue
-      </button>
+      <div className="d-flex justify-content-around">
+        <button 
+          className="btn btn-outline-info mt-2"
+          onClick={applyDiscountCoupon}
+        >
+          Apply
+        </button>
+        <button 
+          className="btn btn-outline-info mt-2"
+          onClick={() => setActiveKey(['3'])}
+        >
+          Continue
+        </button>
+      </div>
+      {couponApplied &&
+        <div
+          className='text-center bg-success py-2 mt-1'
+        >
+          Coupon Applied!
+        </div>
+      }
     </React.Fragment>
   );
 
   const handleOrder = () => {
-    const amount = totalAfterDiscount || total;
+    const amount = totalAfterDiscount || cartTotal;
     if (COD) {
       createCashOrder(user.token, amount)
         .then(res => {
@@ -283,7 +299,7 @@ const BetaCheckout = ({ history }) => {
               header="Payment" 
               key="3"
              >
-              <SquareContainer />
+              <SquareContainer chargeAmount={chargeAmount}/>
             </Panel>
           </Collapse>
         </div>
@@ -295,35 +311,18 @@ const BetaCheckout = ({ history }) => {
           <p>({products.length} Item{products.length !== 1 ? 's' : ''})</p>
           <hr />
           {showProductSummary()}
-          <p>Cart Total: {total.toLocaleString('en-US',{
+          <p>Cart Total: {cartTotal.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
             })}</p>
           {totalAfterDiscount && (
             <p className="bg-success p-2">
-              Discount Applied Total Payable: ${totalAfterDiscount}
+              Discount Applied; Total Payable: ${totalAfterDiscount.toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}
             </p>
           )}
-          <div className="row">
-            <div className="col-md-6">
-              <button 
-                className="btn btn-primary"
-                disabled={!addressSaved}
-                onClick={handleOrder}
-              >
-                Place Order
-              </button>
-            </div>
-            <div className="col-md-6">
-              <button 
-                className="btn btn-primary"
-                onClick={emptyCart}
-                disabled={products.length === 0}
-              >
-                Empty Cart
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

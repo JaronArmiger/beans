@@ -1,9 +1,10 @@
 import React from 'react';
-import config from '../../utils/paymentForm';
+import config from '../../utils/squareConfig';
 
-const SquarePaymentForm = ({ paymentForm }) => {
+const SquarePaymentForm = ({ paymentForm, chargeAmount }) => {
   paymentForm = new paymentForm(config);
   paymentForm.build();
+
   const requestCardNonce = (e) => {
     e.preventDefault();
     paymentForm.requestCardNonce();
@@ -18,7 +19,14 @@ const SquarePaymentForm = ({ paymentForm }) => {
         onClick={requestCardNonce}
         style={{ border: 0, fontWeight: 500 }}
       >
-        Pay
+        Pay{' '}
+        {chargeAmount
+          .toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          })
+        }
+
       </button>
     </div>
   );
