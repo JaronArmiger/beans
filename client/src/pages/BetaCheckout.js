@@ -326,14 +326,25 @@ const BetaCheckout = ({ history }) => {
               style: 'currency',
               currency: 'USD',
             })}</p>
-          {totalAfterDiscount && (
+          {totalAfterDiscount ? (
             <p className="bg-success p-2">
               Discount Applied; Total Payable: ${totalAfterDiscount.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
             })}
             </p>
-          )}
+          ) : (<br />)}
+          <div className="row">
+            <div className="col d-flex justify-content-center">
+              <button 
+                className="btn btn-outline-primary"
+                disabled={paymentStatus !== 'confirmed'}
+                onClick={handleOrder}
+              >
+                Place Order
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
