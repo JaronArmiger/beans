@@ -30,7 +30,7 @@ readdirSync('./routes').map((r) => {
 });
 
 const pathway = path.join(__dirname, 'client', 'build');
-// app.use(express.static(pathway));
+app.use(express.static(pathway));
 app.get('*', (req, res) => {
   res.sendFile('index.html', { root: pathway });
   // res.sendFile(path.join(__dirname + '/client/build/index.html'));
