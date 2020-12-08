@@ -20,13 +20,13 @@ const createPayment = (nonce) => {
   const state = store.getState();
   const { cartId } = state;
 
-  const body = {
+  const squareInfo = {
     nonce,
     idempotency_key,
     location_id: process.env.REACT_APP_SQUARE_LOCATION_ID,
   };
 
-  confirmPaymentDetails(cartId, body);
+  confirmPaymentDetails(cartId, squareInfo);
   
 
   // fetch(`${process.env.REACT_APP_API}/process-square-payment`, {
