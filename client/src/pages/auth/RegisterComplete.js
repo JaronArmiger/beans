@@ -80,7 +80,7 @@ const RegisterComplete = ({ history }) => {
         className='form-control' 
         value={password} 
         onChange={e => setPassword(e.target.value)}
-        placeholder='Enter Password'
+        placeholder='Create Password'
         autoFocus
       />
       <br/>
