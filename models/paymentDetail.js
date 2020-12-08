@@ -16,7 +16,7 @@ const PaymentDetailSchema = new mongoose.Schema({
   },
   cartId: {
     type: ObjectId,
-    ref: 'Product',
+    ref: 'Cart',
     required: true,
   }
 }, { timestamps: true });

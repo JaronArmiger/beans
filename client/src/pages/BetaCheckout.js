@@ -74,6 +74,8 @@ const BetaCheckout = ({ history }) => {
         })
         .catch(err => {
           console.log(err);
+          console.log(err.response);
+          // if ()
         });
     } else {
       if (cartId) {
@@ -101,6 +103,7 @@ const BetaCheckout = ({ history }) => {
     if (paymentStatus) {
       if (paymentStatus === 'confirmed') {
         toast.success('Payment details confirmed.');
+        setActiveKey([]);
       } else if (paymentStatus === 'error') {
         toast.warning('Error confirming payment details.');
       }
@@ -262,6 +265,7 @@ const BetaCheckout = ({ history }) => {
         payload: address,
       });
       setActiveKey(['2']);
+      setAddressSaved(true);
     }
   };
 
@@ -330,7 +334,7 @@ const BetaCheckout = ({ history }) => {
             <div className="col d-flex justify-content-center">
               <button 
                 className="btn btn-outline-primary"
-                disabled={paymentStatus !== 'confirmed'}
+                disabled={(paymentStatus !== 'confirmed') || !addressSaved}
                 onClick={handleOrder}
               >
                 Place Order
