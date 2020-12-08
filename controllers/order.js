@@ -1,5 +1,5 @@
 const Order = require('../models/order');
-// const Product = require('../models/product');
+const Product = require('../models/product');
 const Cart = require('../models/cart');
 const PaymentDetail = require('../models/paymentDetail');
 const { createPaymentPromise } = require('../utils/square');
@@ -27,6 +27,8 @@ exports.create = async (req, res) => {
     const {
       cartTotal,
       totalAfterDiscount,
+      products,
+      userEmail,
     } = cart;
 
     const chargeAmount = totalAfterDiscount || cartTotal;
@@ -42,11 +44,38 @@ exports.create = async (req, res) => {
     };
 
     createPaymentPromise(requestBody)
-      .then((result) => {
+      .then(async (result) => {
         console.log('______PAYMENT_RESULT______', result);
+        const bulkOption = products.map((p) => {
+          return {
+            updateOne: {
+              filter: { _id: p.product.toString()},
+              update: {
+                sold: true,
+                soldDate: new Date(),
+              }
+            }
+          }
+        });
+
+        await Product.bulkWrite(bulkOption, {});
+
+        const newOrder = new Order({
+          products,
+          paid: true,
+          userEmail,
+        });
+
+        await newOrder.save();
+        await PaymentDetail.findByIdAndDelete(paymentDetail._id);
+
+        res.json({ ok: true });
       })
-      .catch((err) => {
-        console.log('______PAYMENT_ERR______', err);
+      .catch(async (err) => {
+        console.log(err);
+        res.status(400).json({
+          err: err.message,
+        })
       });
   } catch (err) {
     console.log(err);
@@ -56,14 +85,14 @@ exports.create = async (req, res) => {
   }
 };
 
-// let testPromise = new Promise(async (resolve, reject) => {
-//   try {
-//     const product = await Product.find({title: 'dsfds'});
-//     resolve(product);
-//   } catch (err) {
-//     reject(err);
-//   }
-// });
+let testPromise = new Promise(async (resolve, reject) => {
+  try {
+    const product = await Product.find({title: 'dsfds'});
+    resolve(product);
+  } catch (err) {
+    reject(err);
+  }
+});
 
 exports.list = async (req, res) => {
   try {
@@ -72,6 +101,8 @@ exports.list = async (req, res) => {
     // testPromise
     //   .then((result) => res.send(result))
     //   .catch(err => res.send(err))
+    const result = await testPromise;
+    res.send(result);
   } catch (err) {
     console.log(err);
     res.status(400).json({
