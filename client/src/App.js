@@ -32,6 +32,7 @@ const PreCheckout = lazy(() => import('./pages/PreCheckout'));
 const BetaCheckout = lazy(() => import('./pages/BetaCheckout'));
 const ProductView = lazy(() => import('./pages/ProductView'));
 const Payment = lazy(() => import('./pages/Payment'));
+const OrderReceipt = lazy(() => import('./pages/OrderReceipt'));
 const CategoryHome = lazy(() => import('./pages/category/CategoryHome'));
 const SubHome = lazy(() => import('./pages/sub/SubHome'));
 
@@ -144,6 +145,7 @@ const App = () => {
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/pre-checkout' component={PreCheckout} />
         <Route exact path='/beta-checkout' component={BetaCheckout} />
+        <Route exact path='/order/:orderId' component={OrderReceipt} />
       </Switch>
     </Suspense>
   );

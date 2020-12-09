@@ -4,6 +4,17 @@ const Cart = require('../models/cart');
 const PaymentDetail = require('../models/paymentDetail');
 const { createPaymentPromise } = require('../utils/square');
 
+exports.read = async (req, res) => {
+  try {
+    const { orderId } = req.params;
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    })
+  }
+};
+
 exports.create = async (req, res) => {
   try {
     const {
@@ -71,7 +82,10 @@ exports.create = async (req, res) => {
         await newOrder.save();
         await PaymentDetail.findByIdAndDelete(paymentDetail._id);
 
-        res.json({ ok: true });
+        res.json({ 
+          ok: true,
+          orderId: newOrder._id,
+        });
       })
       .catch(async (err) => {
         console.log(err);

@@ -90,7 +90,10 @@ exports.create = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
-    const deleted = await Cart.findOneByIdAndDelete(cartId);
+    console.log('_______REMOVE_______');
+    // const { cartId } = req.params;
+    // console.log(cartId);
+    // const deleted = await Cart.findByIdAndDelete(cartId);
     res.json({
       ok: true,
     });

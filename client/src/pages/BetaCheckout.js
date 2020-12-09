@@ -284,6 +284,12 @@ const BetaCheckout = ({ history }) => {
           console.log('payment successful');
           emptyCart();
           toast.success('Your order has been placed!');
+
+          if (user) {
+
+          } else {
+            history.push(`/order/${res.data.orderId}`);
+          }
           // send user to order summary page
         };
       })
