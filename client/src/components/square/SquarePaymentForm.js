@@ -4,6 +4,7 @@ import config from '../../utils/squareConfig';
 const SquarePaymentForm = ({ paymentForm }) => {
   paymentForm = new paymentForm(config);
   paymentForm.build();
+  console.log('squareConfig', config);
 
   const requestCardNonce = (e) => {
     e.preventDefault();

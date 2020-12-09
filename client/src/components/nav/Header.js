@@ -174,7 +174,12 @@ const Header = () => {
     <React.Fragment>
       <Menu 
         mode="horizontal"
-        style={{ position: 'fixed', zIndex: 1, width: '100%' }}
+        style={{ 
+          position: 'fixed', 
+          zIndex: 1, 
+          width: '100%',
+          height: '50px'
+        }}
       > 
         <Dropdown
           overlay={
@@ -235,6 +240,7 @@ const Header = () => {
           </Link>
         </Item>
       </Menu>
+      <div style={{ height: '50px' }}></div>
       <div
         className='d-flex justify-content-center py-1'
         style={{ backgroundColor: '#03fca1' }}
