@@ -1,6 +1,6 @@
 let initialVal = null;
 if (typeof window !== 'undefined') {
-    initialVal = (localStorage.getItem('cartId'));
+  initialVal = (localStorage.getItem('cartId'));
 }
 
 export const cartIdReducer = (state=initialVal, action) => {

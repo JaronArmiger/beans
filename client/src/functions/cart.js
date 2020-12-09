@@ -15,6 +15,10 @@ export const createCart = async (cart, userEmail, cartId=null) => {
   );
 };
 
+export const removeCart = async (cartId) => {
+  return await axios.delete(`${process.env.REACT_APP_API}/cart/${cartId}`);
+};
+
 export const applyCoupon = async (cartId, coupon) => {
   return await axios.post(
     `${process.env.REACT_APP_API}/cart/coupon`,

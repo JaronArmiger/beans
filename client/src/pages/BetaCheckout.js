@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   userCart,
-  // getUserCart,
-  emptyUserCart,
   saveUserAddress,
   createCashOrder,
 } from '../functions/user';
 import {
   getCart,
   applyCoupon,
+  removeCart,
 } from '../functions/cart';
 import {
   createOrder,
@@ -129,12 +128,31 @@ const BetaCheckout = ({ history }) => {
     };
     dispatch({ type: 'CLEAR_CART' });
 
-    emptyUserCart(user.token)
+    removeCart(cartId)
       .then((res) => {
         setProducts([]);
         setCartTotal(0);
         setTotalAfterDiscount(null);
-        toast.success('Cart emptied');
+        dispatch({
+          type: 'MODIFY_CART_ID',
+          payload: null,
+        });
+
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('cartId');
+        };
+        dispatch({
+          type: 'COUPON_APPLIED',
+          payload: false,
+        });
+        dispatch({
+          type: 'SET_PAYMENT_STATUS',
+          payload: null,
+        });
+        dispatch({
+          type: 'SET_PAYMENT_ID',
+          payload: null,
+        });
       })
       .catch((err) => console.log(err));
   };

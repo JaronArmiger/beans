@@ -174,6 +174,7 @@ const Header = () => {
     <React.Fragment>
       <Menu 
         mode="horizontal"
+        style={{ position: 'fixed', zIndex: 1, width: '100%' }}
       > 
         <Dropdown
           overlay={

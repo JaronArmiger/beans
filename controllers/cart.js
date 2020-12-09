@@ -88,6 +88,20 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.remove = async (req, res) => {
+  try {
+    const deleted = await Cart.findOneByIdAndDelete(cartId);
+    res.json({
+      ok: true,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.mesage,
+    });
+  }
+};
+
 exports.applyCouponToCart = async (req, res) => {
   try {
     const { 

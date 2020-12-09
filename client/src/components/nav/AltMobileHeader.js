@@ -180,6 +180,9 @@ const AltMobileHeader = () => {
         style={{ 
           cursor: 'pointer', 
           backgroundColor: '#03fca1',
+          position: 'fixed', 
+          zIndex: 1, 
+          width: '100%',
         }}
         leftContent={<MenuOutlined style={{ color: 'black' }}/>}
       >
