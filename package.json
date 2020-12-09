@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd client && npm && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build",
     "devstart": "nodemon server.js"
   },
   "license": "MIT",
