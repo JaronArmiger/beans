@@ -112,7 +112,7 @@ exports.applyCouponToCart = async (req, res) => {
       const { products, cartTotal } = cart;
       const { discount } = validCoupon;
       const totalAfterDiscount = (cartTotal * (1 - discount / 100))
-        .toFixed(0);
+        .toFixed(2);
 
       cart.totalAfterDiscount = totalAfterDiscount;
       await cart.save();

@@ -14,6 +14,9 @@ import {
 import {
   createOrder,
 } from '../functions/order';
+import {
+  saveAddress,
+} from '../functions/address';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
@@ -44,6 +47,7 @@ const BetaCheckout = ({ history }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const [address, setAddress] = useState(initialAddress);
   const [addressSaved, setAddressSaved] = useState(false);
+  const [addressId, setAddressId] = useState('');
   const [coupon, setCoupon] = useState('');
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(null);
   const [activeKey, setActiveKey] = useState(['1']);
@@ -172,12 +176,16 @@ const BetaCheckout = ({ history }) => {
     setAddressErrors(errorResult);
 
     if (errorResult.length === 0) {
-      dispatch({
-        type: 'SAVE_ADDRESS',
-        payload: address,
-      });
-      setActiveKey(['2']);
-      setAddressSaved(true);
+      saveAddress(address)
+        .then(res => {
+          setAddressId(res.data.addressId);
+          setActiveKey(['2']);
+          setAddressSaved(true);
+        })
+        .catch(err => {
+          console.log(err);
+          toast.error('Error saving address');
+        });
     }
   };
 
@@ -202,10 +210,12 @@ const BetaCheckout = ({ history }) => {
                   alt={`${title}`}
                   style={{ maxWidth: '100px', height: 'auto' }}
                 />
-              <span>{title} x {p.count} = {(p.price * p.count).toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            })}</span>
+              <div className='text-right'>
+                {title} x {p.count} = {(p.price * p.count).toLocaleString('en-US',{
+                  style: 'currency',
+                  currency: 'USD',
+                })}
+              </div>
             </div>
             <hr />
           </React.Fragment>
@@ -250,12 +260,18 @@ const BetaCheckout = ({ history }) => {
   );
 
   const handleOrder = () => {
-    createOrder(paymentId)
+    createOrder(paymentId, addressId)
       .then(res => {
-        if (res.data.ok) console.log('payment successful');
+        if (res.data.ok) {
+          console.log('payment successful');
+          emptyCart();
+          toast.success('Your order has been placed!');
+          // send user to order summary page
+        };
       })
       .catch(err => {
         console.log(err);
+        toast.error('An error has occurred');
       });
   };
 
@@ -310,7 +326,7 @@ const BetaCheckout = ({ history }) => {
             })}</p>
           {totalAfterDiscount ? (
             <p className="bg-success p-2">
-              Discount Applied; Total Payable: ${totalAfterDiscount.toLocaleString('en-US',{
+              Discount Applied; Total Payable: {totalAfterDiscount.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
             })}

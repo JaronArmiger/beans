@@ -47,7 +47,7 @@ const AdminDashboard = () => {
         <div className="col-md-2">
           <AdminNav />
         </div>
-        <div className="col text-center">
+        <div className="col-md-10 text-center">
           <h4>Orders</h4>
           <AdminOrders 
             orders={orders}

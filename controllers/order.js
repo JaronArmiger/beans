@@ -8,6 +8,7 @@ exports.create = async (req, res) => {
   try {
     const {
       paymentId,
+      addressId,
     } = req.body;
 
     const paymentDetail = await PaymentDetail.findById(paymentId);
@@ -64,6 +65,7 @@ exports.create = async (req, res) => {
           products,
           paid: true,
           userEmail,
+          userAddress: addressId,
         });
 
         await newOrder.save();
@@ -85,24 +87,9 @@ exports.create = async (req, res) => {
   }
 };
 
-let testPromise = new Promise(async (resolve, reject) => {
-  try {
-    const product = await Product.find({title: 'dsfds'});
-    resolve(product);
-  } catch (err) {
-    reject(err);
-  }
-});
-
 exports.list = async (req, res) => {
   try {
-    // const result = await testPromise;
-    // res.send(result);
-    // testPromise
-    //   .then((result) => res.send(result))
-    //   .catch(err => res.send(err))
-    const result = await testPromise;
-    res.send(result);
+    
   } catch (err) {
     console.log(err);
     res.status(400).json({

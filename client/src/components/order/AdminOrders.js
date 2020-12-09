@@ -4,6 +4,9 @@ import {
   CloseCircleOutlined,
 } from '@ant-design/icons';
 import PaymentInfo from '../cards/PaymentInfo';
+import ProductCardInCheckout from '../cards/ProductCardInCheckout';
+import ModalImage from 'react-modal-image';
+import defaultImage from '../../images/snake.jpg';
 
 const statusOptions = [
   'Not Processed',
@@ -17,7 +20,6 @@ const statusOptions = [
 const AdminOrders = ({ orders, handleStatusChange }) => {
   const showProductInfo = (product, idx) => {
     const {
-      title,
       price,
       color, 
       count 
@@ -25,75 +27,76 @@ const AdminOrders = ({ orders, handleStatusChange }) => {
     const {
       brand,
       shipping,
+      title,
+      images,
     } = product.product;
+
     return (
-      <tr key={idx}>
-        <td>
-          <b>{title}</b>
-        </td>
-        <td>
-          {price && price.toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            })}
-        </td>
-        <td>
-          {brand}
-        </td>
-        <td>
-          {color}
-        </td>
-        <td>
-          {count}
-        </td>
-        <td className='text-center'>
-          {shipping === 'Yes' ?
-            <CheckCircleOutlined className='text-success'/> :
-            <CloseCircleOutlined className='text-danger'/>
-          }
-        </td>
-      </tr>
+      <div className='d-flex my-2 justify-content-between'>
+        <div
+          // style={{ maxWidth: '150px', height: 'auto' }}
+          className='d-flex justify-content-start'
+        >
+          <ModalImage
+            className='float-right'
+            small={images[0] ? images[0].url : defaultImage}
+            large={images[0] ? images[0].url : defaultImage}
+          />
+        </div>
+        <div>
+          <p>{title}</p>
+          <p>{price}</p>
+        </div>
+      </div>
     );
+
+    // return (
+    //   <div
+    //     key={idx}
+    //   >
+
+    //     <td>
+    //       <b>{title}</b>
+    //     </td>
+    //     <td>
+    //       {price && price.toLocaleString('en-US',{
+    //           style: 'currency',
+    //           currency: 'USD',
+    //         })}
+    //     </td>
+    //     <td>
+    //       {brand}
+    //     </td>
+    //     <td>
+    //       {color}
+    //     </td>
+    //     <td>
+    //       {count}
+    //     </td>
+    //     <td className='text-center'>
+    //       {shipping === 'Yes' ?
+    //         <CheckCircleOutlined className='text-success'/> :
+    //         <CloseCircleOutlined className='text-danger'/>
+    //       }
+    //     </td>
+    //   </div>
+    // );
   };
 
   const showProductsInOrder = (products) => {
     return (
-      <table className="table table-bordered">
-        <thead className='thead-light'>
-          <tr>
-            <th scope='col'>
-              Title
-            </th>
-            <th scope='col'>
-              Price
-            </th>
-            <th scope='col'>
-              Brand
-            </th>
-            <th scope='col'>
-              Color
-            </th>
-            <th scope='col'>
-              Count
-            </th>
-            <th scope='col'>
-              Shipping
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((p, idx) => (
-            showProductInfo(p, idx)
-          ))}
-        </tbody>
-      </table>
+      <div>
+        {products.map((p, idx) => (
+          showProductInfo(p, idx)
+        ))}
+      </div>
     )
   };
 
   const showOrders = () => (
     orders.map((o, idx) => (
-      <div key={idx} className="row m-5 p-3 card bg-light">
-        <PaymentInfo order={o} showStatus={false}/>
+      <div key={idx} className="row card bg-light">
+        {/*<PaymentInfo order={o} showStatus={false}/>*/}
         {showProductsInOrder(o.products)}
         <div className="row">
           <div className="col-md-4">

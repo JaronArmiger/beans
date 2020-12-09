@@ -31,6 +31,10 @@ const OrderSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
+  userAddress: {
+    type: ObjectId,
+    ref: 'Address',
+  },
   cashOnDelivery: { type: Boolean, default: false },
 }, { timestamps: true });
 

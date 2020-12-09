@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const validateAddress = (address) => {
   const errors = [];
   if (!address.firstName) {
@@ -43,3 +45,7 @@ export const validateAddress = (address) => {
 
   return errors;
 };
+
+export const saveAddress = (address) => {
+  return axios.post(`${process.env.REACT_APP_API}/address`, { address });
+}
