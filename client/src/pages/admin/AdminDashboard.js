@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import AdminOrders from '../../components/order/AdminOrders';
 import ProductCreate from './product/ProductCreate';
+import AllProducts from './product/AllProducts';
 import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
-const AdminDashboard = () => {
-  const [openKey, setOpenKey] = useState('1');
+const AdminDashboard = ({ match }) => {
+  const { key } = match.params;
+  const [openKey, setOpenKey] = useState(key || '1');
 
   return (
   	<div className="container-fluid">
@@ -28,7 +30,7 @@ const AdminDashboard = () => {
               <ProductCreate setOpenKey={setOpenKey}/>
             </TabPane>
             <TabPane tab="Product View" key="3">
-              tab 3
+              <AllProducts />
             </TabPane>
             <TabPane tab="Category" key="4">
               tab 1

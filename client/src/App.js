@@ -109,7 +109,7 @@ const App = () => {
         <UserRoute exact path='/user/dashboard' component={UserDashboard} />
         <UserRoute exact path='/checkout' component={Checkout} />
         <UserRoute exact path='/payment' component={Payment} />
-        <AdminRoute exact path='/admin/dashboard' component={AdminDashboard} />
+        <AdminRoute exact path='/admin/dashboard/:key?' component={AdminDashboard} />
         <AdminRoute exact path='/admin/category' component={CategoryCreate} />
         <AdminRoute 
           exact 

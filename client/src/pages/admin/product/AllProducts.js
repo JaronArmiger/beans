@@ -52,29 +52,21 @@ const AllProducts = () => {
   }
 
   return (
-  	<div className="container-fluid">
+  	<React.Fragment>
+      {loading && <LoadingOutlined className='text-warning h1'/>}
       <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col">
-          <h4>All Products</h4>
-          {loading && <LoadingOutlined className='text-warning h1'/>}
-          <div className="row">
-            {products.map((p) => {
-              return (
-                <div className="col-md-4 pb-3" key={p._id}>
-                  <AdminProductCard 
-                    product={p}
-                    handleRemove={handleRemove}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {products.map((p) => {
+          return (
+            <div className="col-md-4 pb-3" key={p._id}>
+              <AdminProductCard 
+                product={p}
+                handleRemove={handleRemove}
+              />
+            </div>
+          );
+        })}
       </div>
-  	</div>
+    </React.Fragment>
   );
 };
 

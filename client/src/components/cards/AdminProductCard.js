@@ -32,7 +32,7 @@ const AdminProductCard = ({ product, handleRemove }) => {
           to={`/admin/product/${slug}`}
         >
   	  	  <EditOutlined
-  	  	    className='text-warning'
+  	  	    className='text-primary'
   	  	  />
         </Link>, 
   	  	<DeleteOutlined 

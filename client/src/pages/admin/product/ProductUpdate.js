@@ -107,7 +107,7 @@ const ProductUpdate = ({ match, history }) => {
       	setLoading(false);
       	console.log(res.data);
       	toast.success(`Product updated successfully!`);
-      	history.push('/admin/products');
+      	history.push('/admin/dashboard/3');
       })
       .catch((err) => {
       	setLoading(false);
@@ -139,12 +139,9 @@ const ProductUpdate = ({ match, history }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col-md-10">
-          <h4>Product Create</h4>
+      <div className="row justify-content-center">
+        <div className="col-md-10 pt-4">
+          <h4>Product Update</h4>
           {loading && <LoadingOutlined className='text-danger h1'/>}
           <hr />
           <ProductForm 
