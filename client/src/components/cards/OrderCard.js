@@ -9,7 +9,15 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const { Panel } = Collapse;
 
-const OrderCard = ({ order, admin=false }) => {
+const statusOptions = [
+  'Not Processed',
+  'Processing',
+  'Dispatched',
+  'Cancelled',
+  'Completed',
+];
+
+const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
   const [activeKey, setActiveKey] = useState([]);
   const address = order.userAddress;
   const products = order.products;
@@ -59,7 +67,28 @@ const OrderCard = ({ order, admin=false }) => {
   const showOrderDetail = () => (
     <div>
       { admin ? (
-          <p>ay</p>
+          <React.Fragment>
+            <b>Status: </b>
+            <select
+              name='order-status'
+              className='p-2 ml-5'
+              style={{ 
+                cursor: 'pointer',
+                color: calcStatusColor(),
+                fontWeight: 'bold',
+                fontSize: '17px',
+                border: 'none',
+              }}
+              defaultValue={order.orderStatus}
+              onChange={e => handleStatusChange(order._id, e.target.value)}
+            >
+              {statusOptions.map((op, idx) => (
+                <option value={op} key={idx}>
+                  {op}
+                </option>
+              ))}
+            </select>
+          </React.Fragment>
         ) : (
         <p>
           <b>STATUS: </b>
