@@ -96,38 +96,42 @@ const ProductCard = ({ product }) => {
   }
 
   return (
-    <Card
-      cover={
-        (<img 
-            src={(images && images.length > 0) ? images[0].url : defaultImage}
-            style={{ height: '250px', objectFit: 'cover' }}
-            className='p-1'
-            alt={title}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-         />)
-      }
+    <Link
+      to={`/product/${slug}`}
     >
-      <Meta
-          className={
-            `text-center ${sold ? 'alert alert-danger' : ''}`
-          }
-          title={title}
-          description={
-            sold ?
-            'SOLD' :
-            `${price ? price.toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            }) : ''}`
-            // description ? (
-            //   (description.length > 30) ?
-            //   (`${description.substring(0, 30)}...`)
-            //   : description
-            // ) : ''
-          }
-        />
-    </Card>
+      <Card
+        cover={
+          (<img 
+              src={(images && images.length > 0) ? images[0].url : defaultImage}
+              style={{ height: '250px', objectFit: 'cover' }}
+              className='p-1'
+              alt={title}
+              onMouseOver={handleMouseOver}
+              onMouseOut={handleMouseOut}
+           />)
+        }
+      >
+        <Meta
+            className={
+              `text-center ${sold ? 'alert alert-danger' : ''}`
+            }
+            title={title}
+            description={
+              sold ?
+              'SOLD' :
+              `${price ? price.toLocaleString('en-US',{
+                style: 'currency',
+                currency: 'USD',
+              }) : ''}`
+              // description ? (
+              //   (description.length > 30) ?
+              //   (`${description.substring(0, 30)}...`)
+              //   : description
+              // ) : ''
+            }
+          />
+      </Card>
+    </Link>
   );
 };
 
