@@ -39,13 +39,14 @@ const initialValues = {
   size: '',
 }
 
-const ProductCreate = () => {
+const ProductCreate = ({ setOpenKey }) => {
   const [values, setValues] = useState(initialValues);
   const [subOptions, setSubOptions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
 
   const {token} = useSelector(state => state.user);
+
 
   useEffect(() => {
     loadCategories();
@@ -71,12 +72,16 @@ const ProductCreate = () => {
       	setLoading(false);
       	console.log(res.data);
       	window.alert(`"${res.data.title}" created successfully!`);
-      	window.location.reload();
+        // window.reload();
+      	setOpenKey('3');
+        setValues(initialValues);
       })
       .catch((err) => {
       	setLoading(false);
-        console.log(err.response.data.err);
-        toast.error(err.response.data.err);
+        if (err.response) {
+          console.log(err.response.data.err);
+          toast.error(err.response.data.err);
+        }
       });
   }
 
@@ -101,28 +106,20 @@ const ProductCreate = () => {
   }
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col-md-10">
-          <h4>Product Create</h4>
-          {loading && <LoadingOutlined className='text-danger h1'/>}
-          <hr />
-          <ProductForm 
-            handleChange={handleChange}
-            handleCategoryChange={handleCategoryChange}
-            handleSubmit={handleSubmit}
-            values={values}
-            setValues={setValues}
-            subOptions={subOptions}
-            setLoading={setLoading}
-            categories={categories}
-          />
-        </div>
-      </div>
-    </div>
+    <React.Fragment>
+      {loading && <LoadingOutlined className='text-danger h1'/>}
+      <hr />
+      <ProductForm 
+        handleChange={handleChange}
+        handleCategoryChange={handleCategoryChange}
+        handleSubmit={handleSubmit}
+        values={values}
+        setValues={setValues}
+        subOptions={subOptions}
+        setLoading={setLoading}
+        categories={categories}
+      />
+    </React.Fragment>
   );
 };
 

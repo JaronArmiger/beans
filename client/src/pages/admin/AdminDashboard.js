@@ -1,66 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import AdminNav from '../../components/nav/AdminNav';
 import AdminOrders from '../../components/order/AdminOrders';
-import {
-  getOrders,
-  changeOrderStatus,
-} from '../../functions/admin';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import ProductCreate from './product/ProductCreate';
 import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
 const AdminDashboard = () => {
-  // const [orders, setOrders] = useState([]);
-
-  // const { token } = useSelector(state => state.user);
-
-  // useEffect(() => {
-  //   loadOrders();
-  // }, []);
-
-  // const loadOrders = () => {
-  //   getOrders(token)
-  //     .then(res => {
-  //       console.log(res.data);
-  //       setOrders(res.data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // };
-
-  // const handleStatusChange = (orderId, newStatus) => {
-  //   changeOrderStatus(orderId, newStatus, token)
-  //     .then(res => {
-  //       if (res.data.ok) {
-  //         loadOrders()
-  //         toast.success(`Order status updated to "${newStatus}"`)
-  //       };
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
+  const [openKey, setOpenKey] = useState('1');
 
   return (
   	<div className="container-fluid">
       <div className="row justify-content-center">
         <div className="col-md-10 p-2">
           <Tabs 
-            defaultActiveKey="1" 
+            activeKey={openKey}
             size='large' 
             style={{ 
               marginBottom: 32,
             }}
             tabPosition='top'
+            onChange={(key) => setOpenKey(key)}
           >
             <TabPane tab="Orders" key="1">
               <AdminOrders />
             </TabPane>
             <TabPane tab="Product Create" key="2">
-              tab 2
+              <ProductCreate setOpenKey={setOpenKey}/>
             </TabPane>
             <TabPane tab="Product View" key="3">
               tab 3
