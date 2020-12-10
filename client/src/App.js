@@ -124,7 +124,7 @@ const App = () => {
         <Route exact path='/product/:slug' component={ProductView} />
         <Route exact path='/category/:slug' component={CategoryHome} />
         <Route exact path='/sub/:slug' component={SubHome} />
-        <Route exact path='/shop' component={Shop} />
+        <Route exact path='/shop' component={() => <Shop windowWidth={windowWidth} />} />
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/pre-checkout' component={PreCheckout} />
         <Route exact path='/beta-checkout' component={BetaCheckout} />

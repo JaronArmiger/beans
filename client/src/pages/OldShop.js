@@ -24,13 +24,11 @@ import {
   Checkbox,
   Radio,
   Button,
-  Collapse,
 } from 'antd';
 
-const { Panel } = Collapse;
 const { SubMenu } = Menu;
 
-const Shop = ({ windowWidth }) => {
+const Shop = () => {
   const max = 10000;
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false); 
@@ -98,13 +96,13 @@ const Shop = ({ windowWidth }) => {
   // }, [categoryIds]);
 
   const loadAllProducts = (count) => {
-  	setLoading(true);
-  	getProductsByCount(count)
-  	  .then((res) => {
-  	  	setProducts(res.data);
-  	  	setLoading(false);
-  	  })
-  	  .catch((err) => {
+    setLoading(true);
+    getProductsByCount(count)
+      .then((res) => {
+        setProducts(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
         setLoading(false);
         console.log(err);
       });
@@ -326,184 +324,171 @@ const Shop = ({ windowWidth }) => {
     );
   };
 
-  const showFilters = () => (
-    <React.Fragment>
-      <Button
-        block
-        type='primary'
-        onClick={handleReset}
-      >
-        Reset Filters
-      </Button>
-      <Menu
-        mode='inline'
-        defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
-      >
-        {/* Price */}
-        <SubMenu 
-          key='1' 
-          title={
-            <span className='h6'>
-              <DollarOutlined />
-              Price
-            </span>
-          }
-        >
-          <div>
-            <Slider 
-              className='mx-4'
-              tipFormatter={(v) => `$${v}`}
-              range
-              value={price}
-              onChange={handleSlider}
-              max={max}
-            />
-          </div>
-        </SubMenu>
-      {/* Category */}
-        <SubMenu 
-          key='2' 
-          title={
-            <span className='h6'>
-              <AimOutlined />
-              Categories
-            </span>
-          }
-        >
-          <div
-            style={{ marginTop: '-10px' }}
-          >
-            {showCategories()}
-          </div>
-        </SubMenu>
-      {/* Stars */}
-      {/*<SubMenu 
-                    key='3' 
-                    title={
-                      <span className='h6'>
-                        <StarOutlined />
-                        Rating
-                      </span>
-                    }
-                  >
-                    <div
-                      style={{ marginTop: '-10px' }}
-                    >  
-                      <div className="px-4 pb-2">
-                        {showStars()}
-                      </div>
-                    </div>
-                  </SubMenu>*/}
-        {/* Subs */}
-        <SubMenu 
-          key='4' 
-          title={
-            <span className='h6'>
-              <AimOutlined />
-              Sub-Categories
-            </span>
-          }
-        >
-          <div
-            style={{ marginTop: '-10px' }}
-          >
-            <div className="px-4 pb-2">
-              {showSubs()}
-            </div>
-          </div>
-        </SubMenu>
-      {/* Brands */}
-        {/*<SubMenu 
-                      key='5' 
-                      title={
-                        <span className='h6'>
-                          <AimOutlined />
-                          Brands
-                        </span>
-                      }
-                    >
-                      <div
-                        style={{ marginTop: '-10px' }}
-                      >
-                        <div className="px-4 pb-2">
-                          {showBrands()}
-                        </div>
-                      </div>
-                    </SubMenu>*/}
-      {/* Colors */}
-        <SubMenu 
-          key='6' 
-          title={
-            <span className='h6'>
-              <AimOutlined />
-              Colors
-            </span>
-          }
-        >
-          <div
-            style={{ marginTop: '-10px' }}
-          >
-            <div className="px-4 pb-2">
-              {showColors()}
-            </div>
-          </div>
-        </SubMenu>
-      {/* Shipping */}
-        <SubMenu 
-          key='7' 
-          title={
-            <span className='h6'>
-              <AimOutlined />
-              Shipping
-            </span>
-          }
-        >
-          <div
-            style={{ marginTop: '-10px' }}
-          >
-            <div className="px-4 pb-2">
-              {showShipping()}
-            </div>
-          </div>
-        </SubMenu>
-      </Menu>
-    </React.Fragment>
-  );
-
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-md-3 pt-2">
-          <Collapse
-            defaultActiveKey={windowWidth > 768 ? ['1'] : []}
+          <h4>Filters</h4>
+          <hr />
+          <Button
+            block
+            type='primary'
+            onClick={handleReset}
           >
-            <Panel
-              header={<h4 className='mb-0'>Filters</h4>}
-              key='1'
+            Reset Filters
+          </Button>
+          <Menu
+            mode='inline'
+            defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
+          >
+            {/* Price */}
+            <SubMenu 
+              key='1' 
+              title={
+                <span className='h6'>
+                  <DollarOutlined />
+                  Price
+                </span>
+              }
             >
-              {showFilters()}
-            </Panel>
-          </Collapse>
+              <div>
+                <Slider 
+                  className='mx-4'
+                  tipFormatter={(v) => `$${v}`}
+                  range
+                  value={price}
+                  onChange={handleSlider}
+                  max={max}
+                />
+              </div>
+            </SubMenu>
+          {/* Category */}
+            <SubMenu 
+              key='2' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Categories
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                {showCategories()}
+              </div>
+            </SubMenu>
+          {/* Stars */}
+          <SubMenu 
+              key='3' 
+              title={
+                <span className='h6'>
+                  <StarOutlined />
+                  Rating
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >  
+                <div className="px-4 pb-2">
+                  {showStars()}
+                </div>
+              </div>
+            </SubMenu>
+            {/* Subs */}
+            <SubMenu 
+              key='4' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Sub-Categories
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showSubs()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Brands */}
+            <SubMenu 
+              key='5' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Brands
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showBrands()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Colors */}
+            <SubMenu 
+              key='6' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Colors
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showColors()}
+                </div>
+              </div>
+            </SubMenu>
+          {/* Shipping */}
+            <SubMenu 
+              key='7' 
+              title={
+                <span className='h6'>
+                  <AimOutlined />
+                  Shipping
+                </span>
+              }
+            >
+              <div
+                style={{ marginTop: '-10px' }}
+              >
+                <div className="px-4 pb-2">
+                  {showShipping()}
+                </div>
+              </div>
+            </SubMenu>
+          </Menu>
         </div>
         <div className="col-md-9 pt-2">
-     		  {products.length < 1 ? (
-     		  	<h4>No products found</h4>
-     		  ) : (
-     		    <h4>Showing {products.length} product{products.length > 1 ? 's' : ''}</h4>
-     		  )}
-     		  {loading && <LoadingOutlined className='text-warning h1'/>}
-     		  <div className="row pb-5">
-     		    {products.map((p) => {
-     		      return (
-     		      	<div
-     		      	  key={p._id}
-     		      	  className='col-md-4 mt-3'
-     		      	>
-     		      	  <ProductCard product={p} />
-     		      	</div>
-     		      );
-     		    })}
-     		  </div>
+          {products.length < 1 ? (
+            <h4>No products found</h4>
+          ) : (
+            <h4>Showing {products.length} product{products.length > 1 ? 's' : ''}</h4>
+          )}
+          {loading && <LoadingOutlined className='text-warning h1'/>}
+          <div className="row pb-5">
+            {products.map((p) => {
+              return (
+                <div
+                  key={p._id}
+                  className='col-md-4 mt-3'
+                >
+                  <ProductCard product={p} />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
