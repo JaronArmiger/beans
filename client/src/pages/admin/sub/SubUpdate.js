@@ -35,8 +35,8 @@ const SubUpdate = ({ match, history }) => {
   const loadSub = () => {
     getSub(match.params.slug)
       .then((res) => {
-        setName(res.data.name);
-        setParent(res.data.parent);
+        setName(res.data.sub.name);
+        setParent(res.data.sub.parent);
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +55,7 @@ const SubUpdate = ({ match, history }) => {
         setLoading(false);
         setName('');
         toast.success('Sub-Category updated!');
-        history.push('/admin/sub');
+        history.push('/admin/dashboard/5');
       })
       .catch((err) => {
         setLoading(false);
@@ -66,11 +66,8 @@ const SubUpdate = ({ match, history }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col">
+      <div className="row justify-content-center">
+        <div className="col-md-10 pt-4">
           {loading ? (
               (<h4 className="text-danger">Loading...</h4>)
             ) : (<h4>Update Sub-Category</h4>)}

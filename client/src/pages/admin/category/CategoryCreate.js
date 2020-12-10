@@ -76,52 +76,42 @@ const CategoryCreate = () => {
   }
 
   return (
-  	<div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col">
-          {loading ? (
-              (<h4 className="text-danger">Loading...</h4>)
-            ) : (<h4>Create Category</h4>)}
-          <CategoryForm 
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-          />
+  	<React.Fragment>
+      <CategoryForm 
+        handleSubmit={handleSubmit}
+        name={name}
+        setName={setName}
+      />
 
-          <hr />
+      <hr />
 
-          <LocalSearch 
-            keyword={keyword}
-            setKeyword={setKeyword}
-          />
-          
-          {categories.filter(searched(keyword)).map((c) => (
-            <div
-              className='alert alert-secondary'
-              key={c._id}
+      <LocalSearch 
+        keyword={keyword}
+        setKeyword={setKeyword}
+      />
+      
+      {categories.filter(searched(keyword)).map((c) => (
+        <div
+          className='alert alert-secondary'
+          key={c._id}
+        >
+          {c.name}{' '}
+          <span
+            onClick={() => handleRemove(c.slug)}
+            className='btn btn-sm float-right'
+          >
+            <DeleteOutlined className='text-danger'/>
+          </span>{' '}
+          <Link to={`/admin/category/${c.slug}`}>
+            <span 
+            className='btn btn-sm float-right'
             >
-              {c.name}{' '}
-              <span
-                onClick={() => handleRemove(c.slug)}
-                className='btn btn-sm float-right'
-              >
-                <DeleteOutlined className='text-danger'/>
-              </span>{' '}
-              <Link to={`/admin/category/${c.slug}`}>
-                <span 
-                className='btn btn-sm float-right'
-                >
-                  <EditOutlined className='text-warning'/>
-                </span>
-              </Link>
-            </div>
-          ))}
+              <EditOutlined className='text-warning'/>
+            </span>
+          </Link>
         </div>
-      </div>
-  	</div>
+      ))}
+    </React.Fragment>
   );
 };
 

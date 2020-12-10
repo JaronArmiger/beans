@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import AdminOrders from '../../components/order/AdminOrders';
 import ProductCreate from './product/ProductCreate';
+import CategoryCreate from './category/CategoryCreate';
+import SubCreate from './sub/SubCreate';
+import CouponCreate from './coupon/CouponCreate';
 import AllProducts from './product/AllProducts';
+import Password from '../user/Password';
 import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
@@ -33,16 +37,16 @@ const AdminDashboard = ({ match }) => {
               <AllProducts />
             </TabPane>
             <TabPane tab="Category" key="4">
-              tab 1
+              <CategoryCreate />
             </TabPane>
             <TabPane tab="Sub-Category" key="5">
-              tab 2
+              <SubCreate />
             </TabPane>
             <TabPane tab="Coupon" key="6">
-              tab 3
+              <CouponCreate />
             </TabPane>
             <TabPane tab="Password" key="7">
-              tab 3
+              <Password />
             </TabPane>
           </Tabs>
         </div>

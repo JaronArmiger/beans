@@ -22,8 +22,8 @@ const CategoryUpdate = ({ history, match }) => {
   const loadCategory = (slug) => {
     getCategory(slug)
       .then((res) => {
-        setName(res.data.name);
-        setOldName(res.data.name);
+        setName(res.data.category.name);
+        setOldName(res.data.category.name);
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +38,7 @@ const CategoryUpdate = ({ history, match }) => {
         setLoading(false);
         toast.success(`"${oldName}" changed to "${res.data.name}"!`);
         setName('');
-        history.push('/admin/category');
+        history.push('/admin/dashboard/4');
       })
       .catch((err) => {
         setLoading(false);
@@ -50,11 +50,8 @@ const CategoryUpdate = ({ history, match }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col">
+      <div className="row justify-content-centert">
+        <div className="col-md-10 pt-4">
           {loading ? (
               (<h4 className="text-danger">Loading...</h4>)
             ) : (<h4>Update Category</h4>)}

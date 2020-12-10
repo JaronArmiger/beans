@@ -14,14 +14,9 @@ const RegisterComplete = lazy(() => import('./pages/auth/RegisterComplete'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
 const UserDashboard = lazy(() => import('./pages/user/UserDashboard'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
-const CategoryCreate = lazy(() => import('./pages/admin/category/CategoryCreate'));
 const CategoryUpdate = lazy(() => import('./pages/admin/category/CategoryUpdate'));
-const SubCreate = lazy(() => import('./pages/admin/sub/SubCreate'));
 const SubUpdate = lazy(() => import('./pages/admin/sub/SubUpdate'));
-const ProductCreate = lazy(() => import('./pages/admin/product/ProductCreate'));
 const ProductUpdate = lazy(() => import('./pages/admin/product/ProductUpdate'));
-const AllProducts = lazy(() => import('./pages/admin/product/AllProducts'));
-const CreateCouponPage = lazy(() => import('./pages/admin/coupon/CreateCouponPage'));
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Cart = lazy(() => import('./pages/Cart'));
@@ -110,30 +105,22 @@ const App = () => {
         <UserRoute exact path='/checkout' component={Checkout} />
         <UserRoute exact path='/payment' component={Payment} />
         <AdminRoute exact path='/admin/dashboard/:key?' component={AdminDashboard} />
-        <AdminRoute exact path='/admin/category' component={CategoryCreate} />
         <AdminRoute 
           exact 
           path='/admin/category/:slug' 
           component={CategoryUpdate} 
         />
-        <AdminRoute exact path='/admin/sub' component={SubCreate} />
         <AdminRoute 
           exact 
           path='/admin/sub/:slug' 
           component={SubUpdate} 
         />
-        <AdminRoute exact path='/admin/product' component={ProductCreate} />
-        <AdminRoute exact path='/admin/products' component={AllProducts} />
         <AdminRoute 
           exact 
           path='/admin/product/:slug' 
           component={ProductUpdate} 
         />
-        <AdminRoute 
-          exact 
-          path='/admin/coupon' 
-          component={CreateCouponPage} 
-        />
+
         <Route exact path='/product/:slug' component={ProductView} />
         <Route exact path='/category/:slug' component={CategoryHome} />
         <Route exact path='/sub/:slug' component={SubHome} />

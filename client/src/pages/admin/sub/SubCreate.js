@@ -94,75 +94,64 @@ const SubCreate = () => {
   }
 
   return (
-  	<div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <AdminNav />
-        </div>
-        <div className="col">
-          {loading ? (
-              (<h4 className="text-danger">Loading...</h4>)
-            ) : (<h4>Create Sub-Category</h4>)}
-
-          <div className="form-group">
-            <label>Parent Category</label>
-            <select 
-              name="category" 
-              className='form-control'
-              onChange={(e) => setCategory(e.target.value)}
-            >  
-              <option>select a parent category</option>
-              {categories.length > 0 && categories.map((c) => {
-              	return (
-              	  <option 
-              	    key={c._id}
-              	    value={c._id}
-              	  >
-              	    {c.name}
-              	  </option>
-              	);
-              })}
-            </select>
-          </div>
-
-          <CategoryForm 
-            handleSubmit={handleSubmit}
-            name={name}
-            setName={setName}
-          />
-
-          <hr />
-
-          <LocalSearch 
-            keyword={keyword}
-            setKeyword={setKeyword}
-          />
-          
-           {subs.filter(searched(keyword)).map((s) => (
-            <div
-              className='alert alert-secondary'
-              key={s._id}
-            >
-              {s.name}{' '}
-              <span
-                onClick={() => handleRemove(s.slug)}
-                className='btn btn-sm float-right'
-              >
-                <DeleteOutlined className='text-danger'/>
-              </span>{' '}
-              <Link to={`/admin/sub/${s.slug}`}>
-                <span 
-                className='btn btn-sm float-right'
-                >
-                  <EditOutlined className='text-warning'/>
-                </span>
-              </Link>
-            </div>
-          ))
-           }
-        </div>
+  	<React.Fragment>
+      <div className="form-group">
+        <label>Parent Category</label>
+        <select 
+          name="category" 
+          className='form-control'
+          onChange={(e) => setCategory(e.target.value)}
+        >  
+          <option>select a parent category</option>
+          {categories.length > 0 && categories.map((c) => {
+          	return (
+          	  <option 
+          	    key={c._id}
+          	    value={c._id}
+          	  >
+          	    {c.name}
+          	  </option>
+          	);
+          })}
+        </select>
       </div>
-  	</div>
+
+      <CategoryForm 
+        handleSubmit={handleSubmit}
+        name={name}
+        setName={setName}
+      />
+
+      <hr />
+
+      <LocalSearch 
+        keyword={keyword}
+        setKeyword={setKeyword}
+      />
+      
+       {subs.filter(searched(keyword)).map((s) => (
+        <div
+          className='alert alert-secondary'
+          key={s._id}
+        >
+          {s.name}{' '}
+          <span
+            onClick={() => handleRemove(s.slug)}
+            className='btn btn-sm float-right'
+          >
+            <DeleteOutlined className='text-danger'/>
+          </span>{' '}
+          <Link to={`/admin/sub/${s.slug}`}>
+            <span 
+            className='btn btn-sm float-right'
+            >
+              <EditOutlined className='text-warning'/>
+            </span>
+          </Link>
+        </div>
+      ))
+       }
+    </React.Fragment>
   );
 };
 
