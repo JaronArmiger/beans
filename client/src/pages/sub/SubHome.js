@@ -7,6 +7,7 @@ const SubHome = ({ match }) => {
   const [sub, setSub] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [name, setName] = useState('');
 
   const { slug } = match.params;
 
@@ -24,20 +25,50 @@ const SubHome = ({ match }) => {
       })
   }, [slug]);
 
+  useEffect(() => {
+    if (sub && sub.name) {
+      if (sub.name.includes('-m')) {
+        const newName = 'Men\'s ' + sub.name.substring(0, sub.name.length - 2);
+        setName(newName);
+      } else if (sub.name.includes('-w')) {
+        const newName = 'Women\'s ' + sub.name.substring(0, sub.name.length - 2);
+        setName(newName);
+      } else {
+         console.log(sub.name);
+        setName(sub.name);
+      }
+    }
+  }, [sub]);
+
+  // const showName = () => {
+  //   if (sub && sub.name) {
+  //     if (sub.name.includes('-m')) {
+  //       console.log('men')
+  //     }
+  //   }
+      
+  //   return (
+  //     <h4>Ay</h4>
+  //   );
+  // };
+
   return (
-  	<div className="container-fluid">
-  	  <div className="row">
-  	    <div className="col">
-	  	  <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-	  	    {products.length} products in "{sub.name}" sub-category
-	  	  </h4>
-  	    </div>
-  	  </div>
-  	  <div className="row">
-  	    {loading ? (
-	  	    <LoadingOutlined className='text-danger h1' />
+  	<div className="container">
+  	    {/*
+          <div className="row">
+            <div className="col">
+              <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+                {products.length} products in "{sub.name}" sub-category
+              </h4>
+            </div>
+          </div>
+      */}
+      <h4 className='pl-2'>{name}</h4>
+  	  <div className="row pt-4 pl-2">
+  	    {products.length < 1 ? (
+	  	    <h6>No products found :(</h6>
 	  	  ) : (
-	  	    products.length > 0 && products.map((p) => {
+	  	     products.map((p) => {
 	  	      return (
 	  	      	<div className="col-md-4" key={p._id}>
 	  	      	  <ProductCard product={p} />

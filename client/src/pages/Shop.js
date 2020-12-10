@@ -44,16 +44,22 @@ const Shop = ({ windowWidth }) => {
     'Black', 
     'Brown', 
     'Silver', 
-    'White', 
-    'Blue'
+    'White',
+    'Red',
+    'Orange',
+    'Yellow',
+    'Green',
+    'Blue',
+    'Purple',
+    'Other',
   ]);
-  const [brands, setBrands] = useState([
-    'Apple', 
-    'Samsung', 
-    'Microsoft', 
-    'Lenovo', 
-    'Asos'
-  ]);
+  // const [brands, setBrands] = useState([
+  //   'Apple', 
+  //   'Samsung', 
+  //   'Microsoft', 
+  //   'Lenovo', 
+  //   'Asos'
+  // ]);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedShipping, setSelectedShipping] = useState('');
@@ -230,19 +236,19 @@ const Shop = ({ windowWidth }) => {
     return categoryDivs;
   };
 
-  const showStars = (numStars=5) => {
-    const stars = [];
-    for (let i = numStars; i > 0; i--) {
-      stars.push(
-        <Star
-          key={i}
-          starClick={handleStarClick}
-          numberOfStars={i}
-        />
-      );
-    }
-    return stars;
-  };
+  // const showStars = (numStars=5) => {
+  //   const stars = [];
+  //   for (let i = numStars; i > 0; i--) {
+  //     stars.push(
+  //       <Star
+  //         key={i}
+  //         starClick={handleStarClick}
+  //         numberOfStars={i}
+  //       />
+  //     );
+  //   }
+  //   return stars;
+  // };
 
   const showSubs = () => {
     return subs.map((s) => {
@@ -259,27 +265,27 @@ const Shop = ({ windowWidth }) => {
     });
   };
 
-  const showBrands = () => {
-    const btns = brands.map((b, idx) => {
-      return (
-        <Radio
-          key={idx}
-          value={b}
-          name={b}
-        >
-          {b}
-        </Radio>
-      );
-    });
-    return (
-      <Radio.Group
-        onChange={(e) => radioChange(e, 'brand')}
-        value={selectedBrand}
-      >
-        {btns}
-      </Radio.Group>
-    );
-  };
+  // const showBrands = () => {
+  //   const btns = brands.map((b, idx) => {
+  //     return (
+  //       <Radio
+  //         key={idx}
+  //         value={b}
+  //         name={b}
+  //       >
+  //         {b}
+  //       </Radio>
+  //     );
+  //   });
+  //   return (
+  //     <Radio.Group
+  //       onChange={(e) => radioChange(e, 'brand')}
+  //       value={selectedBrand}
+  //     >
+  //       {btns}
+  //     </Radio.Group>
+  //   );
+  // };
 
   const showColors = () => {
     const btns = colors.map((c, idx) => {

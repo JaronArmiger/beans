@@ -6,7 +6,7 @@ import {
   Badge,
 } from 'antd';
 import { 
-  AppstoreOutlined,
+  HomeOutlined,
   MailOutlined,
   SettingOutlined,
   MenuOutlined,
@@ -208,7 +208,7 @@ const AltMobileHeader = () => {
           openKeys={openKeys}
           onOpenChange={onOpenChange}
         >
-          <Item key="home" icon={<AppstoreOutlined />}>
+          <Item key="home" icon={<HomeOutlined />}>
             <Link 
               to="/"
               onClick={() => setDrawerOpen(false)}

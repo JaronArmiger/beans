@@ -123,24 +123,24 @@ const Cart = ({ history }) => {
                   className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
                   disabled={cart.length === 0}
                 >
-                  BetaCheckout
-                </button>
-                <br />
-                <button
-                  onClick={() => saveOrdertoDb(false)}
-                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-                  disabled={cart.length === 0}
-                >
                   Checkout
                 </button>
-                <br />
-                <button
-                  onClick={() => saveOrdertoDb(true)}
-                  className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
-                  disabled={cart.length === 0}
-                >
-                  Pay Cash on Delivery
-                </button>
+                {/* <br />
+                                <button
+                                  onClick={() => saveOrdertoDb(false)}
+                                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                                  disabled={cart.length === 0}
+                                >
+                                  Checkout
+                                </button>
+                                <br />
+                                <button
+                                  onClick={() => saveOrdertoDb(true)}
+                                  className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
+                                  disabled={cart.length === 0}
+                                >
+                                  Pay Cash on Delivery
+                                </button>*/}
               </React.Fragment>
         </div>
       </div>
