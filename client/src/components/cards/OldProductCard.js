@@ -81,34 +81,58 @@ const ProductCard = ({ product }) => {
     toast.info(`${title} removed from cart!`);
   };
 
-  const handleMouseOver = (e) => {
-    if (!images || !images[1]) {
-      return;
-    };
-    e.currentTarget.src = images[1].url;
-  };
-
-  const handleMouseOut = (e) => {
-    if (!images || !images[1] || !images[0]) {
-      return;
-    };
-    e.currentTarget.src = images[0].url;
-  }
-
   return (
-    <Card
-      cover={
-        (<img 
-            src={(images && images.length > 0) ? images[0].url : defaultImage}
-            style={{ height: '250px', objectFit: 'cover' }}
-            className='p-1'
-            alt={title}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-         />)
-      }
-    >
-      <Meta
+    <React.Fragment>
+      {(product && product.ratings && product.ratings.length > 0) ? (
+          showAverage(product.ratings)
+        ) : (
+          <div className="text-center pt-1 pb-3">
+            No ratings yet
+          </div>
+        )}
+      <Card
+        cover={
+          (<img 
+              src={(images && images.length > 0) ? images[0].url : defaultImage}
+              style={{ height: '150px', objectFit: 'cover' }}
+              className='p-1'
+              alt={title}
+           />)
+        }
+        actions={[
+          <Link
+            to={`/product/${slug}`}
+          >
+            <EyeOutlined
+              className='text-link'
+            />
+            <br />
+            View
+          </Link>,
+          <React.Fragment>
+            {_.some(cart, product) ?
+              (<a onClick={handleRemoveFromCart}
+                >
+                          <ShoppingCartOutlined 
+                            className='text-danger'
+                          />
+                          <br />
+                          Remove from Cart
+                        </a>) :
+              (<a 
+                  onClick={handleAddToCart}
+                  disabled={sold}
+                >
+                    <ShoppingCartOutlined 
+                      className='text-success'
+                    />
+                    <br />
+                    Add to Cart
+                  </a>)}
+            </React.Fragment>
+        ]}
+      >
+        <Meta
           className={
             `text-center ${sold ? 'alert alert-danger' : ''}`
           }
@@ -126,8 +150,9 @@ const ProductCard = ({ product }) => {
             //   : description
             // ) : ''
           }
-        />
-    </Card>
+        /> 
+      </Card>
+    </React.Fragment>
   );
 };
 
