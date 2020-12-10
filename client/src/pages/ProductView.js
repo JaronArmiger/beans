@@ -61,7 +61,7 @@ const ProductView = ({ match }) => {
   	  <div className="row">
   	    <div className='col text-center pt-5 pb-5'>
           <hr />
-          <h4>Related Products</h4>
+          <h4>You May Also Like</h4>
           <hr />
         </div>
   	  </div>

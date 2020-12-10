@@ -27,9 +27,9 @@ const SingleProduct = ({
   star,
 }) => {
   const {
-  	title,
-  	images,
-  	description,
+    title,
+    images,
+    description,
     _id,
     quantity,
     sold,
@@ -106,22 +106,47 @@ const SingleProduct = ({
     <React.Fragment>
       <div className="col-md-7">
         <Carousel
+          showArrows={true}
+          autoPlay
           infiniteLoop
-          dots={false}
         >
           {(images && images.length > 0) ? images.map((i) => {
-          	return (
-          	  <img 
-                src={i.url} 
-                alt={title} 
-                key={i.public_id}
-                style={{ maxHeight: '400px' }}
-              />
-          	);
+            return (
+              <img src={i.url} alt={title} key={i.public_id} />
+            );
           }) : <img src={defaultImage} alt={title} />}
         </Carousel>
+        <Tabs
+          type='card'
+        >
+          <TabPane
+            tab='Description'
+            key='1'
+          >
+            {description && description}
+          </TabPane>
+          <TabPane
+            tab='Wisdom'
+            key='2'
+          >
+            way more grimy
+          </TabPane>
+        </Tabs>
       </div>
       <div className="col-md-5">
+        <h1 className='bg-info p-3'>{title}</h1>
+        {sold && (
+            <div className="alert alert-danger">
+              SOLD
+            </div>
+          )}
+        {(product && product.ratings && product.ratings.length > 0) ? (
+          showAverage(product.ratings)
+        ) : (
+          <div className="text-center pt-1 pb-3">
+            No ratings yet
+          </div>
+        )}
         <Card
           actions={[
             <React.Fragment>
@@ -143,11 +168,11 @@ const SingleProduct = ({
                   Add to Cart
                 </a>)}
             </React.Fragment>,
-          	<a onClick={handleAddToWishlist}>
-          	  <HeartOutlined className='text-info'/>
-          	  <br />
-          	  Add to Wishlist
-          	</a>,
+            <a onClick={handleAddToWishlist}>
+              <HeartOutlined className='text-info'/>
+              <br />
+              Add to Wishlist
+            </a>,
             <RatingModal>
               <StarRating
                 name={_id}
