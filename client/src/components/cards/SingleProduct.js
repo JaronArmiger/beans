@@ -32,6 +32,7 @@ const SingleProduct = ({
   	description,
     _id,
     quantity,
+    sold,
   } = product;
 
   const { cart, user } = useSelector(state => state);
@@ -39,7 +40,7 @@ const SingleProduct = ({
 
 
   const handleAddToCart = () => {
-    if (quantity === 0) {
+    if (sold) {
       toast.error(`${title} is currently out of stock. Sorry :(`);
       return;
     }
@@ -92,7 +93,7 @@ const SingleProduct = ({
     addToWishlist(_id, user.token)
       .then(res => {
         if (res.data.ok) {
-          toast.success(`"${title}" added to wishlist!`);
+          toast.success(`"${title}" added to wishlist! View in your dashboard!`);
           // history.push('/user/wishlist');
         }
       })
@@ -134,9 +135,9 @@ const SingleProduct = ({
       </div>
       <div className="col-md-5">
         <h1 className='bg-info p-3'>{title}</h1>
-        {quantity === 0 && (
+        {sold && (
             <div className="alert alert-danger">
-              OUT OF STOCK
+              SOLD
             </div>
           )}
         {(product && product.ratings && product.ratings.length > 0) ? (
@@ -158,7 +159,7 @@ const SingleProduct = ({
                   Remove from Cart
                 </a>) :
               (<a onClick={handleAddToCart}
-                  disabled={quantity === 0}
+                  disabled={sold}
                 >
                   <ShoppingCartOutlined 
                     className='text-success'

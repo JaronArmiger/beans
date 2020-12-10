@@ -23,6 +23,7 @@ const ProductCard = ({ product }) => {
     price,
     _id,
     quantity,
+    sold,
   } = product;
 
   const { cart } = useSelector(state => state);
@@ -30,7 +31,7 @@ const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    if (quantity === 0) {
+    if (sold) {
       toast.error(`${title} is currently out of stock. Sorry :(`);
       return;
     }
@@ -120,7 +121,7 @@ const ProductCard = ({ product }) => {
                         </a>) :
               (<a 
                   onClick={handleAddToCart}
-                  disabled={quantity===0}
+                  disabled={sold}
                 >
                     <ShoppingCartOutlined 
                       className='text-success'
@@ -133,12 +134,12 @@ const ProductCard = ({ product }) => {
       >
         <Meta
           className={
-            `text-center ${quantity === 0 ? 'alert alert-danger' : ''}`
+            `text-center ${sold ? 'alert alert-danger' : ''}`
           }
           title={title}
           description={
-            quantity === 0 ?
-            'OUT OF STOCK' :
+            sold ?
+            'SOLD' :
             `${price ? price.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
