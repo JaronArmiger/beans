@@ -36,6 +36,11 @@ const OrderSchema = new mongoose.Schema({
     ref: 'Address',
   },
   cashOnDelivery: { type: Boolean, default: false },
+  chargeAmount: Number,
+  shipping: {
+    type: Boolean,
+    default: false,
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);

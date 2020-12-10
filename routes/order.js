@@ -8,6 +8,7 @@ const {
 
 // controller
 const { 
+  read,
   create,
   list,
   remove,
@@ -17,6 +18,10 @@ const {
 router.get(
   '/orders',
   list
+);
+router.get(
+  '/order/:orderId',
+  read
 );
 router.post(
   '/order',

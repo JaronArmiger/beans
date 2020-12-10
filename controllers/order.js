@@ -7,6 +7,11 @@ const { createPaymentPromise } = require('../utils/square');
 exports.read = async (req, res) => {
   try {
     const { orderId } = req.params;
+    const order = await Order
+      .findById(orderId)
+      .populate('products.product', 'title images')
+      .populate('userAddress');
+    res.json(order);
   } catch (err) {
     console.log(err);
     res.status(400).json({
@@ -77,6 +82,7 @@ exports.create = async (req, res) => {
           paid: true,
           userEmail,
           userAddress: addressId,
+          chargeAmount,
         });
 
         await newOrder.save();
