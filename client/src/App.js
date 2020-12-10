@@ -12,7 +12,7 @@ const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
 const RegisterComplete = lazy(() => import('./pages/auth/RegisterComplete'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
-const History = lazy(() => import('./pages/user/History'));
+const UserDashboard = lazy(() => import('./pages/user/UserDashboard'));
 const Password = lazy(() => import('./pages/user/Password'));
 const Wishlist = lazy(() => import('./pages/user/Wishlist'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
@@ -108,7 +108,7 @@ const App = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/register/complete' component={RegisterComplete} />
         <Route exact path='/forgot/password' component={ForgotPassword} />
-        <UserRoute exact path='/user/history' component={History} />
+        <UserRoute exact path='/user/dashboard' component={UserDashboard} />
         <UserRoute exact path='/user/password' component={Password} />
         <UserRoute exact path='/user/wishlist' component={Wishlist} />
         <UserRoute exact path='/checkout' component={Checkout} />

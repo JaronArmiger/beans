@@ -70,9 +70,9 @@ const OrderReceipt = ({ match }) => {
             >
               { user && 
                 <Link
-                  to='/user/history'
+                  to='/user/dashboard'
                 >
-                  View in your order history >> 
+                  View in your order dashboard >> 
                 </Link>
             }
             </div>

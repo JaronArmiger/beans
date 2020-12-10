@@ -212,7 +212,7 @@ const Header = () => {
           >
             {user && user.role === "subscriber" && (
               <Item>
-                <Link to="/user/history">Dashboard</Link>
+                <Link to="/user/dashboard">Dashboard</Link>
               </Item>
             )}
 
