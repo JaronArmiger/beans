@@ -15,7 +15,6 @@ const History = () => {
   const loadUserOrders = () => {
     getUserOrders(token)
       .then(res => {
-        console.log(res.data);
         setOrders(res.data);
       })
       .catch(err => {
@@ -34,22 +33,12 @@ const History = () => {
   );
 
   return (
-  	<div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <UserNav />
-        </div>
-        <div className="col pt-3">
-          <h4>
-            Your Orders
-          </h4>
-          {orders.length > 0 ? 
-            showOrders() :
-            'No orders yet :\'('
-          }
-        </div>
-      </div>
-  	</div>
+    <React.Fragment>
+      {orders.length > 0 ? 
+        showOrders() :
+        'No orders yet :\'('
+      }
+    </React.Fragment>
   );
 };
 

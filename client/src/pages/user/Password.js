@@ -51,25 +51,9 @@ const Password = () => {
   }
 
   return (
-  	<div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <UserNav />
-        </div>
-        <div className="col">
-          {loading ? (
-            <h4 className='text-danger'>
-              Loading...
-            </h4>
-          ) : (
-            <h4>
-              Password Update
-            </h4>
-          )}
-          {passwordUpdateForm()}
-        </div>
-      </div>
-  	</div>
+    <React.Fragment>
+      {passwordUpdateForm()}
+    </React.Fragment>
   );
 };
 

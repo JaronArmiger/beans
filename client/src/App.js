@@ -13,8 +13,6 @@ const Register = lazy(() => import('./pages/auth/Register'));
 const RegisterComplete = lazy(() => import('./pages/auth/RegisterComplete'));
 const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'));
 const UserDashboard = lazy(() => import('./pages/user/UserDashboard'));
-const Password = lazy(() => import('./pages/user/Password'));
-const Wishlist = lazy(() => import('./pages/user/Wishlist'));
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'));
 const CategoryCreate = lazy(() => import('./pages/admin/category/CategoryCreate'));
 const CategoryUpdate = lazy(() => import('./pages/admin/category/CategoryUpdate'));
@@ -109,8 +107,6 @@ const App = () => {
         <Route exact path='/register/complete' component={RegisterComplete} />
         <Route exact path='/forgot/password' component={ForgotPassword} />
         <UserRoute exact path='/user/dashboard' component={UserDashboard} />
-        <UserRoute exact path='/user/password' component={Password} />
-        <UserRoute exact path='/user/wishlist' component={Wishlist} />
         <UserRoute exact path='/checkout' component={Checkout} />
         <UserRoute exact path='/payment' component={Payment} />
         <AdminRoute exact path='/admin/dashboard' component={AdminDashboard} />

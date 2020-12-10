@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
   DeleteOutlined,
+  EyeOutlined,
 } from '@ant-design/icons';
 import ModalImage from 'react-modal-image';
 import defaultImage from '../../images/snake.jpg';
@@ -45,43 +46,40 @@ const Wishlist = () => {
   };
 
   return (
-  	<div className="container-fluid">
-      <div className="row">
-        <div className="col-md-2">
-          <UserNav />
+    <React.Fragment>
+      {wishlist.map((p, idx) => (
+        <div 
+          className='alert alert-secondary'
+          key={idx} 
+        >
+          <div
+            style={{maxWidth: '150px', height: 'auto'}}
+          >
+            <ModalImage
+              src={p.images[0] ? p.images[0].url : defaultImage}
+              large={p.images[0] ? p.images[0].url : defaultImage}
+            />
+            <span>{p.title}</span>
+            <p>${p.price.toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
+          </div>
+          <div
+          >
+            <Link 
+              to={`/product/${p.slug}`}
+            >
+              <EyeOutlined className='text-success' style={{ fontSize: '20px' }}/>
+            </Link>
+            <span 
+              className="btn btn-sm float-right"
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleRemove(p._id, p.title)}
+            >
+              <DeleteOutlined className='text-danger h-4'/>
+            </span>
+          </div>
         </div>
-        <div className="col">
-          <h4>Wishlist</h4>
-          {wishlist.map((p, idx) => (
-            <div key={idx} className='alert alert-secondary'>
-              <div 
-                className='d-inline-block mr-3'
-                style={{maxWidth: '150px', height: 'auto'}}
-              >
-                <ModalImage
-                  small={p.images[0] ? p.images[0].url : defaultImage}
-                  large={p.images[0] ? p.images[0].url : defaultImage}
-                />
-              </div>
-              <Link 
-                to={`/product/${p.slug}`}
-                className='h6'
-                style={{ color: 'black' }}
-              >
-                {p.title}
-              </Link>
-              <span 
-                className="btn btn-sm float-right"
-                style={{ cursor: 'pointer' }}
-                onClick={() => handleRemove(p._id, p.title)}
-              >
-                <DeleteOutlined className='text-danger'/>
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-  	</div>
+      ))}
+    </React.Fragment>
   );
 };
 
