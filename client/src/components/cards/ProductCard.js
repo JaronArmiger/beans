@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { 
   Card, 
 } from 'antd';
-import {
-  EyeOutlined,
-  ShoppingCartOutlined,
-} from '@ant-design/icons';
+// import {
+//   EyeOutlined,
+//   ShoppingCartOutlined,
+// } from '@ant-design/icons';
 import defaultImage from '../../images/snake.jpg';
 import { Link } from 'react-router-dom';
-import { showAverage } from '../../functions/rating';
-import _ from 'lodash';
+// import { showAverage } from '../../functions/rating';
+// import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -26,60 +26,60 @@ const ProductCard = ({ product }) => {
     sold,
   } = product;
 
-  const { cart } = useSelector(state => state);
+  // const { cart } = useSelector(state => state);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  const handleAddToCart = () => {
-    if (sold) {
-      toast.error(`${title} is currently out of stock. Sorry :(`);
-      return;
-    }
-    let cart = [];
-    if (typeof window !== "undefined") {
-      // if cart is in local storage GET it
-      if (localStorage.getItem("cart")) {
-        cart = JSON.parse(localStorage.getItem("cart"));
-      }
-      // push new product to cart
-      cart.push({
-        ...product,
-        count: 1,
-      });
-      // remove duplicates
-      let unique = _.uniqWith(cart, _.isEqual);
-      // save to local storage
-      // console.log('unique', unique)
-      localStorage.setItem("cart", JSON.stringify(unique));
+  // const handleAddToCart = () => {
+  //   if (sold) {
+  //     toast.error(`${title} is currently out of stock. Sorry :(`);
+  //     return;
+  //   }
+  //   let cart = [];
+  //   if (typeof window !== "undefined") {
+  //     // if cart is in local storage GET it
+  //     if (localStorage.getItem("cart")) {
+  //       cart = JSON.parse(localStorage.getItem("cart"));
+  //     }
+  //     // push new product to cart
+  //     cart.push({
+  //       ...product,
+  //       count: 1,
+  //     });
+  //     // remove duplicates
+  //     let unique = _.uniqWith(cart, _.isEqual);
+  //     // save to local storage
+  //     // console.log('unique', unique)
+  //     localStorage.setItem("cart", JSON.stringify(unique));
 
-      // add to reeux state
-      dispatch({
-        type: "MODIFY_CART",
-        payload: unique,
-      });
-      dispatch({
-        type: "SET_VISIBLE",
-        payload: true,
-      });
-      // toast.success(`${title} added to cart!`);
-    }
-  };
+  //     // add to reeux state
+  //     dispatch({
+  //       type: "MODIFY_CART",
+  //       payload: unique,
+  //     });
+  //     dispatch({
+  //       type: "SET_VISIBLE",
+  //       payload: true,
+  //     });
+  //     // toast.success(`${title} added to cart!`);
+  //   }
+  // };
 
-  const handleRemoveFromCart = () => {
-    let cart = [];
-    if (typeof window !== undefined) {
-      if (localStorage.getItem('cart')) {
-        cart = JSON.parse(localStorage.getItem('cart'));
-      }
-      const newCart = cart.filter((p) => p._id !== _id);
-      localStorage.setItem('cart', JSON.stringify(newCart));
-      dispatch({
-        type: 'MODIFY_CART',
-        payload: newCart,
-      })
-    }
-    toast.info(`${title} removed from cart!`);
-  };
+  // const handleRemoveFromCart = () => {
+  //   let cart = [];
+  //   if (typeof window !== undefined) {
+  //     if (localStorage.getItem('cart')) {
+  //       cart = JSON.parse(localStorage.getItem('cart'));
+  //     }
+  //     const newCart = cart.filter((p) => p._id !== _id);
+  //     localStorage.setItem('cart', JSON.stringify(newCart));
+  //     dispatch({
+  //       type: 'MODIFY_CART',
+  //       payload: newCart,
+  //     })
+  //   }
+  //   toast.info(`${title} removed from cart!`);
+  // };
 
   const handleMouseOver = (e) => {
     if (!images || !images[1]) {
