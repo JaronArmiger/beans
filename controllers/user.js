@@ -165,11 +165,11 @@ exports.createOrder = async (req, res) => {
 
 exports.listOrders = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.user.email });
     const userOrders = await Order
-      .find({ orderedBy: user._id })
+      .find({ userEmail: req.user.email })
       .sort('-createdAt')
-      .populate('products.product');
+      .populate('products.product', 'title images')
+      .populate('address');
     res.json(userOrders);
   } catch (err) {
     console.log(err);

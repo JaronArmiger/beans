@@ -35,8 +35,6 @@ const Invoice = ({ order }) => (
           <TableCell>Title</TableCell>
           <TableCell>Price</TableCell>
           <TableCell>Quantity</TableCell>
-          <TableCell>Brand</TableCell>
-          <TableCell>Color</TableCell>
         </TableHeader>
       </Table>
       <Table data={order.products}>
@@ -50,23 +48,17 @@ const Invoice = ({ order }) => (
           <DataTableCell 
             getContent={(x) => x.count}
           />
-          <DataTableCell 
-            getContent={(x) => x.product.brand}
-          />
-          <DataTableCell 
-            getContent={(x) => x.product.color}
-          />
         </TableBody>
       </Table>
       <Text style={styles.text}>
         <Text>
-          Date:afasf {'               '} 
-          {new Date(order.paymentIntent.created * 1000).toLocaleDateString()}
+          Date: {'               '} 
+          {new Date(order.createdAt * 1000).toLocaleDateString()}
         </Text>
         {'\n'}
         <Text>
           Order Id: {'           '}
-          {order.paymentIntent.id}
+          {order._id}
         </Text>
         {'\n'}
         <Text>
@@ -75,7 +67,7 @@ const Invoice = ({ order }) => (
         {'\n'}
         <Text>
           Amount Paid: {'       '}
-          ${order.paymentIntent.amount / 100}
+          ${order.chargeAmount}
         </Text>
       </Text>
       <Text style={styles.footer}>

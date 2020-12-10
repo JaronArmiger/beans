@@ -4,10 +4,12 @@ import {
   Collapse,
 } from 'antd';
 import defaultImage from '../../images/snake.jpg';
+import Invoice from '../order/Invoice';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 const { Panel } = Collapse;
 
-const OrderCard = ({ order }) => {
+const OrderCard = ({ order, admin=false }) => {
   const [activeKey, setActiveKey] = useState([]);
   const address = order.userAddress;
   const products = order.products;
@@ -35,18 +37,41 @@ const OrderCard = ({ order }) => {
     
   };
 
+  const showDownloadLink = () => {
+    const date = new Date(order.createdAt)
+      .toLocaleDateString();
+
+    return (
+      <PDFDownloadLink
+        document={
+          <Invoice order={order} />
+        }
+        fileName={
+          `invoice${date}.pdf`
+        }
+        className='btn btn-sm btn-outline-primary'
+      >
+        Download PDF of Receipt
+      </PDFDownloadLink>
+    );
+  };
+
   const showOrderDetail = () => (
     <div>
-      <p>
-        <b>STATUS: </b>
-        <b 
-          style={{ 
-            color: calcStatusColor(),
-          }}
-        >
-          {order.orderStatus}
-        </b>
-      </p>
+      { admin ? (
+          <p>ay</p>
+        ) : (
+        <p>
+          <b>STATUS: </b>
+          <b 
+            style={{ 
+              color: calcStatusColor(),
+            }}
+          >
+            {order.orderStatus}
+          </b>
+        </p>
+        )}
       <p className='mb-0'><b>Order Id: </b>{order._id}</p>
       <p className='mb-0'><b>User Email: </b>{order.userEmail}</p>
       <p className='mb-0'><b>Date Placed: </b>{new Date(order.createdAt).toLocaleDateString()}</p>
@@ -54,11 +79,15 @@ const OrderCard = ({ order }) => {
         <b>
           Total:{' '}
         </b>
-        {/*(order.chargeAmount)
-          .toLocaleString('en-US', {
-            type: 'currency',
-            currency: 'USD'
-          })*/}
+        {order.chargeAmount ?
+          (order.chargeAmount)
+            .toLocaleString('en-US', {
+              type: 'currency',
+              currency: 'USD'
+            }) : (
+            '$0'
+          )
+          }
       </p>
       <Collapse
         activeKey={activeKey}
@@ -74,6 +103,11 @@ const OrderCard = ({ order }) => {
           <p>{`${address.city}, ${address.state} ${address.zip}`}</p>
         </Panel>
       </Collapse>
+      <div
+        className='d-flex justify-content-center'
+      >
+        {!admin && showDownloadLink()} 
+      </div>
     </div>
   );
 
@@ -107,10 +141,9 @@ const OrderCard = ({ order }) => {
   );
 
   return (
-    <React.Fragment>
-      <h4>Order Receipt</h4>
       <div
         style={{ backgroundColor: '#d5deed'}}
+        className='mb-3'
       >
         <h6
           className='p-2'
@@ -126,7 +159,6 @@ const OrderCard = ({ order }) => {
           {showProducts()}
         </div>
       </div>
-    </React.Fragment>
   );
 };
 

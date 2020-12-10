@@ -65,12 +65,15 @@ const BetaCheckout = ({ history }) => {
   } = useSelector(state => state);
 
   useEffect(() => {
+    let mounted = true;
     if (user) {
       userCart(cart, user.token)
         .then((res) => {
-          setProducts(res.data.products);
-          setCartTotal(res.data.cartTotal);
-          setTotalAfterDiscount(parseInt(res.data.totalAfterDiscount));
+          if (mounted) {
+            setProducts(res.data.products);
+            setCartTotal(res.data.cartTotal);
+            setTotalAfterDiscount(parseInt(res.data.totalAfterDiscount));
+          }
           dispatch({
             type: 'MODIFY_CART_ID',
             payload: res.data._id,
@@ -88,9 +91,11 @@ const BetaCheckout = ({ history }) => {
       if (cartId) {
         getCart(cartId)
           .then((res) => {
-            setProducts(res.data.products);
-            setCartTotal(res.data.cartTotal);
-            setTotalAfterDiscount(res.data.totalAfterDiscount);
+            if (mounted) {
+              setProducts(res.data.products);
+              setCartTotal(res.data.cartTotal);
+              setTotalAfterDiscount(res.data.totalAfterDiscount);
+            }
             dispatch({
               type: 'MODIFY_CART_ID',
               payload: res.data._id,
@@ -104,6 +109,7 @@ const BetaCheckout = ({ history }) => {
           });
       }
     }
+    return () => mounted = false;
   }, [user]);
 
   useEffect(() => {
@@ -285,12 +291,7 @@ const BetaCheckout = ({ history }) => {
           emptyCart();
           toast.success('Your order has been placed!');
 
-          if (user) {
-
-          } else {
-            history.push(`/order/${res.data.orderId}`);
-          }
-          // send user to order summary page
+          history.push(`/order/${res.data.orderId}`);
         };
       })
       .catch(err => {

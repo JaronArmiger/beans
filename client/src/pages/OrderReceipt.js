@@ -8,6 +8,8 @@ import {
 } from 'antd';
 import defaultImage from '../images/snake.jpg';
 import OrderCard from '../components/cards/OrderCard';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { Panel } = Collapse;
 
@@ -41,6 +43,8 @@ const OrderReceipt = ({ match }) => {
   const [activeKey, setActiveKey] = useState([]);
   const [order, setOrder] = useState(orderBeforeLoad);
 
+  const { user } = useSelector(state => state);
+
   useEffect(() => {
     getOrder(orderId)
      .then(res => {
@@ -54,19 +58,26 @@ const OrderReceipt = ({ match }) => {
 
   return (
     <div className="container-fluid">
-      <div className="row">
+      <div className="row justify-content-center">
         <div 
-          className="col-md-6"
-          style={{ border: '1px solid blue' }}
+          className="col-md-8 pt-3"
         > 
+          <h4>Order Receipt</h4>
           <OrderCard order={order} />
+          {
+            <div
+              className='p-2'
+            >
+              { user && 
+                <Link
+                  to='/user/history'
+                >
+                  View in your order history >> 
+                </Link>
+            }
+            </div>
+          }
         </div>
-          
-        <div 
-          className="col-md-6"
-          style={{ border: '1px solid blue' }}
-        >
-        adsa</div>
       </div>
     </div>
   );
