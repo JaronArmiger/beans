@@ -52,6 +52,7 @@ const Cart = ({ history }) => {
   };
 
   const saveOrdertoDbBeta = (cod=false) => {
+    if (!noneSold) return;
     if (cod) {
       dispatch({
         type: 'COD',
@@ -92,7 +93,7 @@ const Cart = ({ history }) => {
       	  product={p}
       	/>
       ))}
-      </React.Fragment>
+    </React.Fragment>
   );
 
   return (
@@ -130,31 +131,37 @@ const Cart = ({ history }) => {
           <hr />
             Total: <b>{getTotal()}</b>
           <hr />
-              <React.Fragment>
-                <button
-                  onClick={() => saveOrdertoDbBeta(false)}
-                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-                  disabled={cart.length === 0 || !noneSold}
-                >
-                  Checkout
-                </button>
-                {/* <br />
-                                <button
-                                  onClick={() => saveOrdertoDb(false)}
-                                  className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-                                  disabled={cart.length === 0}
-                                >
-                                  Checkout
-                                </button>
-                                <br />
-                                <button
-                                  onClick={() => saveOrdertoDb(true)}
-                                  className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
-                                  disabled={cart.length === 0}
-                                >
-                                  Pay Cash on Delivery
-                                </button>*/}
-              </React.Fragment>
+          {!noneSold && 
+            <div className="alert alert-danger">
+              <p className='mb-0'>A product in your cart has been sold already.</p>
+              <p className='mb-0'>Please remove it in order to proceed to checkout.</p>
+            </div>
+          }
+          <React.Fragment>
+            <button
+              onClick={() => saveOrdertoDbBeta(false)}
+              className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+              disabled={cart.length === 0 || !noneSold}
+            >
+              Checkout
+            </button>
+            {/* <br />
+                            <button
+                              onClick={() => saveOrdertoDb(false)}
+                              className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                              disabled={cart.length === 0}
+                            >
+                              Checkout
+                            </button>
+                            <br />
+                            <button
+                              onClick={() => saveOrdertoDb(true)}
+                              className='btn btn-sm btn-warning btn-outline-warning mt-2 btn-block'
+                              disabled={cart.length === 0}
+                            >
+                              Pay Cash on Delivery
+                            </button>*/}
+          </React.Fragment>
         </div>
       </div>
       <div className="row justify-content-center">

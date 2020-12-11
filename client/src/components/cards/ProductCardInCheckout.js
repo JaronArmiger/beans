@@ -20,6 +20,7 @@ const ProductCardInCheckout = ({ product }) => {
   	images,
   	quantity,
   	shipping,
+    sold,
   } = product;
 
   const colors = [
@@ -108,6 +109,11 @@ const ProductCardInCheckout = ({ product }) => {
         >
           <div>
       	  	<p>{title}</p>
+            {sold &&
+              <p className="alert alert-danger">
+                SOLD
+              </p>
+            }
       	  	<p>
               {price && price.toLocaleString('en-US',{
                 style: 'currency',
