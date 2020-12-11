@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
@@ -7,7 +7,18 @@ import { toast } from 'react-toastify';
 
 const Cart = ({ history }) => {
   const { user, cart } = useSelector(state => state);
+  const [noneSold, setNoneSold] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    let anySold = false;
+    cart.forEach((p) => {
+      if (p.sold === true) {
+        anySold = true;
+      };
+    });
+    if (!anySold) setNoneSold(true);
+  }, [cart]);
 
   const getTotal = () => {
     return cart.reduce((acc, c) => {
@@ -71,6 +82,8 @@ const Cart = ({ history }) => {
     //   });
   };
 
+  // check sold
+
   const showCartItems = () => (
     <React.Fragment>
       {cart && cart.map((p) => (
@@ -121,7 +134,7 @@ const Cart = ({ history }) => {
                 <button
                   onClick={() => saveOrdertoDbBeta(false)}
                   className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-                  disabled={cart.length === 0}
+                  disabled={cart.length === 0 || !noneSold}
                 >
                   Checkout
                 </button>

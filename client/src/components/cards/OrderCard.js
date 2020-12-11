@@ -154,7 +154,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
             <img 
               src={images && images[0] ? images[0].url : defaultImage }
               alt={p.product}
-              style={{ maxWidth: '100px'}}
+              style={{ maxWidth: '100px', height: 'auto' }}
             />
             <div
               className='text-right'

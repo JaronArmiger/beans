@@ -40,7 +40,8 @@ const OrderSchema = new mongoose.Schema({
   shipping: {
     type: Boolean,
     default: false,
-  }
+  },
+  paymentResult: {},
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);

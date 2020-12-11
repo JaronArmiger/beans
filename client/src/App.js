@@ -82,7 +82,7 @@ const App = () => {
     <Suspense fallback={
         <div className="col text-center p-5">
           <h1>
-            Pilsen Vinta
+            Pilsen Vint
             <LoadingOutlined className='h1'/>
             ge
           </h1>

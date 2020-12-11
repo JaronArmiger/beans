@@ -61,8 +61,8 @@ exports.create = async (req, res) => {
     };
 
     createPaymentPromise(requestBody)
-      .then(async (result) => {
-        console.log('______PAYMENT_RESULT______', result);
+      .then(async (paymentResult) => {
+        console.log('______PAYMENT_RESULT______', paymentResult);
         const bulkOption = products.map((p) => {
           return {
             updateOne: {
@@ -83,6 +83,7 @@ exports.create = async (req, res) => {
           userEmail,
           userAddress: addressId,
           chargeAmount,
+          paymentResult,
         });
 
         await newOrder.save();
