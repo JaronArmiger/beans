@@ -63,10 +63,16 @@ const SubHome = ({ match }) => {
             </div>
           </div>
       */}
-      <h4 className='pl-2'>{name}</h4>
-  	  <div className="row pt-4 pl-2">
+      <div className="row">
+        <div className="col">
+        <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
+          {name}
+        </h4>
+        </div>
+      </div>
+  	  <div className="row">
   	    {products.length < 1 ? (
-	  	    <h6>No products found :(</h6>
+	  	    <h6 className='pl-4'>No products found :(</h6>
 	  	  ) : (
 	  	     products.map((p) => {
 	  	      return (

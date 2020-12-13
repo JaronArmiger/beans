@@ -156,12 +156,15 @@ const Header = () => {
         key={i}
         overlay={renderSubs(c.subs, i)}
         placement='bottomCenter'
-        onClick={() => history.push(`category/${c.slug}`)}
       >
-        <Button
-          style={{ border: 'none' }}
+        <Link
+          to={`/category/${c.slug}`}
+          className='px-2'
+          style={{
+            color: '#000',
+          }}
         >
-        {c.title}</Button>
+        {c.title}</Link>
       </Dropdown>
     ))
   );

@@ -22,22 +22,22 @@ const CategoryHome = ({ match }) => {
       	setLoading(false);
       	console.log(err);
       })
-  }, []);
+  }, [slug]);
 
   return (
   	<div className="container-fluid">
   	  <div className="row">
   	    <div className="col">
 	  	  <h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
-	  	    {products.length} products in "{category.name}" category
+	  	    {category.name}
 	  	  </h4>
   	    </div>
   	  </div>
   	  <div className="row">
-  	    {loading ? (
-	  	    <LoadingOutlined className='text-danger h1' />
+  	    {products.length < 1 ? (
+	  	    <h6 className='pl-4'>No products found :(</h6>
 	  	  ) : (
-	  	    products.length > 0 && products.map((p) => {
+	  	    products.map((p) => {
 	  	      return (
 	  	      	<div className="col-md-4" key={p._id}>
 	  	      	  <ProductCard product={p} />
