@@ -28,6 +28,7 @@ const { SubMenu, Item } = Menu;
 const categories = [
   {
     title: 'Women\'s',
+    slug: 'women\'s',
     subs: [
       {
         title: 'Bottoms',
@@ -53,6 +54,7 @@ const categories = [
   },
   {
     title: 'Men\'s',
+    slug: 'men\'s',
     subs: [
       {
         title: 'Bottoms',
@@ -74,6 +76,7 @@ const categories = [
   },
   {
     title: 'Accessories',
+    slug: 'accessories',
     subs: [
       {
         title: 'Jewelry',
@@ -91,6 +94,7 @@ const categories = [
   },
   {
     title: 'Other',
+    slug: 'other',
     subs: [
       {
         title: 'Electronics',
@@ -152,6 +156,7 @@ const Header = () => {
         key={i}
         overlay={renderSubs(c.subs, i)}
         placement='bottomCenter'
+        onClick={() => history.push(`category/${c.slug}`)}
       >
         <Button
           style={{ border: 'none' }}
