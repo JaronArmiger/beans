@@ -1,4 +1,5 @@
 const cloudinary = require('cloudinary');
+const Product = require('../models/product');
 
 // config
 cloudinary.config({
@@ -33,4 +34,29 @@ exports.remove = (req, res) => {
       });
     }
   })
+};
+
+exports.removalPromise = (imageId) => {
+  return new Promise( async (resolve, reject) => {
+    try {
+      cloudinary.uploader.destroy(imageId, (result) => {
+        if (result.result === 'ok') {
+          resolve({
+            success: true,
+            imageId,
+          });
+        } else {
+          reject({
+            success: false,
+            imageId,
+          });
+        }
+      });
+    } catch (err) {
+      reject({
+        success: false,
+        err: err.message,
+      });
+    };
+  });
 };

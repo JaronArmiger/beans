@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const User = require('../models/user');
 const slugify = require('slugify');
+const { removalPromise } = require('./cloudinary');
 
 exports.create = async (req, res) => {
   try {
@@ -87,8 +88,24 @@ exports.count = async (req, res) => {
 exports.remove = async (req, res) => {
   try {
     const { slug } = req.params;
-    const deleted = await Product.findOneAndRemove({ slug });
-    res.json(deleted);
+    const deleteImagePromises = [];
+    const productToDelete = await Product.findOne({ slug });
+    productToDelete.images.forEach((image) => {
+      deleteImagePromises.push(removalPromise(image.public_id));
+    });
+
+    Promise.all(deleteImagePromises)
+      .then(async result => {
+        console.log('_______IMAGE_PROMISES_RESULT_______', result);
+        const deleted = await Product.findOneAndRemove({ slug });
+        res.json(deleted);
+      })
+      .catch(err => {
+        res.status(400).json({
+          err: err.message,
+        });
+      });
+
   } catch (err) {
     console.log(err);
     res.status(400).json({
