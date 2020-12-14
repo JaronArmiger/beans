@@ -84,3 +84,15 @@ export const fetchProductsByFilter = async (arg) => {
 export const getProductsToPull = async () => {
   return await axios.get(`${process.env.REACT_APP_API}/products/to-pull`);
 };
+
+export const markAsPulled = async (productId, authtoken) => {
+  return await axios.put(
+    `${process.env.REACT_APP_API}/product/pull/${productId}`,
+    {},
+    {
+      headers: {
+        authtoken,
+      },
+    },
+  );
+};

@@ -20,6 +20,7 @@ const {
   listRelated,
   searchFilters,
   getProductsToPull,
+  markProductAsPulled,
 } = require('../controllers/product');
 
 // routes
@@ -27,6 +28,12 @@ router.get(
   '/products/total',
   count
 );
+
+router.get(
+  '/products/to-pull',
+  getProductsToPull
+);
+
 router.get(
   '/products/:count',
   listAll
@@ -47,12 +54,21 @@ router.get(
   '/product/:slug',
   read
 );
+
+router.put(
+  '/product/pull/:productId',
+  authCheck,
+  adminCheck,
+  markProductAsPulled,
+);
+
 router.put(
   '/product/:slug',
   authCheck,
   adminCheck,
   update
 );
+
 router.get(
   '/product/related/:id',
   listRelated
@@ -76,11 +92,6 @@ router.put(
 router.post(
   '/search/filters',
   searchFilters
-);
-
-router.get(
-  '/products/to-pull',
-  getProductsToPull
 );
 
 

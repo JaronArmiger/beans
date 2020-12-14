@@ -1,14 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { getProductsToPull } from '../../../functions/product';
+import { 
+  getProductsToPull,
+  markAsPulled,
+} from '../../../functions/product';
 import defaultImage from '../../../images/snake.jpg';
 // import ProductCardInCheckout from '../../../components/cards/ProductCardInCheckout';
 import ModalImage from 'react-modal-image';
 import {
   FastForwardOutlined,
 } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 
 const ProductsToPull = () => {
   const [products, setProducts] = useState([]);
+
+  const { token } = useSelector(state => state.user);
 
   useEffect(() => {
     loadProducts();
@@ -24,16 +30,23 @@ const ProductsToPull = () => {
       });
   };
 
-  const pullProduct = (e) => {
-    console.log(e);
+  const pullProduct = (productId) => {
+    markAsPulled(productId, token)
+      .then(res => {
+        if (res.data.ok) loadProducts();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const showProducts = () => (
     products.map((p, i) => {
       const {
+        _id,
         images,
         title,
-
+        soldDate,
       } = p;
       return (
         <div
@@ -56,6 +69,7 @@ const ProductsToPull = () => {
             </div>
             <div>
               <p className='text-right'>{title}</p>
+              <p className='text-right'><b>Sold on: </b>{new Date(soldDate).toLocaleDateString()}</p>
             </div>
           </div>
           <div
@@ -63,7 +77,7 @@ const ProductsToPull = () => {
           >
             <button
               className='btn btn-outline-primary'
-              onClick={pullProduct}
+              onClick={() => pullProduct(_id)}
             >
               Mark as pulled
               <FastForwardOutlined

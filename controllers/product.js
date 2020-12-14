@@ -387,7 +387,12 @@ exports.searchFilters = async (req, res) => {
 
 exports.getProductsToPull = async (req, res) => {
   try {
-    const products = await Product.find({ pulled: false });
+    const products = await Product
+      .find({ 
+        pulled: false,
+        sold: true, 
+      })
+      .sort([['soldDate', 'asc']]);
     res.json(products);
   } catch (err) {
     console.log(err);
@@ -397,7 +402,21 @@ exports.getProductsToPull = async (req, res) => {
   }
 };
 
-
+exports.markProductAsPulled = async (req, res) => {
+  try {
+    const {
+      productId
+    } = req.params;
+    const product = await Product
+      .findByIdAndUpdate(productId, { pulled: true });
+    res.json({ ok: true });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+};
 
 
 
