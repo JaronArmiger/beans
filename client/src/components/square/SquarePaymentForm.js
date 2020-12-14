@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../utils/squareConfig';
 
-const SquarePaymentForm = ({ paymentForm, open }) => {
+const SquarePaymentForm = ({ paymentForm }) => {
   paymentForm = new paymentForm(config);
   paymentForm.build();
 
