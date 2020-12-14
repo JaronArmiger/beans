@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminOrders from '../../components/order/AdminOrders';
+import ProductsToPull from './product/ProductsToPull';
 import ProductCreate from './product/ProductCreate';
 import CategoryCreate from './category/CategoryCreate';
 import SubCreate from './sub/SubCreate';
@@ -27,25 +28,28 @@ const AdminDashboard = ({ match }) => {
             tabPosition='top'
             onChange={(key) => setOpenKey(key)}
           >
-            <TabPane tab="Orders" key="1">
+            <TabPane tab="To Pull" key="1">
+              <ProductsToPull />
+            </TabPane>
+            <TabPane tab="Orders" key="2">
               <AdminOrders />
             </TabPane>
-            <TabPane tab="Product Create" key="2">
+            <TabPane tab="Product Create" key="3">
               <ProductCreate setOpenKey={setOpenKey}/>
             </TabPane>
-            <TabPane tab="Product View" key="3">
+            <TabPane tab="Product View" key="4">
               <AllProducts />
             </TabPane>
-            <TabPane tab="Category" key="4">
+            <TabPane tab="Category" key="5">
               <CategoryCreate />
             </TabPane>
-            <TabPane tab="Sub-Category" key="5">
+            <TabPane tab="Sub-Category" key="6">
               <SubCreate />
             </TabPane>
-            <TabPane tab="Coupon" key="6">
+            <TabPane tab="Coupon" key="7">
               <CouponCreate />
             </TabPane>
-            <TabPane tab="Password" key="7">
+            <TabPane tab="Password" key="8">
               <Password />
             </TabPane>
           </Tabs>

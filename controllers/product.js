@@ -385,6 +385,18 @@ exports.searchFilters = async (req, res) => {
   }
 };
 
+exports.getProductsToPull = async (req, res) => {
+  try {
+    const products = await Product.find({ pulled: false });
+    res.json(products);
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
+};
+
 
 
 

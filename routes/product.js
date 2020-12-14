@@ -19,6 +19,7 @@ const {
   leaveRating,
   listRelated,
   searchFilters,
+  getProductsToPull,
 } = require('../controllers/product');
 
 // routes
@@ -75,6 +76,11 @@ router.put(
 router.post(
   '/search/filters',
   searchFilters
+);
+
+router.get(
+  '/products/to-pull',
+  getProductsToPull
 );
 
 
