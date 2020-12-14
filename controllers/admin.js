@@ -5,7 +5,7 @@ exports.listOrders = async (req, res) => {
     const orders = await Order
       .find()
       .sort('-createdAt')
-      .populate('products.product', 'title images')
+      .populate('products.product', 'title images pulled')
       .populate('userAddress');
 
     res.json(orders);

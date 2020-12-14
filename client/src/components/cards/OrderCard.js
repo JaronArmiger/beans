@@ -6,6 +6,10 @@ import {
 import defaultImage from '../../images/snake.jpg';
 import Invoice from '../order/Invoice';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import {
+  CloseCircleOutlined,
+  CheckCircleOutlined,
+} from '@ant-design/icons';
 
 const { Panel } = Collapse;
 
@@ -42,7 +46,6 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
       default:
         return '#000000';
     }
-    
   };
 
   const showDownloadLink = () => {
@@ -81,6 +84,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               }}
               defaultValue={order.orderStatus}
               onChange={e => handleStatusChange(order._id, e.target.value)}
+              disabled={!(products.every((p) => p.product.pulled === true))}
             >
               {statusOptions.map((op, idx) => (
                 <option value={op} key={idx}>
@@ -150,6 +154,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
       const {
         title,
         images,
+        pulled,
       } = p.product;
       return (
         <React.Fragment key={i}>
@@ -168,6 +173,21 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
             </div>
           </div>
+          <p className='d-flex align-items-center mt-2'>
+            <b>Pulled?</b>
+            {pulled ? (
+                <CheckCircleOutlined 
+                  className='text-success ml-4'
+                  style={{ fontSize: '30px' }}
+                />
+              ) : (
+                <CloseCircleOutlined 
+                  className='text-danger ml-4'
+                  style={{ fontSize: '30px' }}
+                />
+              )
+            }
+          </p>
           <hr />
         </React.Fragment>
       );
