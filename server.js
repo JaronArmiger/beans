@@ -7,7 +7,6 @@ const { readdirSync } = require('fs');
 require('dotenv').config();
 var path = require('path');
 
-
 // app
 const app = express();
 // db

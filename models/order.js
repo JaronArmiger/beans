@@ -42,6 +42,10 @@ const OrderSchema = new mongoose.Schema({
     default: false,
   },
   paymentResult: {},
+  pulled: {
+    type: Boolean,
+    default: false,
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', OrderSchema);
