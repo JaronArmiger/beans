@@ -82,8 +82,31 @@ const config = {
   applicationId: process.env.REACT_APP_SQUARE_APP_ID,
   inputClass: 'sq-input',
   autoBuild: false,
-  card: {
-    elementId: 'sq-card',
+  // card: {
+  //   elementId: 'sq-card',
+  // },
+  inputStyles: [{
+    fontSize: '16px',
+    lineHeight: '24px',
+    padding: '16px',
+    placeholderColor: '#a0a0a0',
+    backgroundColor: 'transparent',
+  }],
+  cardNumber: {
+    elementId: 'sq-card-number',
+    placeholder: 'Card Number'
+  },
+  cvv: {
+    elementId: 'sq-cvv',
+    placeholder: 'CVV'
+  },
+  expirationDate: {
+    elementId: 'sq-expiration-date',
+    placeholder: 'MM/YY'
+  },
+  postalCode: {
+    elementId: 'sq-postal-code',
+    placeholder: 'Postal'
   },
   callbacks: {
     cardNonceResponseReceived,

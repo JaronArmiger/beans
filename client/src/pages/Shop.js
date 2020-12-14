@@ -26,6 +26,7 @@ import {
   Button,
   Collapse,
 } from 'antd';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const { Panel } = Collapse;
 const { SubMenu } = Menu;

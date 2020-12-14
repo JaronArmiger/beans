@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../utils/squareConfig';
 
-const SquarePaymentForm = ({ paymentForm }) => {
+const SquarePaymentForm = ({ paymentForm, open }) => {
   paymentForm = new paymentForm(config);
   paymentForm.build();
 
@@ -12,7 +12,10 @@ const SquarePaymentForm = ({ paymentForm }) => {
 
   return (
     <div id="form-container">
-      <div id="sq-card"></div>
+      <div id="sq-card-number"></div>
+      <div className="third" id="sq-expiration-date"></div>
+      <div className="third" id="sq-cvv"></div>
+      <div className="third" id="sq-postal-code"></div>
       <button 
         id="sq-creditcard" 
         className="button-credit-card"

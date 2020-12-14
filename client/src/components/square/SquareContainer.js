@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SquarePaymentForm from './SquarePaymentForm';
 
-const SquareContainer = React.memo(({ chargeAmount }) => {
+const SquareContainer = React.memo(({ chargeAmount, open }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,6 +18,10 @@ const SquareContainer = React.memo(({ chargeAmount }) => {
       .appendChild(sqPaymentScript);
   }, []);
 
+  useEffect(() => {
+    console.log(open);
+  }, [open]);
+
   return(
     <React.Fragment>
       <p className='text-center'>
@@ -29,6 +33,7 @@ const SquareContainer = React.memo(({ chargeAmount }) => {
       {!loading && 
         <SquarePaymentForm 
           paymentForm={ window.SqPaymentForm }
+          open={open}
         />
       }
     </React.Fragment>

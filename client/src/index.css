@@ -31,7 +31,7 @@ fieldset {
 
 #form-container {
   position: relative;
-  width: 380px;
+  width: 100%;
   margin: 0 auto;
   top: 50%;
 }

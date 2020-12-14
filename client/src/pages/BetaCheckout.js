@@ -53,6 +53,7 @@ const BetaCheckout = ({ history }) => {
   const [addressErrors, setAddressErrors] = useState([]);
   const [chargeAmount, setChargeAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
+  const [squareShowing, setSquareShowing] = useState(false);
 
   const dispatch = useDispatch();
   const { 
@@ -332,8 +333,12 @@ const BetaCheckout = ({ history }) => {
             <Panel 
               header="Payment" 
               key="3"
+              forceRender={true}
              >
-              <SquareContainer chargeAmount={chargeAmount}/>
+              <SquareContainer 
+                chargeAmount={chargeAmount}
+                open={squareShowing}
+              />
             </Panel>
           </Collapse>
         </div>
