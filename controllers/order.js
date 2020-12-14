@@ -81,7 +81,7 @@ exports.create = async (req, res) => {
           products,
           paid: true,
           userEmail,
-          userAddress: addressId,
+          userAddress: addressId || null,
           chargeAmount,
           paymentResult,
         });

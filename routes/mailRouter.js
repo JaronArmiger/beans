@@ -10,6 +10,5 @@ const {
 } = require('../mailer/prodMailer');
 
 router.post('/mail-dev', sendEmailDev);
-router.post('/mail', sendEmail);
 
 module.exports = router;

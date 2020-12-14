@@ -53,6 +53,7 @@ const BetaCheckout = ({ history }) => {
   const [addressErrors, setAddressErrors] = useState([]);
   const [chargeAmount, setChargeAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
+  const [shipping, setShipping] = useState(false);
 
   const dispatch = useDispatch();
   const { 
@@ -193,6 +194,11 @@ const BetaCheckout = ({ history }) => {
     setAddress({...address, state: stateVal })
   };
 
+  const continueWithoutShipping = () => {
+    setActiveKey(['2']);
+    setAddressSaved(true);
+  };
+
   const handleAddressSubmit = (e) => {
     e.preventDefault();
     console.log(address);
@@ -310,7 +316,7 @@ const BetaCheckout = ({ history }) => {
             onChange={(key) => setActiveKey(key)}
           >
             <Panel 
-              header="Shipping Address" 
+              header="Shipping" 
               key="1"
              >
               <ShippingAddress
@@ -319,6 +325,9 @@ const BetaCheckout = ({ history }) => {
                 addressErrors={addressErrors}
                 handleAddressChange={handleAddressChange}
                 handleUSStateChange={handleUSStateChange}
+                shipping={shipping}
+                setShipping={setShipping}
+                continueWithoutShipping={continueWithoutShipping}
               />
             </Panel>
             <Panel 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
   getUserCart,
@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import SelectUSState from 'react-select-us-states';
+import { Radio } from 'antd';
 
 
 const ShippingAddress = ({ 
@@ -19,9 +20,11 @@ const ShippingAddress = ({
   handleAddressChange,
   handleUSStateChange,
   addressErrors,
-}) => {
-
-  return (
+  shipping,
+  setShipping,
+  continueWithoutShipping,
+}) => {  
+  const showAddressForm = () => (
     <form
       onSubmit={handleAddressSubmit}
     >  
@@ -132,6 +135,31 @@ const ShippingAddress = ({
         </button>
       </div>
     </form>
+  );
+
+  const onRadioChange = e => {
+    setShipping(e.target.value);
+  };
+
+  return (
+    <React.Fragment>
+      <div
+        className='mb-4 mt-2'
+      >
+        <Radio.Group onChange={onRadioChange} value={shipping}>
+          <Radio value={false}>I'll pick up my order in store</Radio>
+          <Radio value={true}>I want my order shipped</Radio>
+        </Radio.Group>
+      </div>
+      {!shipping && 
+        <button
+          className='btn btn-outline-info'
+          onClick={continueWithoutShipping}
+        >
+          Continue
+        </button>}
+      {shipping && showAddressForm()}
+    </React.Fragment>
   );
 
 };

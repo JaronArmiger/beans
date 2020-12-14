@@ -19,7 +19,7 @@ const statusOptions = [
 
 const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
   const [activeKey, setActiveKey] = useState([]);
-  const address = order.userAddress;
+  const address = order.userAddress || null;
   const products = order.products;
 
   const calcStatusColor = () => {
@@ -118,20 +118,25 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
           )
           }
       </p>
-      <Collapse
-        activeKey={activeKey}
-        onChange={(key) => setActiveKey(key)}
-        bordered='false'
-        ghost
-      >
-        <Panel
-          header={<p><b>Ship To: </b>{`${address.firstName} ${address.lastName}`}</p>}
-          key='1'
+      {address ? (
+        <Collapse
+          activeKey={activeKey}
+          onChange={(key) => setActiveKey(key)}
+          bordered='false'
+          ghost
         >
-          <p>{address.streetAddress}</p>
-          <p>{`${address.city}, ${address.state} ${address.zip}`}</p>
-        </Panel>
-      </Collapse>
+          <Panel
+            header={<p><b>Ship To: </b>{`${address.firstName} ${address.lastName}`}</p>}
+            key='1'
+          >
+            <p>{address.streetAddress}</p>
+            <p>{`${address.city}, ${address.state} ${address.zip}`}</p>
+          </Panel>
+        </Collapse>
+        ) : (
+          <p>In-Store pickup</p>
+        )
+      }
       <div
         className='d-flex justify-content-center'
       >
