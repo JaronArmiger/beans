@@ -173,21 +173,23 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
             </div>
           </div>
-          <p className='d-flex align-items-center mt-2'>
-            <b>Pulled?</b>
-            {pulled ? (
-                <CheckCircleOutlined 
-                  className='text-success ml-4'
-                  style={{ fontSize: '30px' }}
-                />
-              ) : (
-                <CloseCircleOutlined 
-                  className='text-danger ml-4'
-                  style={{ fontSize: '30px' }}
-                />
-              )
-            }
-          </p>
+          {admin && 
+            <p className='d-flex align-items-center mt-2'>
+              <b>Pulled?</b>
+              {pulled ? (
+                  <CheckCircleOutlined 
+                    className='text-success ml-4'
+                    style={{ fontSize: '30px' }}
+                  />
+                ) : (
+                  <CloseCircleOutlined 
+                    className='text-danger ml-4'
+                    style={{ fontSize: '30px' }}
+                  />
+                )
+              }
+            </p>
+          }
           <hr />
         </React.Fragment>
       );

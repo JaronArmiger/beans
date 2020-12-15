@@ -290,7 +290,7 @@ const BetaCheckout = ({ history }) => {
   );
 
   const handleOrder = () => {
-    createOrder(paymentId, addressId)
+    createOrder(paymentId, addressId, shipping)
       .then(res => {
         if (res.data.ok) {
           console.log('payment successful');
@@ -345,6 +345,7 @@ const BetaCheckout = ({ history }) => {
              >
               <SquareContainer 
                 chargeAmount={chargeAmount}
+                shipping={shipping}
               />
             </Panel>
           </Collapse>
@@ -357,18 +358,45 @@ const BetaCheckout = ({ history }) => {
           <p>({products.length} Item{products.length !== 1 ? 's' : ''})</p>
           <hr />
           {showProductSummary()}
-          <p>Cart Total: {cartTotal.toLocaleString('en-US',{
+          <p className='text-right'>
+            Sub Total: {cartTotal.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
-            })}</p>
-          {totalAfterDiscount ? (
+            })}
+          </p>
+          <hr />
+          {(couponApplied && totalAfterDiscount) &&
+            <React.Fragment>
+              <p className='text-right'>
+                Discount: -{(cartTotal - totalAfterDiscount).toLocaleString('en-US',{
+                  style: 'currency',
+                  currency: 'USD',
+                })}
+              </p>
+            </React.Fragment>
+          }
+          {shipping &&
+            <React.Fragment>
+              <p className='text-right'>
+                Shipping: $8.00
+              </p>
+            </React.Fragment>
+          }
+          <p className='text-right'>
+            <b>Order Total: {(shipping ? (chargeAmount + 8) : chargeAmount).toLocaleString('en-US',{
+              style: 'currency',
+              currency: 'USD',
+            })}
+            </b>
+          </p>
+          {/*totalAfterDiscount ? (
             <p className="bg-success p-2">
               Discount Applied; Total Payable: {totalAfterDiscount.toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
             })}
             </p>
-          ) : (<br />)}
+          ) : (<br />)*/}
           <div className="row">
             <div className="col d-flex justify-content-center">
               <button 

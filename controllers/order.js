@@ -25,6 +25,7 @@ exports.create = async (req, res) => {
     const {
       paymentId,
       addressId,
+      shipping,
     } = req.body;
 
     const paymentDetail = await PaymentDetail.findById(paymentId);
@@ -48,7 +49,8 @@ exports.create = async (req, res) => {
       userEmail,
     } = cart;
 
-    const chargeAmount = totalAfterDiscount || cartTotal;
+    let chargeAmount = totalAfterDiscount || cartTotal;
+    if (shipping) chargeAmount += 8;
 
     const requestBody = {
       sourceId: nonce,

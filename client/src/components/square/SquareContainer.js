@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SquarePaymentForm from './SquarePaymentForm';
 
-const SquareContainer = React.memo(({ chargeAmount }) => {
+const SquareContainer = React.memo(({ chargeAmount, shipping }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const SquareContainer = React.memo(({ chargeAmount }) => {
   return(
     <React.Fragment>
       <p className='text-center'>
-        <b>Charge Amount:</b> {chargeAmount.toLocaleString('en-US', {
+        <b>Charge Amount:</b> {(shipping ? (chargeAmount + 8) : chargeAmount).toLocaleString('en-US', {
             style: 'currency',
             currency: 'USD',
           })}

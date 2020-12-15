@@ -79,6 +79,7 @@ const PreCheckout = ({ history }) => {
               </div>
               <button
                 className='btn btn-primary'
+                disabled={!email}
               >
                 Continue
               </button>
