@@ -51,36 +51,23 @@ const Cart = ({ history }) => {
       });
   };
 
-  const saveOrdertoDbBeta = (cod=false) => {
+  const saveOrdertoDbBeta = () => {
     if (!noneSold) return;
-    if (cod) {
-      dispatch({
-        type: 'COD',
-        payload: true,
-      })
-    };
 
     if (user) {
       history.push('/beta-checkout');
     } else {
       history.push('/pre-checkout');
     }
+  };
+  const saveOrdertoDbGamma = () => {
+    if (!noneSold) return;
 
-    // write alternative method to save cart
-
-    // userCart(cart, user.token)
-    //   .then((res) => {
-    //     console.log('CART POST RES', res);
-    //     if (res.data.ok) history.push('/beta-checkout');
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response);
-    //     if (err.response) {
-    //       if (err.response.statusText === 'Unauthorized') {
-    //         toast.error('Error: Logout and then log in again.')
-    //       }
-    //     }
-    //   });
+    if (user) {
+      history.push('/gamma-checkout');
+    } else {
+      history.push('/pre-checkout');
+    }
   };
 
   // check sold
@@ -139,11 +126,18 @@ const Cart = ({ history }) => {
           }
           <React.Fragment>
             <button
-              onClick={() => saveOrdertoDbBeta(false)}
+              onClick={saveOrdertoDbBeta}
               className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
               disabled={cart.length === 0 || !noneSold}
             >
               Checkout
+            </button>
+            <button
+              onClick={saveOrdertoDbGamma}
+              className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+              disabled={cart.length === 0 || !noneSold}
+            >
+              Gamma-Checkout
             </button>
             {/* <br />
                             <button

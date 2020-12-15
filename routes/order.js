@@ -12,6 +12,7 @@ const {
   create,
   list,
   remove,
+  createStripe,
 } = require('../controllers/order');
 
 // routes
@@ -27,6 +28,12 @@ router.post(
   '/order',
   create
 );
+
+router.post(
+  '/order-stripe',
+  createStripe
+);
+
 router.delete(
   '/order/:orderId',
   authCheck,

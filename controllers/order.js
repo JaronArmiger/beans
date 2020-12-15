@@ -110,6 +110,10 @@ exports.create = async (req, res) => {
   }
 };
 
+exports.createStripe = async (req, res) => {
+  
+};
+
 exports.list = async (req, res) => {
   try {
     

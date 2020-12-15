@@ -10,3 +10,10 @@ export const createOrder = async (paymentId, addressId, shipping) => {
     { paymentId, addressId, shipping },
   );
 };
+
+export const createStripeOrder = async (paymentId, addressId, shipping) => {
+  return await axios.post(
+    `${process.env.REACT_APP_API}/order-stripe`,
+    { paymentId, addressId, shipping },
+  );
+};

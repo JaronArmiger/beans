@@ -23,6 +23,7 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const PreCheckout = lazy(() => import('./pages/PreCheckout'));
 const BetaCheckout = lazy(() => import('./pages/BetaCheckout'));
+const GammaCheckout = lazy(() => import('./pages/GammaCheckout'));
 const ProductView = lazy(() => import('./pages/ProductView'));
 const Payment = lazy(() => import('./pages/Payment'));
 const OrderReceipt = lazy(() => import('./pages/OrderReceipt'));
@@ -102,7 +103,7 @@ const App = () => {
         <Route exact path='/register/complete' component={RegisterComplete} />
         <Route exact path='/forgot/password' component={ForgotPassword} />
         <UserRoute exact path='/user/dashboard' component={UserDashboard} />
-        <UserRoute exact path='/checkout' component={Checkout} />
+        {/*<UserRoute exact path='/checkout' component={Checkout} />*/}
         <UserRoute exact path='/payment' component={Payment} />
         <AdminRoute exact path='/admin/dashboard/:key?' component={AdminDashboard} />
         <AdminRoute 
@@ -128,6 +129,7 @@ const App = () => {
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/pre-checkout' component={PreCheckout} />
         <Route exact path='/beta-checkout' component={BetaCheckout} />
+        <Route exact path='/gamma-checkout' component={GammaCheckout} />
         <Route exact path='/order/:orderId' component={OrderReceipt} />
       </Switch>
     </Suspense>

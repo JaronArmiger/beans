@@ -27,7 +27,7 @@ const PreCheckout = ({ history }) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem("cartId", res.data.cartId);
         }
-        history.push('/beta-checkout');
+        history.push('/gamma-checkout');
       })
       .catch(err => {
         console.log(err);
