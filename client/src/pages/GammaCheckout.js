@@ -44,7 +44,7 @@ const initialAddress = {
   firstName: '',
 }
 
-const BetaCheckout = ({ history }) => {
+const GammaCheckout = () => {
   const [products, setProducts] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [address, setAddress] = useState(initialAddress);
@@ -57,7 +57,6 @@ const BetaCheckout = ({ history }) => {
   const [chargeAmount, setChargeAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
-  const [clientSecret, setClientSecret] = useState('');
   const [cardElement, setCardElement] = useState(null);
   const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [payable, setPayable] = useState(0);
@@ -333,56 +332,6 @@ const BetaCheckout = ({ history }) => {
   return (
     <div className="container-fluid">
       <div className="row justify-content-md-center">
-        <div className="col-md-6 pt-3">
-          <Collapse
-            activeKey={activeKey}
-            onChange={(key) => setActiveKey(key)}
-          >
-            <Panel 
-              header="Shipping" 
-              key="1"
-             >
-              <ShippingAddress
-                handleAddressSubmit={handleAddressSubmit}
-                address={address}
-                addressErrors={addressErrors}
-                handleAddressChange={handleAddressChange}
-                handleUSStateChange={handleUSStateChange}
-                shipping={shipping}
-                setShipping={setShipping}
-                continueWithoutShipping={continueWithoutShipping}
-              />
-            </Panel>
-            <Panel 
-              header="Apply Coupon" 
-              key="2"
-             >
-              <h4>Have a coupon?</h4>
-              <br />
-              {showApplyCoupon()}
-            </Panel>
-            <Panel 
-              header="Payment" 
-              key="3"
-              forceRender={true}
-             >
-              <Elements
-                stripe={promise}
-              >
-                <StripeCheckout 
-                  shipping={shipping}
-                  setActiveKey={setActiveKey}
-                  setClientSecret={setClientSecret}
-                  setCardElement={setCardElement}
-                  setPaymentConfirmed={setPaymentConfirmed}
-                  setPayable={setPayable}
-                />
-              </Elements>
-            </Panel>
-          </Collapse>
-        </div>
-      </div>
-      <div className="row justify-content-md-center">
         <div className="col-md-6">
           <h4 className='pt-2'>Order Summary</h4>
           <hr />
@@ -428,21 +377,71 @@ const BetaCheckout = ({ history }) => {
             })}
             </p>
           ) : (<br />)*/}
-          <div className="row">
-            <div className="col d-flex justify-content-center">
-              <button 
-                className="btn btn-outline-primary"
-                disabled={!paymentConfirmed || !addressSaved}
-                onClick={handleOrder}
+          {/*<div className="row">
+                      <div className="col d-flex justify-content-center">
+                        <button 
+                          className="btn btn-outline-primary"
+                          disabled={!paymentConfirmed || !addressSaved}
+                          onClick={handleOrder}
+                        >
+                          Place Order
+                        </button>
+                      </div>
+                    </div>*/}
+        </div>
+      </div>
+      <div className="row justify-content-md-center">
+        <div className="col-md-6 pt-3">
+          <Collapse
+            activeKey={activeKey}
+            onChange={(key) => setActiveKey(key)}
+          >
+            <Panel 
+              header="Shipping" 
+              key="1"
+             >
+              <ShippingAddress
+                handleAddressSubmit={handleAddressSubmit}
+                address={address}
+                addressErrors={addressErrors}
+                handleAddressChange={handleAddressChange}
+                handleUSStateChange={handleUSStateChange}
+                shipping={shipping}
+                setShipping={setShipping}
+                continueWithoutShipping={continueWithoutShipping}
+              />
+            </Panel>
+            <Panel 
+              header="Apply Coupon" 
+              key="2"
+             >
+              <h4>Have a coupon?</h4>
+              <br />
+              {showApplyCoupon()}
+            </Panel>
+            <Panel 
+              header="Payment" 
+              key="3"
+              forceRender={true}
+             >
+              <Elements
+                stripe={promise}
               >
-                Place Order
-              </button>
-            </div>
-          </div>
+                <StripeCheckout 
+                  shipping={shipping}
+                  addressId={addressId}
+                  setActiveKey={setActiveKey}
+                  setPaymentConfirmed={setPaymentConfirmed}
+                  setPayable={setPayable}
+                  emptyCart={emptyCart}
+                />
+              </Elements>
+            </Panel>
+          </Collapse>
         </div>
       </div>
     </div>
   );
 };
 
-export default BetaCheckout;
+export default GammaCheckout;

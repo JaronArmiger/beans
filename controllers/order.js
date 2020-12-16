@@ -106,12 +106,67 @@ exports.create = async (req, res) => {
     console.log(err);
     res.status(400).json({
       err: err.message,
-    })
+    });
   }
 };
 
 exports.createStripe = async (req, res) => {
+  try {
+    const {
+      cartId,
+      addressId,
+      paymentIntent,
+      shipping,
+    } = req.body;
   
+    const cart = await Cart.findById(cartId);
+    console.log('cart', cart);
+
+    const {
+      cartTotal,
+      totalAfterDiscount,
+      products,
+      userEmail,
+    } = cart;
+
+    let chargeAmount = totalAfterDiscount || cartTotal;
+    if (shipping) chargeAmount += 8;
+
+    const bulkOption = products.map((p) => {
+      return {
+        updateOne: {
+          filter: { _id: p.product.toString()},
+          update: {
+            sold: true,
+            soldDate: new Date(),
+          }
+        }
+      }
+    });
+
+    await Product.bulkWrite(bulkOption, {});
+
+    const newOrder = new Order({
+      products,
+      paid: true,
+      userEmail,
+      userAddress: addressId || null,
+      chargeAmount,
+      paymentResult: paymentIntent,
+    });
+
+    await newOrder.save();
+
+    res.json({ 
+      ok: true,
+      orderId: newOrder._id,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({
+      err: err.message,
+    });
+  }
 };
 
 exports.list = async (req, res) => {

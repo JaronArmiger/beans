@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   CardElement,
   useStripe,
@@ -8,15 +8,19 @@ import {
   useSelector,
   useDispatch,
 } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { 
+  Link,
+  useHistory,
+} from 'react-router-dom';
 import {
   createPaymentIntent,
 } from '../functions/stripe';
 import {
-  createOrder,
-  createStripeOrder,
   emptyUserCart,
 } from '../functions/user';
+import {
+  createStripeOrder,
+} from '../functions/order';
 import {
   Card
 } from 'antd';
@@ -46,22 +50,42 @@ const cardStyle = {
 
 const StripeCheckout = ({ 
   shipping, 
+  addressId,
   setActiveKey,
-  setClientSecret,
-  setCardElement,
   setPaymentConfirmed,
   setPayable,
+  emptyCart,
 }) => {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [clientSecret, setClientSecret] = useState('');
 
   const dispatch = useDispatch();
-  const { cartId } = useSelector(state => state);
+  const history = useHistory();
+
+  const { 
+    cartId,
+  } = useSelector(state => state);
 
   const stripe = useStripe();
   const elements = useElements();
+
+  useEffect(() => {
+    createPaymentIntent(cartId, shipping)
+      .then(res => {
+        const {
+          clientSecret,
+          chargeAmount,
+        } = res.data;
+        setProcessing(false);
+        setClientSecret(clientSecret);
+        setPayable(chargeAmount);
+        setPaymentConfirmed(true);
+      })
+      .catch(err => console.log(err));
+  }, []);
 
   const handleChange = async (e) => {
     // listen for changes in the cart element
@@ -73,75 +97,62 @@ const StripeCheckout = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProcessing(true);
-    createPaymentIntent(cartId, shipping)
-      .then(res => {
-        console.log(res.data);
-        const {
-          clientSecret,
-          chargeAmount,
-        } = res.data;
+    try {
+      const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          }
+        });
+      if (payload.error) {
+        setError(`Payment failed ${payload.error.message}`);
         setProcessing(false);
-        setClientSecret(clientSecret);
-        setPayable(chargeAmount);
-        setActiveKey([]);
-        setSucceeded(true);
-        setPaymentConfirmed(true);
-        setCardElement(elements.getElement(CardElement))
-        toast.success('Payment details confirmed.');
-      })
-      .catch(err => {
-        console.log(err);
-        setProcessing(false);
-        toast.warning('Error confirming payment details.');
-      });
-    // e.preventDefault();
-    // setProcessing(true);
-    // try {
-    //   const payload = await stripe
-    //     .confirmCardPayment(clientSecret, {
-    //     	payment_method: {
-    //     	  card: elements.getElement(CardElement),
-    //     	  billing_details: {
-    //     	  	name: e.target.name.value,
-    //     	  },
-    //     	}
-    //     });
-    //   if (payload.error) {
-    //     setError(`Payment failed ${payload.error.message}`);
-    //     setProcessing(false);
-    //   } else {
-    //     // create order and save in database for admin to process
-    //     createOrder(user.token, payload)
-    //       .then(res => {
-    //         if (res.data.ok) {
-    //           if (typeof window !== undefined) {
-    //             localStorage.removeItem('cart');
-    //           }
-    //         }
-    //         dispatch({ type: 'CLEAR_CART' });
-    //         dispatch({
-    //           type: 'COUPON_APPLIED',
-    //           payload: false
-    //         });
-    //         emptyUserCart(user.token)
-    //           .then((res) => {
-    //             if (res.data.ok) console.log('cart deleted on backend');
-    //           })
-    //           .catch(err => console.log(err.response));
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       })
+      } else {
+        createStripeOrder(cartId, addressId, payload.paymentIntent)
+          .then(res => {
+            if (res.data.ok) {
+              console.log('payment successful');
+              emptyCart();
+              toast.success('Your order has been placed!');
+
+              history.push(`/order/${res.data.orderId}`);
+            };
+          })
+          .catch(err => {
+            console.log(err);
+            toast.error('An error has occurred');
+          });
+        // create order and save in database for admin to process
+        // createOrder(user.token, payload)
+        //   .then(res => {
+        //     if (res.data.ok) {
+        //       if (typeof window !== undefined) {
+        //         localStorage.removeItem('cart');
+        //       }
+        //     }
+        //     dispatch({ type: 'CLEAR_CART' });
+        //     dispatch({
+        //       type: 'COUPON_APPLIED',
+        //       payload: false
+        //     });
+        //     emptyUserCart(user.token)
+        //       .then((res) => {
+        //         if (res.data.ok) console.log('cart deleted on backend');
+        //       })
+        //       .catch(err => console.log(err.response));
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   })
         
-    //     console.log(payload);
-    //     setError(null);
-    //     setProcessing(false);
-    //     setSucceeded(true);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error('An error has occurred. Order not placed.')
-    // }
+        setError(null);
+        setProcessing(false);
+        setSucceeded(true);
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error('An error has occurred. Order not placed.')
+    }
 
   };
 
@@ -159,7 +170,7 @@ const StripeCheckout = ({
         />
         <button 
           className="stripe-button"
-          disabled={disabled || processing || succeeded}
+          disabled={disabled || processing || succeeded || !addressId}
         >
           <span
             id='button-text'
@@ -171,7 +182,7 @@ const StripeCheckout = ({
             	>
             	</div>
             ) : (
-              'Confirm Details'
+              'Complete Payment'
             )}
           </span>
         </button>
