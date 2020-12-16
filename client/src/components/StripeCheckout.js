@@ -52,7 +52,6 @@ const StripeCheckout = ({
   shipping, 
   addressId,
   setActiveKey,
-  setPaymentConfirmed,
   setPayable,
   emptyCart,
 }) => {
@@ -79,10 +78,8 @@ const StripeCheckout = ({
           clientSecret,
           chargeAmount,
         } = res.data;
-        setProcessing(false);
         setClientSecret(clientSecret);
         setPayable(chargeAmount);
-        setPaymentConfirmed(true);
       })
       .catch(err => console.log(err));
   }, []);
@@ -122,28 +119,6 @@ const StripeCheckout = ({
             console.log(err);
             toast.error('An error has occurred');
           });
-        // create order and save in database for admin to process
-        // createOrder(user.token, payload)
-        //   .then(res => {
-        //     if (res.data.ok) {
-        //       if (typeof window !== undefined) {
-        //         localStorage.removeItem('cart');
-        //       }
-        //     }
-        //     dispatch({ type: 'CLEAR_CART' });
-        //     dispatch({
-        //       type: 'COUPON_APPLIED',
-        //       payload: false
-        //     });
-        //     emptyUserCart(user.token)
-        //       .then((res) => {
-        //         if (res.data.ok) console.log('cart deleted on backend');
-        //       })
-        //       .catch(err => console.log(err.response));
-        //   })
-        //   .catch(err => {
-        //     console.log(err);
-        //   })
         
         setError(null);
         setProcessing(false);
@@ -170,7 +145,7 @@ const StripeCheckout = ({
         />
         <button 
           className="stripe-button"
-          disabled={disabled || processing || succeeded || !addressId}
+          disabled={disabled || processing || succeeded}
         >
           <span
             id='button-text'

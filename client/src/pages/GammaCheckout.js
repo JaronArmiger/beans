@@ -58,7 +58,6 @@ const GammaCheckout = () => {
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
   const [cardElement, setCardElement] = useState(null);
-  const [paymentConfirmed, setPaymentConfirmed] = useState(false);
   const [payable, setPayable] = useState(0);
 
   const dispatch = useDispatch();
@@ -431,7 +430,6 @@ const GammaCheckout = () => {
                   shipping={shipping}
                   addressId={addressId}
                   setActiveKey={setActiveKey}
-                  setPaymentConfirmed={setPaymentConfirmed}
                   setPayable={setPayable}
                   emptyCart={emptyCart}
                 />
