@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Slide from './Slide';
 
-const SliderContent = ({ width, translate, imageURLs }) => {
+const SliderContent = ({ 
+  width, 
+  translate, 
+  imageURLs,
+  height,
+}) => {
   const sliderContentStyle = {
     transform: `translateX(-${translate}px)`,
     transition: `transform ease-out 0.45s`,
-    height: '100%',
+    height,
     width: `${width * imageURLs.length}px`,
     display: 'flex',
   };
@@ -20,6 +25,7 @@ const SliderContent = ({ width, translate, imageURLs }) => {
               key={idx}
               imageURL={imageURL}
               width={width}
+              height={height}
             />
           ))}
       </div>

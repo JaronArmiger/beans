@@ -11,6 +11,7 @@ const imageURLs = [
 const Slider = () => {
   const [translate, setTranslate] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const height = '70vh';
 
   const autoPlayRef = useRef();
 
@@ -46,7 +47,7 @@ const Slider = () => {
     <div
       style={{
         position: 'relative',
-        height: '100%',
+        height,
         width: '100%',
         margin: '0 auto',
         overflow: 'hidden',
@@ -56,10 +57,8 @@ const Slider = () => {
         width={getWidth()}
         translate={translate}
         imageURLs={imageURLs}
+        height={height}
       />
-      {activeIndex}
-      <br />
-      {translate}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Slide = ({ imageURL, width }) => (
+const Slide = ({ imageURL, width, height }) => (
   <div 
     style={{
-      height: '300px',
+      height,
       width: `${width}px`,
       backgroundImage: `url(${imageURL})`,
       backgroundSize: 'cover',
