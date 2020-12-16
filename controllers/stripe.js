@@ -12,6 +12,7 @@ exports.createPaymentIntent = async (req, res) => {
 
     let chargeAmount = totalAfterDiscount ? totalAfterDiscount : cartTotal;
     if (shipping) chargeAmount += 8;
+    console.log('chargeAmount', chargeAmount);
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: chargeAmount * 100,

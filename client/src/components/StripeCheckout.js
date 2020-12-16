@@ -60,6 +60,7 @@ const StripeCheckout = ({
   const [processing, setProcessing] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -71,18 +72,18 @@ const StripeCheckout = ({
   const stripe = useStripe();
   const elements = useElements();
 
-  useEffect(() => {
-    createPaymentIntent(cartId, shipping)
-      .then(res => {
-        const {
-          clientSecret,
-          chargeAmount,
-        } = res.data;
-        setClientSecret(clientSecret);
-        setPayable(chargeAmount);
-      })
-      .catch(err => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   createPaymentIntent(cartId, shipping)
+  //     .then(res => {
+  //       const {
+  //         clientSecret,
+  //         chargeAmount,
+  //       } = res.data;
+  //       setClientSecret(clientSecret);
+  //       setPayable(chargeAmount);
+  //     })
+  //     .catch(err => console.log(err));
+  // }, []);
 
   const handleChange = async (e) => {
     // listen for changes in the cart element
@@ -91,8 +92,27 @@ const StripeCheckout = ({
     setError(e.error ? e.error.message : '');
   };
 
-  const handleSubmit = async (e) => {
+  const handleConfirmDetails = (e) => {
     e.preventDefault();
+    createPaymentIntent(cartId, shipping)
+      .then(res => {
+        const {
+          clientSecret,
+          chargeAmount,
+        } = res.data;
+        setClientSecret(clientSecret);
+        setPayable(chargeAmount);
+        toast.success('Payment details confirmed');
+        setConfirmed(true);
+      })
+      .catch(err => {
+        console.log(err);
+        toast.error('Error confirming payment details');
+      });
+  };
+
+  const handlePayment = async () => {
+    // e.preventDefault();
     setProcessing(true);
     try {
       const payload = await stripe
@@ -105,7 +125,7 @@ const StripeCheckout = ({
         setError(`Payment failed ${payload.error.message}`);
         setProcessing(false);
       } else {
-        createStripeOrder(cartId, addressId, payload.paymentIntent)
+        createStripeOrder(cartId, addressId, shipping, payload.paymentIntent)
           .then(res => {
             if (res.data.ok) {
               console.log('payment successful');
@@ -133,44 +153,60 @@ const StripeCheckout = ({
 
   return (
     <React.Fragment>
-    	<form 
-    	  id="payment-form"
-    	  className='stripe-form'
-    	  onSubmit={handleSubmit}
-    	>
-        <CardElement 
-          id='card-element'
-          options={cardStyle}
-          onChange={handleChange}
-        />
-        <button 
-          className="stripe-button"
-          disabled={disabled || processing || succeeded}
-        >
-          <span
-            id='button-text'
+        <form 
+            id="payment-form"
+            className='stripe-form'
+            onSubmit={handleConfirmDetails}
           >
-            {processing ? (
-            	<div 
-            	  className='spinner'
-            	  id='spinner'
-            	>
-            	</div>
-            ) : (
-              'Complete Payment'
-            )}
-          </span>
-        </button>
-        <br />
-        {error && (
-    	  <div 
-    	    className="card-error text-danger"
-    	    role='alert'
-    	  >
-    	    {error}
-    	  </div>
-    	)}
-    	</form>
+            <CardElement 
+              id='card-element'
+              options={cardStyle}
+              onChange={handleChange}
+            />
+            <button 
+              className="stripe-button"
+              disabled={disabled || processing || succeeded || confirmed || (shipping && !addressId)}
+            >
+              <span
+                id='button-text'
+              >
+                {processing ? (
+                  <div 
+                    className='spinner'
+                    id='spinner'
+                  >
+                  </div>
+                ) : (
+                  confirmed ? (
+                    'Confirmed'
+                  ) : (
+                    'Confirm Details'
+                  )
+                )}
+              </span>
+            </button>
+            <br />
+            {error && (
+            <div 
+              className="card-error text-danger"
+              role='alert'
+            >
+              {error}
+            </div>
+          )}
+          </form>
+      {confirmed && 
+        <div
+          className='d-flex justify-content-center'
+        >
+          <button 
+            className="btn btn-outline-info"
+            onClick={handlePayment}
+          >
+            Place Order
+          </button>
+        </div>
+      }
     </React.Fragment>
   );
 };

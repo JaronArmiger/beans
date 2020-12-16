@@ -112,7 +112,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
         <b>
           Total:{' '}
         </b>
-        {order.chargeAmount ?
+        ${order.chargeAmount ?
           (order.chargeAmount)
             .toLocaleString('en-US', {
               type: 'currency',

@@ -426,6 +426,12 @@ const GammaCheckout = () => {
               <Elements
                 stripe={promise}
               >
+                <p className='text-center'>
+                  <b>Charge Amount:</b> {(shipping ? (chargeAmount + 8) : chargeAmount).toLocaleString('en-US', {
+                      style: 'currency',
+                      currency: 'USD',
+                    })}
+                </p>
                 <StripeCheckout 
                   shipping={shipping}
                   addressId={addressId}

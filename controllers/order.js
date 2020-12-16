@@ -118,6 +118,8 @@ exports.createStripe = async (req, res) => {
       paymentIntent,
       shipping,
     } = req.body;
+
+    console.log(req.body);
   
     const cart = await Cart.findById(cartId);
     console.log('cart', cart);
