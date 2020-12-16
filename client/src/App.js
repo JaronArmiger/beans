@@ -37,6 +37,7 @@ const AltMobileHeader = lazy(() => import('./components/nav/AltMobileHeader'));
 const UserRoute = lazy(() => import('./components/routes/UserRoute'));
 const AdminRoute = lazy(() => import('./components/routes/AdminRoute'));
 const SideDrawer = lazy(() => import('./components/drawer/SideDrawer'));
+const Slider = lazy(() => import('./components/slider/Slider'));
 
 
 
@@ -99,6 +100,7 @@ const App = () => {
       <Switch>
         <Route exact path='/' component={Home} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/slider' component={Slider} />
         <Route exact path='/register' component={Register} />
         <Route exact path='/register/complete' component={RegisterComplete} />
         <Route exact path='/forgot/password' component={ForgotPassword} />
