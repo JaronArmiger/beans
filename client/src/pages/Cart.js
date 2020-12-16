@@ -125,19 +125,19 @@ const Cart = ({ history }) => {
             </div>
           }
           <React.Fragment>
-            <button
-              onClick={saveOrdertoDbBeta}
-              className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
-              disabled={cart.length === 0 || !noneSold}
-            >
-              Checkout
-            </button>
+            {/*<button
+                          onClick={saveOrdertoDbBeta}
+                          className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
+                          disabled={cart.length === 0 || !noneSold}
+                        >
+                          Checkout
+                        </button>*/}
             <button
               onClick={saveOrdertoDbGamma}
               className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'
               disabled={cart.length === 0 || !noneSold}
             >
-              Gamma-Checkout
+              Checkout
             </button>
             {/* <br />
                             <button
