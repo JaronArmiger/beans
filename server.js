@@ -28,10 +28,6 @@ readdirSync('./routes').map((r) => {
   return app.use('/api', require(`./routes/${r}`));
 });
 
-app.get('/.well-known/acme-challenge/GAR0HJU4WcyXhX1fEEo8oYh28wzH-rr4a7t-ojqKfRg', (req, res) => {
-  res.sendFile(path.join(__dirname, './GAR0HJU4WcyXhX1fEEo8oYh28wzH-rr4a7t-ojqKfRg'));
-});
-
 const pathway = path.join(__dirname, 'client', 'build');
 app.use(express.static(pathway));
 app.get('*', (req, res) => {

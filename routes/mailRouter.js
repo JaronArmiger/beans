@@ -6,9 +6,10 @@ const {
 } = require('../mailer/devMailer');
 
 const {
-  sendEmail,
+  sendEmailProd,
 } = require('../mailer/prodMailer');
 
 router.post('/mail-dev', sendEmailDev);
+router.post('/mail-prod', sendEmailProd);
 
 module.exports = router;
