@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -10,13 +9,7 @@ var path = require('path');
 // app
 const app = express();
 // db
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-}).then(() => console.log('DB CONNECTED'))
-  .catch(err => console.log(`DB CONNECTION ERR: ${err}`))
+require('./mongoConfig');
 
 // middlewares
 app.use(morgan('dev'));

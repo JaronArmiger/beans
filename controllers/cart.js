@@ -121,7 +121,7 @@ exports.applyCouponToCart = async (req, res) => {
       const { expiry } = validCoupon;
       if (expiry < Date.now()) {
         console.log('coupon expired');
-        res.status(400).json({
+        return res.status(400).json({
           err: 'Coupon expired (no discount applied)',
         });
       }
