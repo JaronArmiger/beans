@@ -51,7 +51,7 @@ exports.sendOrderEmailDev = async (req, res) => {
     const subject = `Order Confirmation ${order._id}`;
     const text = generateOrderEmailText(order);
     const message = {
-      from: 'Pilsen Vintage <do-not-reply@pilsenvintagechicago.com>',
+      from: 'Pilsen Vintage <vintageon18th@gmail.com>',
       to: order.userEmail,
       subject,
       text,
@@ -63,7 +63,11 @@ exports.sendOrderEmailDev = async (req, res) => {
           err: err.message,
         });
       };
-      res.json(info);
+      res.json({
+        info,
+        ok: true,
+        userEmail: order.userEmail,
+      });
     });
   } catch (err) {
     res.status(400).json({

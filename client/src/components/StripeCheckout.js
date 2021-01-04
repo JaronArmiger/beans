@@ -134,6 +134,13 @@ const StripeCheckout = ({
               console.log('payment successful');
               emptyCart();
               // send email
+              sendOrderEmail(res.data.orderId)
+                .then(res => {
+                  if (res.data.ok) {
+                    toast.success(`a confirmation email has been sent to ${res.data.userEmail} (check spam)`);
+                  }
+                })
+                .catch(err => console.log(err));
               toast.success('Your order has been placed!');
 
               history.push(`/order/${res.data.orderId}`);
