@@ -20,8 +20,34 @@ exports.sendEmailProd = async (req, res) => {
 };
 
 exports.sendOrderEmailProd = async (req, res) => {
-  const { orderId } = req.body;
-  const order = await Order.findById(orderId);
-  console.log('sendOrderEmailProd');
-  res.send('prod');
+  try {
+    const {
+      orderId,
+    } = req.body;
+    const order = await Order
+      .findById(orderId)
+      .populate('products.product userAddress');
+
+    const subject = `Order Confirmation ${order._id}`;
+    const text = generateOrderEmailText(order);
+    const message = {
+      from: 'Pilsen Vintage <do-not-reply@pilsenvintagechicago.com>',
+      to: order.userEmail,
+      subject,
+      text,
+    };
+    // res.send(text);
+    mg.messages().send(message, (err, info) => {
+      if (err) {
+        res.status(400).json({
+          err: err.message,
+        });
+      };
+      res.json(info);
+    });
+  } catch (err) {
+    res.status(400).json({
+      err: err.message,
+    })
+  }
 };

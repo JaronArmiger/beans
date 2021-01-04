@@ -70,4 +70,4 @@ exports.sendOrderEmailDev = async (req, res) => {
       err: err.message,
     })
   }
-}
+};
