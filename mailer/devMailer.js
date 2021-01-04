@@ -1,11 +1,13 @@
 const nodemailer = require('nodemailer');
+require('dotenv').config();
+const Order = require('../models/order');
 
 const transport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "b89182b01bcce8",
-    pass: "ee4c9df4bb785a"
+    user: process.env.NODEMAILER_USERNAME,
+    pass: process.env.NODEMAILER_PASSWORD,
   }
 });
 
@@ -35,3 +37,10 @@ exports.sendEmailDev = async (req, res) => {
     res.json(info);
   });
 };
+
+exports.sendOrderEmailDev = async (req, res) => {
+  const { orderId } = req.body;
+  const order = await Order.findById(orderId);
+  console.log('sendOrderEmailDev');
+  res.send('dev');
+}

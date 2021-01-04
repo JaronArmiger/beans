@@ -16,6 +16,9 @@ import {
   createPaymentIntent,
 } from '../functions/stripe';
 import {
+  sendOrderEmail,
+} from '../functions/mailer';
+import {
   emptyUserCart,
 } from '../functions/user';
 import {
@@ -130,6 +133,7 @@ const StripeCheckout = ({
             if (res.data.ok) {
               console.log('payment successful');
               emptyCart();
+              // send email
               toast.success('Your order has been placed!');
 
               history.push(`/order/${res.data.orderId}`);

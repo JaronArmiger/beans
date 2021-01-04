@@ -2,6 +2,7 @@ const mailgun = require('mailgun-js');
 const DOMAIN = 'mg.pilsenvintagechicago.com';
 require('dotenv').config();
 const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
+const Order = require('../models/order');
 
 exports.sendEmailProd = async (req, res) => {
   const data = {
@@ -15,4 +16,11 @@ exports.sendEmailProd = async (req, res) => {
     if (err) res.send({ err });
     res.send({ body });
   });
+};
+
+exports.sendOrderEmailProd = async (req, res) => {
+  const { orderId } = req.body;
+  const order = await Order.findById(orderId);
+  console.log('sendOrderEmailProd');
+  res.send('prod');
 };
