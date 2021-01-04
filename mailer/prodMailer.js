@@ -3,6 +3,7 @@ const DOMAIN = 'mg.pilsenvintagechicago.com';
 require('dotenv').config();
 const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
 const Order = require('../models/order');
+const { generateOrderEmailText } = require('../utils/emailGenerator');
 
 exports.sendEmailProd = async (req, res) => {
   const data = {
