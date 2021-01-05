@@ -251,7 +251,7 @@ const Header = () => {
       <div style={{ height: '50px' }}></div>
       <div
         className='d-flex justify-content-center py-1'
-        style={{ backgroundColor: '#03fca1' }}
+        // style={{ backgroundColor: '#03fca1' }}
       >
         <Link
           to='/'
