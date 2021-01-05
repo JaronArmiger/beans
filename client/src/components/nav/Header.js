@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
 import SubHeader from './SubHeader';
-import logo from '../../images/pilsen_logo.png';
+import logo from '../../images/pilsen_logo3.png';
 
 const { SubMenu, Item } = Menu;
 
@@ -262,6 +262,7 @@ const Header = () => {
             style={{ 
               width: '250px',
               height: 'auto',
+              padding: '15px 0px',
             }}
           />
         </Link>

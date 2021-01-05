@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
-import logo from '../../images/pilsen_logo.png';
+import logo from '../../images/pilsen_logo3.png';
 
 
 const { SubMenu, Item } = Menu;
