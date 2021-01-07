@@ -2,14 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import SliderContent from './SliderContent';
 
 const imageURLs = [
-  // 'https://images.unsplash.com/photo-1531279550271-23c2a77a765c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1300&q=80',
-  // 'https://images.unsplash.com/photo-1564106273115-63725b0918ea?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=934&q=80',
-  // 'https://images.unsplash.com/photo-1460899960812-f6ee1ecaf117?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2200&q=80',
-  // 'https://images.unsplash.com/photo-1578309793896-2a825b041f57?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1604&q=80',
-  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609876683/pvt1_asbfeb.jpg',
-  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609876683/pvt4_xiagno.jpg',
-  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609876683/pvt2_xjg2ou.jpg',
-  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609876683/pvt3_o4uqnh.jpg',
+  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978130/pvt-cover1_hvd6pv.jpg',
+  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978129/pvt-cover2_ufyhrw.jpg',
+  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978127/pvt-cover3_hmbfgf.jpg',
 ];
 
 const Slider = () => {
@@ -28,7 +23,7 @@ const Slider = () => {
       autoPlayRef.current();
     };
 
-    const interval = setInterval(play, 2000);
+    const interval = setInterval(play, 5000);
 
     return () => clearInterval(interval);
   }, []);

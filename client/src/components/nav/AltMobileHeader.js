@@ -197,7 +197,7 @@ const AltMobileHeader = () => {
           }}
         />
       </NavBar>
-      <div style={{ height: '50px' }}></div>
+      <div style={{ height: '60px' }}></div>
       <Drawer
         visible={drawerOpen}
         placement='left'
