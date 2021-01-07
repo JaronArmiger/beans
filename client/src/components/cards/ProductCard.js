@@ -1,17 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
   Card, 
 } from 'antd';
-// import {
-//   EyeOutlined,
-//   ShoppingCartOutlined,
-// } from '@ant-design/icons';
 import defaultImage from '../../images/snake.jpg';
 import { Link } from 'react-router-dom';
-// import { showAverage } from '../../functions/rating';
-// import _ from 'lodash';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
 
 const { Meta } = Card;
 
@@ -21,8 +13,7 @@ const ProductCard = ({ product }) => {
     images,
     slug,
     price,
-    _id,
-    quantity,
+    // quantity,
     sold,
   } = product;
 

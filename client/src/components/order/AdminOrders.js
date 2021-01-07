@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import OrderCard from '../cards/OrderCard';
-import ModalImage from 'react-modal-image';
-import defaultImage from '../../images/snake.jpg';
 import {
   getOrders,
   changeOrderStatus,
 } from '../../functions/admin';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 
 

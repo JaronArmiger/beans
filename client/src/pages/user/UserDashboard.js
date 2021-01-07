@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Tabs } from 'antd';
 import OrderHistory from './OrderHistory';
 import Password from './Password';

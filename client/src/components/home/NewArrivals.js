@@ -3,7 +3,6 @@ import { getProducts, getProductsCount } from '../../functions/product';
 import ProductCard from '../cards/ProductCard';
 import LoadingCards from '../cards/LoadingCards';
 import { Pagination } from 'antd'; 
-import { LoadingOutlined } from '@ant-design/icons';
 
 const NewArrivals = () => {
   const [products, setProducts] = useState([]);

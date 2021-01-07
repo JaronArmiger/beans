@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   userCart,
-  saveUserAddress,
-  createCashOrder,
 } from '../functions/user';
 import {
   getCart,
@@ -11,18 +9,13 @@ import {
   removeCart,
 } from '../functions/cart';
 import {
-  createOrder,
-} from '../functions/order';
-import {
   saveAddress,
   validateAddress,
 } from '../functions/address';
 import { toast } from 'react-toastify';
-import SelectUSState from 'react-select-us-states';
 import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
 import defaultImage from '../images/snake.jpg';
-import ModalImage from 'react-modal-image';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import StripeCheckout from '../components/StripeCheckout';
@@ -41,7 +34,6 @@ const initialAddress = {
   city: '',
   state: '',
   zip: '',
-  firstName: '',
 }
 
 const GammaCheckout = () => {
@@ -57,7 +49,6 @@ const GammaCheckout = () => {
   const [chargeAmount, setChargeAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
-  const [cardElement, setCardElement] = useState(null);
   const [payable, setPayable] = useState(0);
 
   const dispatch = useDispatch();
@@ -65,7 +56,6 @@ const GammaCheckout = () => {
   const { 
     user, 
     cart,
-    COD,
     cartId,
   } = useSelector(state => state);
 
@@ -218,7 +208,6 @@ const GammaCheckout = () => {
         const {
           images,
           title,
-          price,
         } = p.product
 
         return (
@@ -282,7 +271,7 @@ const GammaCheckout = () => {
     </React.Fragment>
   );
 
-  const handleOrder = async () => {
+  // const handleOrder = async () => {
     // try {
       // const payload = await stripe
       //   .confirmCardPayment(clientSecret, {
@@ -325,7 +314,7 @@ const GammaCheckout = () => {
     //   console.log(err);
     //   toast.error('An error has occurred. Order not placed.');
     // };
-  };
+  // };
 
 
   return (

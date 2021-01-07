@@ -7,7 +7,6 @@ import {
 } from 'antd';
 import { 
   HomeOutlined,
-  MailOutlined,
   SettingOutlined,
   MenuOutlined,
   ShoppingOutlined,

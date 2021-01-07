@@ -21,10 +21,8 @@ const ProductForm = ({
   	subs,
   	shipping,
   	quantity,
-  	images,
   	colors,
   	color,
-  	brand,
     designer,
     size,
   } = values;

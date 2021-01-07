@@ -11,13 +11,9 @@ import {
 } from '../functions/cart';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import SelectUSState from 'react-select-us-states';
 import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
 import defaultImage from '../images/snake.jpg';
-import ModalImage from 'react-modal-image';
 
 
 const { Panel } = Collapse;
@@ -30,7 +26,6 @@ const initialAddress = {
   city: '',
   state: '',
   zip: '',
-  firstName: '',
 }
 
 const Checkout = ({ history }) => {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AdminNav from '../../../components/nav/AdminNav';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { getCategories } from '../../../functions/category';
@@ -46,7 +45,7 @@ const SubUpdate = ({ match, history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    if (parent.length == 0) {
+    if (parent.length === 0) {
       toast.error('Select a parent category.');
       return;
     }

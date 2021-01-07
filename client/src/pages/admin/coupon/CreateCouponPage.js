@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import {
@@ -12,7 +12,6 @@ import {
   DeleteOutlined,
   LoadingOutlined,
 } from '@ant-design/icons';
-import AdminNav from '../../../components/nav/AdminNav';
 
 const CreateCouponPage = () => {
   const [name, setName] = useState('');
@@ -69,7 +68,6 @@ const CreateCouponPage = () => {
   	<div className="container-fluid">
   	  <div className="row">
   	    <div className="col-md-2">
-  	      <AdminNav />
   	    </div>
   	    <div className="col-md-10">
   	      <h4>Coupon</h4>

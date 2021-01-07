@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getSub } from '../../functions/sub';
 import ProductCard from '../../components/cards/ProductCard';
-import { LoadingOutlined } from '@ant-design/icons';
 
 const SubHome = ({ match }) => {
   const [sub, setSub] = useState({});

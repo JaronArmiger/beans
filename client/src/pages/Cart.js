@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
-import { userCart } from '../functions/user';
-import { toast } from 'react-toastify';
 
 const Cart = ({ history }) => {
   const { user, cart } = useSelector(state => state);
   const [noneSold, setNoneSold] = useState(false);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     let anySold = false;
@@ -29,37 +25,37 @@ const Cart = ({ history }) => {
             });
   };
 
-  const saveOrdertoDb = (cod=false) => {
-    if (cod) {
-      dispatch({
-        type: 'COD',
-        payload: true,
-      })
-    };
-    userCart(cart, user.token)
-      .then((res) => {
-        console.log('CART POST RES', res);
-        if (res.data.ok) history.push('/checkout');
-      })
-      .catch((err) => {
-        console.log(err.response);
-        if (err.response) {
-          if (err.response.statusText === 'Unauthorized') {
-            toast.error('Error: Logout and then log in again.')
-          }
-        }
-      });
-  };
+  // const saveOrdertoDb = (cod=false) => {
+  //   if (cod) {
+  //     dispatch({
+  //       type: 'COD',
+  //       payload: true,
+  //     })
+  //   };
+  //   userCart(cart, user.token)
+  //     .then((res) => {
+  //       console.log('CART POST RES', res);
+  //       if (res.data.ok) history.push('/checkout');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //       if (err.response) {
+  //         if (err.response.statusText === 'Unauthorized') {
+  //           toast.error('Error: Logout and then log in again.')
+  //         }
+  //       }
+  //     });
+  // };
 
-  const saveOrdertoDbBeta = () => {
-    if (!noneSold) return;
+  // const saveOrdertoDbBeta = () => {
+  //   if (!noneSold) return;
 
-    if (user) {
-      history.push('/beta-checkout');
-    } else {
-      history.push('/pre-checkout');
-    }
-  };
+  //   if (user) {
+  //     history.push('/beta-checkout');
+  //   } else {
+  //     history.push('/pre-checkout');
+  //   }
+  // };
   const saveOrdertoDbGamma = () => {
     if (!noneSold) return;
 

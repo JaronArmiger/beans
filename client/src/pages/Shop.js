@@ -11,12 +11,10 @@ import {
 } from '../functions/sub';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductCard from '../components/cards/ProductCard';
-import Star from '../components/forms/Star';
 import { 
   LoadingOutlined, 
   DollarOutlined,
   AimOutlined,
-  StarOutlined,
 } from '@ant-design/icons';
 import {
   Menu,
@@ -26,7 +24,6 @@ import {
   Button,
   Collapse,
 } from 'antd';
-import InfiniteScroll from 'react-infinite-scroll-component';
 
 const { Panel } = Collapse;
 const { SubMenu } = Menu;

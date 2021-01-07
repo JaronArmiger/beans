@@ -1,15 +1,4 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { 
-  getUserCart,
-  emptyUserCart,
-  saveUserAddress,
-  applyCoupon,
-  createCashOrder,
-} from '../functions/user';
-import { toast } from 'react-toastify';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import React from 'react';
 import SelectUSState from 'react-select-us-states';
 import { Radio } from 'antd';
 

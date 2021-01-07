@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Card,
   Collapse,
 } from 'antd';
 import defaultImage from '../../images/snake.jpg';

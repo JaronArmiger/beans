@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   CardElement,
   useStripe,
@@ -6,10 +6,8 @@ import {
 } from '@stripe/react-stripe-js';
 import {
   useSelector,
-  useDispatch,
 } from 'react-redux';
 import { 
-  Link,
   useHistory,
 } from 'react-router-dom';
 import {
@@ -19,18 +17,8 @@ import {
   sendOrderEmail,
 } from '../functions/mailer';
 import {
-  emptyUserCart,
-} from '../functions/user';
-import {
   createStripeOrder,
 } from '../functions/order';
-import {
-  Card
-} from 'antd';
-import {
-  DollarOutlined,
-  CheckOutlined,
-} from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
 const cardStyle = {
@@ -65,7 +53,6 @@ const StripeCheckout = ({
   const [clientSecret, setClientSecret] = useState('');
   const [confirmed, setConfirmed] = useState(false);
 
-  const dispatch = useDispatch();
   const history = useHistory();
 
   const { 

@@ -3,8 +3,6 @@ import ModalImage from 'react-modal-image';
 import defaultImage from '../../images/snake.jpg';
 import { useDispatch } from 'react-redux';
 import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
   DeleteOutlined,
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
@@ -14,44 +12,44 @@ const ProductCardInCheckout = ({ product }) => {
   	_id,
   	title,
   	price,
-  	brand,
-  	color,
+  	// brand,
+  	// color,
   	count,
   	images,
   	quantity,
-  	shipping,
+  	// shipping,
     sold,
   } = product;
 
-  const colors = [
-    'Black',
-    'Brown',
-    'Silver',
-    'White',
-    'Blue',
-  ];
+  // const colors = [
+  //   'Black',
+  //   'Brown',
+  //   'Silver',
+  //   'White',
+  //   'Blue',
+  // ];
 
   const dispatch = useDispatch();
 
-  const handleColorChange = (e) => {
-    let cart = [];
-    if (typeof window !== undefined) {
-      if (localStorage.getItem('cart')) {
-      	cart = JSON.parse(localStorage.getItem('cart'));
-      }
-      cart.map((p, idx) => {
-        if (p._id === _id) {
-          p.color = e.target.value;
-        }
-        return p;
-      });
-      localStorage.setItem('cart', JSON.stringify(cart));
-      dispatch({
-      	type: 'MODIFY_CART',
-      	payload: cart
-      })
-    }
-  };
+  // const handleColorChange = (e) => {
+  //   let cart = [];
+  //   if (typeof window !== undefined) {
+  //     if (localStorage.getItem('cart')) {
+  //     	cart = JSON.parse(localStorage.getItem('cart'));
+  //     }
+  //     cart.map((p, idx) => {
+  //       if (p._id === _id) {
+  //         p.color = e.target.value;
+  //       }
+  //       return p;
+  //     });
+  //     localStorage.setItem('cart', JSON.stringify(cart));
+  //     dispatch({
+  //     	type: 'MODIFY_CART',
+  //     	payload: cart
+  //     })
+  //   }
+  // };
 
   const handleQuantityChange = (e) => {
     let cart = [];

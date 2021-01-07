@@ -1,14 +1,11 @@
-import React from 'react';
-import NewArrivals from '../components/home/NewArrivals';
-import BestSellers from '../components/home/BestSellers';
-import CategoryList from '../components/category/CategoryList';
-import SubList from '../components/sub/SubList';
-import Slider from '../components/slider/Slider';
+import React, { lazy } from 'react';
+// const BestSellers = lazy(() => import('../components/home/BestSellers'));
+// const CategoryList = lazy(() => import('../components/home/CategoryList'));
 
-const images = [
-  { url: 'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2020%2F12%2Fdrake-nike-nocta-apparel-collection-release-date-price-collaboration-4.jpg?q=90&w=1400&cbr=1&fit=max' },
-  { url: 'https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2F2020%2F12%2Fdrake-nike-nocta-apparel-collection-release-date-price-collaboration-3.jpg?q=90&w=1400&cbr=1&fit=max' },
-];
+// import SubList from '../components/sub/SubList';
+const Slider = lazy(() => import('../components/slider/Slider'));
+const NewArrivals = lazy(() => import ('../components/home/NewArrivals'));
+
 
 const Home = () => {
   return (

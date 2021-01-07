@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import UserNav from '../../components/nav/UserNav';
 import OrderCard from '../../components/cards/OrderCard';
 import { getUserOrders } from '../../functions/user';
 import { useSelector } from 'react-redux';

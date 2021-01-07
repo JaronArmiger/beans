@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   userCart,
-  saveUserAddress,
-  createCashOrder,
 } from '../functions/user';
 import {
   getCart,
@@ -18,13 +16,9 @@ import {
 } from '../functions/address';
 import { validateAddress } from '../functions/address';
 import { toast } from 'react-toastify';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import SelectUSState from 'react-select-us-states';
 import { Collapse } from 'antd';
 import ShippingAddress from './ShippingAddress';
 import defaultImage from '../images/snake.jpg';
-import ModalImage from 'react-modal-image';
 import SquareContainer from '../components/square/SquareContainer';
 
 
@@ -38,8 +32,7 @@ const initialAddress = {
   city: '',
   state: '',
   zip: '',
-  firstName: '',
-}
+};
 
 const BetaCheckout = ({ history }) => {
   const [products, setProducts] = useState([]);
@@ -59,7 +52,6 @@ const BetaCheckout = ({ history }) => {
   const { 
     user, 
     cart,
-    COD,
     cartId,
     paymentStatus,
     paymentId,
@@ -225,7 +217,6 @@ const BetaCheckout = ({ history }) => {
         const {
           images,
           title,
-          price,
         } = p.product
 
         return (

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AdminNav from '../../../components/nav/AdminNav';
 import AdminProductCard from '../../../components/cards/AdminProductCard';
 import { 
   getProductsByCount,

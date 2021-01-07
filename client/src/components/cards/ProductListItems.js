@@ -1,12 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const ProductListItems = ({ product }) => {
   const {
     title,
   	price,
-  	category,
-  	subs,
   	shipping,
   	sold,
   } = product;

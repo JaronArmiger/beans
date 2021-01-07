@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { 
   Menu, 
   Badge,
@@ -6,12 +6,10 @@ import {
   Button,
 } from "antd";
 import {
-  AppstoreOutlined,
   SettingOutlined,
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
-  ShoppingOutlined,
   ShoppingCartOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
@@ -20,7 +18,6 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Search from "../forms/Search";
-import SubHeader from './SubHeader';
 import logo from '../../images/pilsen_logo3.png';
 
 const { SubMenu, Item } = Menu;

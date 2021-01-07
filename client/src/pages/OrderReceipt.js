@@ -2,16 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {
   getOrder,
 } from '../functions/order';
-import {
-  Card,
-  Collapse,
-} from 'antd';
-import defaultImage from '../images/snake.jpg';
 import OrderCard from '../components/cards/OrderCard';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const { Panel } = Collapse;
 
 const orderBeforeLoad = {
   userEmail: '',
@@ -39,8 +33,6 @@ const orderBeforeLoad = {
 
 const OrderReceipt = ({ match }) => {
   const { orderId } = match.params;
-
-  const [activeKey, setActiveKey] = useState([]);
   const [order, setOrder] = useState(orderBeforeLoad);
 
   const { user } = useSelector(state => state);

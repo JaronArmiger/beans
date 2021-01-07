@@ -13,13 +13,11 @@ import { Carousel } from 'react-responsive-carousel';
 import defaultImage from '../../images/snake.jpg';
 import ProductListItems from './ProductListItems';
 import RatingModal from '../modals/RatingModal';
-import { showAverage } from '../../functions/rating';
 import { addToWishlist } from '../../functions/wishlist';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
-const { TabPane } = Tabs;
 
 const SingleProduct = ({ 
   product, 
@@ -29,9 +27,7 @@ const SingleProduct = ({
   const {
   	title,
   	images,
-  	description,
     _id,
-    quantity,
     sold,
   } = product;
 
