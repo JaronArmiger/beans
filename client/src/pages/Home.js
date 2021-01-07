@@ -3,8 +3,8 @@ import React, { lazy } from 'react';
 // const CategoryList = lazy(() => import('../components/home/CategoryList'));
 
 // import SubList from '../components/sub/SubList';
-const Slider = lazy(() => import('../components/slider/Slider'));
-const NewArrivals = lazy(() => import ('../components/home/NewArrivals'));
+import Slider from '../components/slider/Slider';
+import NewArrivals from '../components/home/NewArrivals';
 
 
 const Home = () => {
