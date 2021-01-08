@@ -21,7 +21,9 @@ exports.create = async (req, res) => {
 
 exports.listAll = async (req, res) => {
   try {
-    const products = await Product.find({})
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    const products = await Product.find({"soldDate": {"$gte": threeDaysAgo}})
       .limit(parseInt(req.params.count))
       .populate('category')
       .populate('subs')
