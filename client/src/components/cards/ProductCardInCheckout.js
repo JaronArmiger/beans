@@ -17,7 +17,7 @@ const ProductCardInCheckout = ({ product }) => {
   	count,
   	images,
   	quantity,
-  	// shipping,
+  	shipping,
     sold,
   } = product;
 
@@ -117,6 +117,9 @@ const ProductCardInCheckout = ({ product }) => {
                 style: 'currency',
                 currency: 'USD',
               })}
+            </p>
+            <p>
+              Shipping: {shipping}
             </p>
             <div className="d-flex align-items-center pb-1">
               <span>QTY: </span>

@@ -50,6 +50,7 @@ const GammaCheckout = () => {
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
   const [payable, setPayable] = useState(0);
+  const [canShip, setCanShip] = useState(true);
 
   const dispatch = useDispatch();
 
