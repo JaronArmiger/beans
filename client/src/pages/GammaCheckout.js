@@ -235,10 +235,22 @@ const GammaCheckout = () => {
                   style={{ maxWidth: '100px', height: 'auto' }}
                 />
               <div className='text-right'>
-                {title} x {p.count} = {(p.price * p.count).toLocaleString('en-US',{
-                  style: 'currency',
-                  currency: 'USD',
-                })}
+                <p>
+                  {title} x {p.count} = {(p.price * p.count).toLocaleString('en-US',{
+                    style: 'currency',
+                    currency: 'USD',
+                  })}
+                </p>
+                {(p.shipping === 'No') && 
+                  (<p 
+                    style={{ 
+                      color: 'orange',
+                      fontWeight: 'bold'
+                    }}
+                   >
+                     SHIPPING UNAVAILABLE
+                   </p>)
+                }
               </div>
             </div>
             <hr />

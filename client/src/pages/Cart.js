@@ -1,19 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ProductCardInCheckout from '../components/cards/ProductCardInCheckout';
 
 const Cart = ({ history }) => {
   const { user, cart } = useSelector(state => state);
   const [noneSold, setNoneSold] = useState(false);
+  const [canShip, setCanShip] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let anySold = false;
+    let allShippable = true;
     cart.forEach((p) => {
       if (p.sold === true) {
         anySold = true;
       };
+      if (p.shipping === 'No') {
+        allShippable = false;
+      }
     });
     if (!anySold) setNoneSold(true);
+    setCanShip(allShippable);
   }, [cart]);
 
   const getTotal = () => {
@@ -23,6 +31,13 @@ const Cart = ({ history }) => {
               style: 'currency',
               currency: 'USD',
             });
+  };
+
+  const emptyCart = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cart');
+    };
+    dispatch({ type: 'CLEAR_CART' });
   };
 
   // const saveOrdertoDb = (cod=false) => {
@@ -93,6 +108,12 @@ const Cart = ({ history }) => {
     	      ) : (
     	      showCartItems()
     	    )}
+            <button 
+              className="btn btn-outline-danger m-1 float-right"
+              onClick={emptyCart}
+            >
+              Empty Cart
+            </button>
     	  </div>
         <div className="col-lg-6">
           <h4>Order Summary</h4>
@@ -128,6 +149,28 @@ const Cart = ({ history }) => {
                         >
                           Checkout
                         </button>*/}
+            {!canShip && (
+              <React.Fragment>
+                <p 
+                  className='mb-0'
+                  style={{ 
+                    color: 'orange',
+                    fontWeight: 'bold'
+                  }}
+                 >
+                   Notice: Your cart contains items that aren't available for shipping.
+                 </p>
+                 <p 
+                   className='mb-0'
+                  style={{ 
+                    color: 'orange',
+                    fontWeight: 'bold'
+                  }}
+                 >
+                   Remove these items if you want your order shipped.
+                 </p>
+              </React.Fragment>
+            )}
             <button
               onClick={saveOrdertoDbGamma}
               className='btn btn-sm btn-primary btn-outline-primary mt-2 btn-block'

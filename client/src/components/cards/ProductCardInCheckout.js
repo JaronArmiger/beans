@@ -118,7 +118,9 @@ const ProductCardInCheckout = ({ product }) => {
                 currency: 'USD',
               })}
             </p>
-            <p>
+            <p
+              className={shipping === 'No' ? 'text-warning font-weight-bold' : ''}
+            >
               Shipping: {shipping}
             </p>
             <div className="d-flex align-items-center pb-1">
