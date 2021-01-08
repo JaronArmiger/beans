@@ -1,14 +1,25 @@
 const Cart = require('../models/cart');
 const stripe = require('stripe')(process.env.STRIPE_API_SECRET);
+const { checkNoneSold } = require('../utils/cart');
 
 exports.createPaymentIntent = async (req, res) => {
   // apply coupon
   // calculate price
   try {
     const { cartId, shipping } = req.body;
-    const { cartTotal, totalAfterDiscount } = await Cart
+    const { cartTotal, totalAfterDiscount, products } = await Cart
       .findById(cartId)
-      .select('cartTotal totalAfterDiscount');
+      .select('cartTotal totalAfterDiscount products');
+    
+    const noneSold = await checkNoneSold(products);
+
+    if (!noneSold) {
+      return res.send({
+        noneSold,
+        clientSecret: null,
+        chargeAmount: null,
+      });
+    };
 
     let chargeAmount = totalAfterDiscount ? totalAfterDiscount : cartTotal;
     if (shipping) chargeAmount += 8;
@@ -20,6 +31,7 @@ exports.createPaymentIntent = async (req, res) => {
     });
 
     res.send({
+      noneSold,
     	clientSecret: paymentIntent.client_secret,
       chargeAmount,
     });
