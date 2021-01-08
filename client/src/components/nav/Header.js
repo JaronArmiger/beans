@@ -10,7 +10,6 @@ import {
   UserOutlined,
   UserAddOutlined,
   LogoutOutlined,
-  ShoppingCartOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -133,7 +132,7 @@ const Header = () => {
           to={`/sub/${s.slug}`}
           className='p-2'
         >
-          {s.title}
+          {s.title.toUpperCase()}
         </Link>
       </Item>
     ));
@@ -161,7 +160,7 @@ const Header = () => {
             color: '#000',
           }}
         >
-        {c.title}</Link>
+        {c.title.toUpperCase()}</Link>
       </Dropdown>
     ))
   );
@@ -235,13 +234,22 @@ const Header = () => {
 
         <Item 
           key="cart" 
-          icon={<ShoppingCartOutlined />}
+          // icon={<ShoppingCartOutlined />}
           className='float-right'
         >
           <Link to="/cart">
             <Badge count={cart.length} offset={[9, 0]}>
-              Cart
+              CART
             </Badge>
+          </Link>
+        </Item>
+        <Item 
+          key="shop" 
+          // icon={<ShoppingOutlined />}
+          className='float-right'
+        >
+          <Link to="/shop">
+            SHOP
           </Link>
         </Item>
       </Menu>

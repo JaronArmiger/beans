@@ -214,10 +214,12 @@ const handleQuery = async (req, res, query) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
       .find({ 
-        $text: { $search: query },
-        "$or": [
-          {"sold": false},
-          {"soldDate": {"$gte": threeDaysAgo}},
+        "$and": [
+          {$text: { $search: query }},
+          {"$or": [
+            {"sold": false},
+            {"soldDate": {"$gte": threeDaysAgo}},
+          ]}
         ]
       })
       // .populate('category', '_id name')
@@ -237,14 +239,14 @@ const handleQueryRegex = async (req, res, query) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
       .find({
-        $or: [
+        "$and": [{$or: [
           {title: { $regex: query, $options: 'i' }},
           {description: { $regex: query, $options: 'i' }},
-        ],
-        "$or": [
+        ]},
+        {"$or": [
           {"sold": false},
           {"soldDate": {"$gte": threeDaysAgo}},
-        ]
+        ]}]
       })
       // .populate('category', '_id name')
       // .populate('subs', '_id name');
@@ -263,13 +265,15 @@ const handlePrice = async (req, res, price) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
       .find({
-        price: {
-          $gte: price[0],
-          $lte: price[1],
-        },
-        "$or": [
-          {"sold": false},
-          {"soldDate": {"$gte": threeDaysAgo}},
+        "$and": [
+          {price: {
+            $gte: price[0],
+            $lte: price[1],
+          }},
+          {"$or": [
+            {"sold": false},
+            {"soldDate": {"$gte": threeDaysAgo}},
+          ]}
         ]
       });
 
@@ -289,10 +293,12 @@ const handleCategory = async (req, res, category) => {
 
     const products = await Product
       .find({ 
-        category,
-        "$or": [
-          {"sold": false},
-          {"soldDate": {"$gte": threeDaysAgo}},
+         "$and": [
+           {category},
+              {"$or": [
+                {"sold": false},
+                {"soldDate": {"$gte": threeDaysAgo}},
+              ]}
         ]
       });
 
@@ -337,10 +343,12 @@ const handleSub = async (req, res, sub) => {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
-      subs: sub,
-      "$or": [
-        {"sold": false},
-        {"soldDate": {"$gte": threeDaysAgo}},
+      "$and": [
+        {subs: sub},
+        {"$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]}
       ]
     });
     res.json(products);
@@ -357,10 +365,12 @@ const handleShipping = async (req, res, shipping ) => {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
-      shipping,
-      "$or": [
-        {"sold": false},
-        {"soldDate": {"$gte": threeDaysAgo}},
+      "$and": [
+        {shipping},
+        {"$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]}
       ]
     });
     res.json(products);
@@ -377,10 +387,12 @@ const handleColor = async (req, res, color) => {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
-      color,
-      "$or": [
-        {"sold": false},
-        {"soldDate": {"$gte": threeDaysAgo}},
+      "$and": [
+        {color},
+        {"$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]}
       ]
     });
     res.json(products);
@@ -397,10 +409,12 @@ const handleBrand = async (req, res, brand) => {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
-      brand,
-      "$or": [
-        {"sold": false},
-        {"soldDate": {"$gte": threeDaysAgo}},
+      "$and": [
+        {brand},
+        {"$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]}
       ]
     });
     res.json(products);
