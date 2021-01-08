@@ -139,21 +139,21 @@ const SingleProduct = ({
                   Add to Cart
                 </a>)}
             </React.Fragment>,
-          	<a onClick={handleAddToWishlist}>
-          	  <HeartOutlined className='text-info'/>
-          	  <br />
-          	  Add to Wishlist
-          	</a>,
-            <RatingModal>
-              <StarRating
-                name={_id}
-                numberOfStars={5}
-                rating={star}
-                changeRating={onStarClick}
-                isSelectable={true}
-                starRatedColor='purple'
-              />
-            </RatingModal>
+          	// <a onClick={handleAddToWishlist}>
+          	//   <HeartOutlined className='text-info'/>
+          	//   <br />
+          	//   Add to Wishlist
+          	// </a>,
+           //  <RatingModal>
+           //    <StarRating
+           //      name={_id}
+           //      numberOfStars={5}
+           //      rating={star}
+           //      changeRating={onStarClick}
+           //      isSelectable={true}
+           //      starRatedColor='purple'
+           //    />
+           //  </RatingModal>
           ]}
         >
           <ProductListItems
