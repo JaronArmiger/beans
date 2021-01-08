@@ -52,8 +52,10 @@ exports.list = async (req, res) => {
     } = req.body;
 
     const currentPage = page || 1;
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-    const products = await Product.find({})
+    const products = await Product.find({"soldDate": {"$gte": threeDaysAgo}})
       .skip((currentPage - 1) * perPage)
       .populate('category')
       .populate('subs')
@@ -172,10 +174,14 @@ exports.leaveRating = async (req, res) => {
 
 exports.listRelated = async (req, res) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
     const product = await Product.findById(req.params.id);
     const related = await Product.find({ 
       _id: { $ne: product._id },// exclude this product
       category: product.category,
+      "soldDate": {"$gte": threeDaysAgo},
     })
     .limit(3);
     res.json(related);
@@ -191,8 +197,13 @@ const handleQuery = async (req, res, query) => {
   // text and description fields are defined 
   // with text: true in schema
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
-      .find({ $text: { $search: query } })
+      .find({ 
+        $text: { $search: query },
+        "soldDate": {"$gte": threeDaysAgo},
+      })
       // .populate('category', '_id name')
       // .populate('subs', '_id name');
     res.json(products);
@@ -206,12 +217,15 @@ const handleQuery = async (req, res, query) => {
 
 const handleQueryRegex = async (req, res, query) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
       .find({
         $or: [
           {title: { $regex: query, $options: 'i' }},
           {description: { $regex: query, $options: 'i' }},
         ],
+        "soldDate": {"$gte": threeDaysAgo},
       })
       // .populate('category', '_id name')
       // .populate('subs', '_id name');
@@ -226,12 +240,15 @@ const handleQueryRegex = async (req, res, query) => {
 
 const handlePrice = async (req, res, price) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product
       .find({
         price: {
           $gte: price[0],
           $lte: price[1],
-        }
+        },
+        "soldDate": {"$gte": threeDaysAgo},
       });
 
     res.json(products);
@@ -245,8 +262,14 @@ const handlePrice = async (req, res, price) => {
 
 const handleCategory = async (req, res, category) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
     const products = await Product
-      .find({ category });
+      .find({ 
+        category,
+        "soldDate": {"$gte": threeDaysAgo},
+      });
 
     res.json(products);
   } catch (err) {
@@ -286,8 +309,11 @@ const handleStar = async (req, res, stars) => {
 
 const handleSub = async (req, res, sub) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       subs: sub,
+      "soldDate": {"$gte": threeDaysAgo},
     });
     res.json(products);
   } catch (err) {
@@ -300,8 +326,11 @@ const handleSub = async (req, res, sub) => {
 
 const handleShipping = async (req, res, shipping ) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       shipping,
+      "soldDate": {"$gte": threeDaysAgo},
     });
     res.json(products);
   } catch (err) {
@@ -314,8 +343,11 @@ const handleShipping = async (req, res, shipping ) => {
 
 const handleColor = async (req, res, color) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       color,
+      "soldDate": {"$gte": threeDaysAgo},
     });
     res.json(products);
   } catch (err) {
@@ -328,8 +360,11 @@ const handleColor = async (req, res, color) => {
 
 const handleBrand = async (req, res, brand) => {
   try {
+    let threeDaysAgo = new Date();
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       brand,
+      "soldDate": {"$gte": threeDaysAgo},
     });
     res.json(products);
   } catch (err) {
