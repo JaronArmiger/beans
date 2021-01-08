@@ -23,7 +23,12 @@ exports.listAll = async (req, res) => {
   try {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-    const products = await Product.find({"soldDate": {"$gte": threeDaysAgo}})
+    const products = await Product.find({
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
+    })
       .limit(parseInt(req.params.count))
       .populate('category')
       .populate('subs')
@@ -55,7 +60,12 @@ exports.list = async (req, res) => {
     let threeDaysAgo = new Date();
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
-    const products = await Product.find({"soldDate": {"$gte": threeDaysAgo}})
+    const products = await Product.find({
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
+    })
       .skip((currentPage - 1) * perPage)
       .populate('category')
       .populate('subs')
@@ -181,7 +191,10 @@ exports.listRelated = async (req, res) => {
     const related = await Product.find({ 
       _id: { $ne: product._id },// exclude this product
       category: product.category,
-      "soldDate": {"$gte": threeDaysAgo},
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
     })
     .limit(3);
     res.json(related);
@@ -202,7 +215,10 @@ const handleQuery = async (req, res, query) => {
     const products = await Product
       .find({ 
         $text: { $search: query },
-        "soldDate": {"$gte": threeDaysAgo},
+        "$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]
       })
       // .populate('category', '_id name')
       // .populate('subs', '_id name');
@@ -225,7 +241,10 @@ const handleQueryRegex = async (req, res, query) => {
           {title: { $regex: query, $options: 'i' }},
           {description: { $regex: query, $options: 'i' }},
         ],
-        "soldDate": {"$gte": threeDaysAgo},
+        "$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]
       })
       // .populate('category', '_id name')
       // .populate('subs', '_id name');
@@ -248,7 +267,10 @@ const handlePrice = async (req, res, price) => {
           $gte: price[0],
           $lte: price[1],
         },
-        "soldDate": {"$gte": threeDaysAgo},
+        "$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]
       });
 
     res.json(products);
@@ -268,7 +290,10 @@ const handleCategory = async (req, res, category) => {
     const products = await Product
       .find({ 
         category,
-        "soldDate": {"$gte": threeDaysAgo},
+        "$or": [
+          {"sold": false},
+          {"soldDate": {"$gte": threeDaysAgo}},
+        ]
       });
 
     res.json(products);
@@ -313,7 +338,10 @@ const handleSub = async (req, res, sub) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       subs: sub,
-      "soldDate": {"$gte": threeDaysAgo},
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
     });
     res.json(products);
   } catch (err) {
@@ -330,7 +358,10 @@ const handleShipping = async (req, res, shipping ) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       shipping,
-      "soldDate": {"$gte": threeDaysAgo},
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
     });
     res.json(products);
   } catch (err) {
@@ -347,7 +378,10 @@ const handleColor = async (req, res, color) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       color,
-      "soldDate": {"$gte": threeDaysAgo},
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
     });
     res.json(products);
   } catch (err) {
@@ -364,7 +398,10 @@ const handleBrand = async (req, res, brand) => {
     threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
     const products = await Product.find({
       brand,
-      "soldDate": {"$gte": threeDaysAgo},
+      "$or": [
+        {"sold": false},
+        {"soldDate": {"$gte": threeDaysAgo}},
+      ]
     });
     res.json(products);
   } catch (err) {
