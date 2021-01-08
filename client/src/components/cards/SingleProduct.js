@@ -118,48 +118,67 @@ const SingleProduct = ({
         </Carousel>
       </div>
       <div className="col-md-5">
-        <Card
-          actions={[
-            <React.Fragment>
-            {_.some(cart, product) ?
-              (<a onClick={handleRemoveFromCart}>
-                  <ShoppingCartOutlined 
-                    className='text-danger'
-                  />
-                  <br />
-                  Remove from Cart
-                </a>) :
-              (<a onClick={handleAddToCart}
-                  disabled={sold}
+        <ProductListItems product={product}/>
+        <div>
+          {_.some(cart, product) ? (
+            <button
+              className='btn btn-outline'
+              onClick={handleRemoveFromCart}
+            >
+              Remove from Cart
+            </button>
+          ) : (
+            <button
+              className='btn btn-outline'
+              onClick={handleAddToCart}
+              disabled={sold}
+            >
+              Add to Cart
+            </button>
+          )}
+        </div>
+        {/*<Card
+                  actions={[
+                    <React.Fragment>
+                    {_.some(cart, product) ?
+                      (<a onClick={handleRemoveFromCart}>
+                          <ShoppingCartOutlined 
+                            className='text-danger'
+                          />
+                          <br />
+                          Remove from Cart
+                        </a>) :
+                      (<a onClick={handleAddToCart}
+                          disabled={sold}
+                        >
+                          <ShoppingCartOutlined 
+                            className='text-success'
+                          />
+                          <br />
+                          Add to Cart
+                        </a>)}
+                    </React.Fragment>,
+                    // <a onClick={handleAddToWishlist}>
+                    //   <HeartOutlined className='text-info'/>
+                    //   <br />
+                    //   Add to Wishlist
+                    // </a>,
+                   //  <RatingModal>
+                   //    <StarRating
+                   //      name={_id}
+                   //      numberOfStars={5}
+                   //      rating={star}
+                   //      changeRating={onStarClick}
+                   //      isSelectable={true}
+                   //      starRatedColor='purple'
+                   //    />
+                   //  </RatingModal>
+                  ]}
                 >
-                  <ShoppingCartOutlined 
-                    className='text-success'
-                  />
-                  <br />
-                  Add to Cart
-                </a>)}
-            </React.Fragment>,
-          	// <a onClick={handleAddToWishlist}>
-          	//   <HeartOutlined className='text-info'/>
-          	//   <br />
-          	//   Add to Wishlist
-          	// </a>,
-           //  <RatingModal>
-           //    <StarRating
-           //      name={_id}
-           //      numberOfStars={5}
-           //      rating={star}
-           //      changeRating={onStarClick}
-           //      isSelectable={true}
-           //      starRatedColor='purple'
-           //    />
-           //  </RatingModal>
-          ]}
-        >
           <ProductListItems
             product={product}
           />
-        </Card>
+        </Card>*/}
       </div>
     </React.Fragment>
   );

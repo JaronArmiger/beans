@@ -6,11 +6,14 @@ const ProductListItems = ({ product }) => {
   	price,
   	shipping,
   	sold,
+    size,
+    description,
   } = product;
 
   return (
     <div
-      className='d-flex flex-column align-items-center'
+      className='d-flex flex-column align-items-start'
+      style={{ textTransform: 'uppercase' }}
     >
       {sold && (
         <div 
@@ -20,12 +23,17 @@ const ProductListItems = ({ product }) => {
           SOLD
         </div>
       )}
-      <h6>{title}</h6>
-      <h6>{price ? price.toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            }) : ''}</h6>
-      <p><b>Shipping Available? </b>{shipping}</p>
+      <p className='mb-3'>{title}</p>
+      <p className='mb-3'>
+        {price ? price.toLocaleString('en-US',{
+          style: 'currency',
+          currency: 'USD',
+        }) : ''}
+      </p>
+      <p className='mb-1'>{description}</p>
+      <hr />
+      <p className='mb-1'>Size: {size}</p>
+      <p className='mb-2'><b>Shipping Available? </b>{shipping}</p>
     </div>
   );
 };

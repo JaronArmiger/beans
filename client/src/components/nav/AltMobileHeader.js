@@ -178,7 +178,7 @@ const AltMobileHeader = () => {
         onLeftClick={toggleOpen}
         style={{ 
           cursor: 'pointer', 
-          backgroundColor: '#03fca1',
+          backgroundColor: '#fcfcfc', //#03fca1
           position: 'fixed', 
           zIndex: 1, 
           width: '100%',

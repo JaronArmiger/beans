@@ -94,7 +94,7 @@ const ProductCard = ({ product }) => {
         cover={
           (<img 
               src={(images && images.length > 0) ? images[0].url : defaultImage}
-              style={{ height: '250px', objectFit: 'cover' }}
+              style={{ height: '250px', objectFit: 'contain' }}
               className='p-1'
               alt={title}
               onMouseOver={handleMouseOver}
@@ -106,7 +106,7 @@ const ProductCard = ({ product }) => {
             className={
               `text-center ${sold ? 'alert alert-danger' : ''}`
             }
-            title={title}
+            title={title.toUpperCase()}
             description={
               sold ?
               'SOLD' :

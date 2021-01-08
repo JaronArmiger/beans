@@ -108,12 +108,14 @@ const Cart = ({ history }) => {
     	      ) : (
     	      showCartItems()
     	    )}
+          {cart.length > 0 && (
             <button 
               className="btn btn-outline-danger m-1 float-right"
               onClick={emptyCart}
             >
               Empty Cart
             </button>
+          )}
     	  </div>
         <div className="col-lg-6">
           <h4>Order Summary</h4>
