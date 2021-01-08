@@ -60,37 +60,17 @@ const GammaCheckout = () => {
     cartId,
   } = useSelector(state => state);
 
+
   useEffect(() => {
     let mounted = true;
-    if (user) {
-      userCart(cart, user.token)
-        .then((res) => {
-          if (mounted) {
-            setProducts(res.data.products);
-            setCartTotal(res.data.cartTotal);
-            setTotalAfterDiscount(parseInt(res.data.totalAfterDiscount));
-          }
-          dispatch({
-            type: 'MODIFY_CART_ID',
-            payload: res.data._id,
-          });
-          if (typeof window !== 'undefined') {
-            localStorage.setItem("cartId", res.data._id);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          console.log(err.response);
-          // if ()
-        });
-    } else {
-      if (cartId) {
-        getCart(cartId)
+    if (mounted) {
+      if (user) {
+        userCart(cart, user.token)
           .then((res) => {
             if (mounted) {
               setProducts(res.data.products);
               setCartTotal(res.data.cartTotal);
-              setTotalAfterDiscount(res.data.totalAfterDiscount);
+              setTotalAfterDiscount(parseInt(res.data.totalAfterDiscount));
             }
             dispatch({
               type: 'MODIFY_CART_ID',
@@ -102,11 +82,42 @@ const GammaCheckout = () => {
           })
           .catch(err => {
             console.log(err);
+            console.log(err.response);
+            // if ()
           });
+      } else {
+        if (cartId) {
+          getCart(cartId)
+            .then((res) => {
+              if (mounted) {
+                setProducts(res.data.products);
+                setCartTotal(res.data.cartTotal);
+                setTotalAfterDiscount(res.data.totalAfterDiscount);
+              }
+              dispatch({
+                type: 'MODIFY_CART_ID',
+                payload: res.data._id,
+              });
+              if (typeof window !== 'undefined') {
+                localStorage.setItem("cartId", res.data._id);
+              }
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        }
       }
     }
     return () => mounted = false;
   }, [user]);
+
+  useEffect(() => {
+    const allProductsCanShip = products.every((p) => {
+      return p.shipping === 'Yes';
+    });
+
+    setCanShip(allProductsCanShip);
+  }, [products]);
 
   useEffect(() => {
     setChargeAmount(totalAfterDiscount || cartTotal);
@@ -389,16 +400,28 @@ const GammaCheckout = () => {
               header="Shipping" 
               key="1"
              >
-              <ShippingAddress
-                handleAddressSubmit={handleAddressSubmit}
-                address={address}
-                addressErrors={addressErrors}
-                handleAddressChange={handleAddressChange}
-                handleUSStateChange={handleUSStateChange}
-                shipping={shipping}
-                setShipping={setShipping}
-                continueWithoutShipping={continueWithoutShipping}
-              />
+              {canShip ?
+                (<ShippingAddress
+                  handleAddressSubmit={handleAddressSubmit}
+                  address={address}
+                  addressErrors={addressErrors}
+                  handleAddressChange={handleAddressChange}
+                  handleUSStateChange={handleUSStateChange}
+                  shipping={shipping}
+                  setShipping={setShipping}
+                  continueWithoutShipping={continueWithoutShipping}
+                />) : (
+                  <React.Fragment>
+                    <p>Your order contains products that we can't ship.</p>
+                    <button
+                      className='btn btn-outline-info'
+                      onClick={continueWithoutShipping}
+                    >
+                      Continue
+                    </button>
+                  </React.Fragment>
+                )
+              }
             </Panel>
             <Panel 
               header="Apply Coupon" 

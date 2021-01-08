@@ -12,6 +12,10 @@ const CartSchema = new mongoose.Schema({
       // color: String,
       // title: String,
       price: Number,
+      shipping: {
+        type: String,
+        enum: ['Yes', 'No'],
+      },
     }
   ],
   cartTotal: Number,

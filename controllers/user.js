@@ -22,15 +22,16 @@ exports.userCart = async (req, res) => {
 
 	  for (let i = 0; i < cart.length; i++) {
 	    const p = {};
-	    const { price } = await Product
+	    const { price, shipping } = await Product
 	      .findById(cart[i]._id)
-	      .select('price');
+	      .select('price shipping');
 
 	    p.product = cart[i]._id;
 	    p.count = cart[i].count;
 	    // p.color = cart[i].color;
 	    // p.title = cart[i].title;
 	    p.price = price;
+      p.shipping = shipping;
 	    
 	    products.push(p);
 	  };
