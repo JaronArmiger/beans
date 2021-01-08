@@ -51,6 +51,7 @@ const GammaCheckout = () => {
   const [shipping, setShipping] = useState(false);
   const [payable, setPayable] = useState(0);
   const [canShip, setCanShip] = useState(true);
+  const [noneSold, setNoneSold] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -116,7 +117,12 @@ const GammaCheckout = () => {
       return p.shipping === 'Yes';
     });
 
+    const noProductsSold = products.every((p) => {
+      return p.sold === false;
+    });
+
     setCanShip(allProductsCanShip);
+    setNoneSold(noProductsSold);
   }, [products]);
 
   useEffect(() => {
@@ -251,6 +257,16 @@ const GammaCheckout = () => {
                      SHIPPING UNAVAILABLE
                    </p>)
                 }
+                {(p.sold) && 
+                  (<p 
+                    style={{ 
+                      color: 'red',
+                      fontWeight: 'bold'
+                    }}
+                   >
+                     SOLD
+                   </p>)
+                }
               </div>
             </div>
             <hr />
@@ -275,12 +291,14 @@ const GammaCheckout = () => {
         <button 
           className="btn btn-outline-info mt-2"
           onClick={applyDiscountCoupon}
+          disabled={!noneSold}
         >
           Apply
         </button>
         <button 
           className="btn btn-outline-info mt-2"
           onClick={() => setActiveKey(['3'])}
+          disabled={!noneSold}
         >
           Continue
         </button>
@@ -381,6 +399,20 @@ const GammaCheckout = () => {
             })}
             </b>
           </p>
+          {!noneSold && (
+            <React.Fragment>
+              <p
+                className='text-right font-weight-bold text-danger mb-0'
+              >
+                WARNING: 1 or more products in your order have been sold.
+              </p>
+              <p
+                className='text-right font-weight-bold text-danger mb-0'
+              >
+                Remove the sold products from your cart to continue.
+              </p>
+            </React.Fragment>
+          )}
           {/*totalAfterDiscount ? (
             <p className="bg-success p-2">
               Discount Applied; Total Payable: {totalAfterDiscount.toLocaleString('en-US',{
@@ -422,12 +454,14 @@ const GammaCheckout = () => {
                   shipping={shipping}
                   setShipping={setShipping}
                   continueWithoutShipping={continueWithoutShipping}
+                  noneSold={noneSold}
                 />) : (
                   <React.Fragment>
                     <p>Your order contains products that we can't ship.</p>
                     <button
                       className='btn btn-outline-info'
                       onClick={continueWithoutShipping}
+                      disabled={!noneSold}
                     >
                       Continue
                     </button>
@@ -463,6 +497,7 @@ const GammaCheckout = () => {
                   setActiveKey={setActiveKey}
                   setPayable={setPayable}
                   emptyCart={emptyCart}
+                  noneSold={noneSold}
                 />
               </Elements>
             </Panel>

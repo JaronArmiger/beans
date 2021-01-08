@@ -9,6 +9,10 @@ const CartSchema = new mongoose.Schema({
       	ref: 'Product',
       },
       count: Number,
+      sold: {
+        type: Boolean,
+        default: false
+      },
       // color: String,
       // title: String,
       price: Number,

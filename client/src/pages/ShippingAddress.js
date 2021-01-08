@@ -12,6 +12,7 @@ const ShippingAddress = ({
   shipping,
   setShipping,
   continueWithoutShipping,
+  noneSold,
 }) => {  
   const showAddressForm = () => (
     <form
@@ -119,6 +120,7 @@ const ShippingAddress = ({
           </div>}
         <button
           className='btn btn-outline-info'
+          disabled={!noneSold}
         >
           Save and Continue
         </button>
@@ -144,9 +146,11 @@ const ShippingAddress = ({
         <button
           className='btn btn-outline-info'
           onClick={continueWithoutShipping}
+          disabled={!noneSold}
         >
           Continue
-        </button>}
+        </button>
+      }
       {shipping && showAddressForm()}
     </React.Fragment>
   );

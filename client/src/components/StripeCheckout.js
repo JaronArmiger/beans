@@ -45,6 +45,7 @@ const StripeCheckout = ({
   setActiveKey,
   setPayable,
   emptyCart,
+  noneSold,
 }) => {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
@@ -163,7 +164,7 @@ const StripeCheckout = ({
             />
             <button 
               className="stripe-button"
-              disabled={disabled || processing || succeeded || confirmed || (shipping && !addressId)}
+              disabled={disabled || processing || succeeded || confirmed || (shipping && !addressId) || !noneSold}
             >
               <span
                 id='button-text'
