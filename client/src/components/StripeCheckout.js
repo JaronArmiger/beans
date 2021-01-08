@@ -53,6 +53,7 @@ const StripeCheckout = ({
   const [disabled, setDisabled] = useState(true);
   const [clientSecret, setClientSecret] = useState('');
   const [confirmed, setConfirmed] = useState(false);
+  const [noneSoldRecheck, setNoneSoldRecheck] = useState(true);
 
   const history = useHistory();
 
@@ -90,9 +91,11 @@ const StripeCheckout = ({
         const {
           clientSecret,
           chargeAmount,
+          noneSoldBackend,
         } = res.data;
         setClientSecret(clientSecret);
         setPayable(chargeAmount);
+        setNoneSoldRecheck(noneSoldBackend);
         toast.success('Payment details confirmed');
         setConfirmed(true);
       })
@@ -152,6 +155,25 @@ const StripeCheckout = ({
 
   return (
     <React.Fragment>
+      {!noneSoldRecheck && (
+        <React.Fragment>
+          <p
+            className='font-weight-bold text-danger mb-0'
+          >
+            WARNING: 1 or more products in your order have been sold.
+          </p>
+          <p
+            className='font-weight-bold text-danger mb-0'
+          >
+            Remove the sold products from your cart to continue.
+          </p>
+          <p
+            className='font-weight-bold text-danger mb-0'
+          >
+            Your card has NOT been charged.
+          </p>
+        </React.Fragment>
+      )}
         <form 
             id="payment-form"
             className='stripe-form'
@@ -201,6 +223,7 @@ const StripeCheckout = ({
           <button 
             className="btn btn-outline-info"
             onClick={handlePayment}
+            disabled={!noneSold || !noneSoldRecheck}
           >
             Place Order
           </button>

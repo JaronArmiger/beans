@@ -12,10 +12,11 @@ exports.createPaymentIntent = async (req, res) => {
       .select('cartTotal totalAfterDiscount products');
     
     const noneSold = await checkNoneSold(products);
+    console.log('_________noneSold_______', noneSold);
 
     if (!noneSold) {
       return res.send({
-        noneSold,
+        noneSoldBackend: noneSold,
         clientSecret: null,
         chargeAmount: null,
       });
@@ -31,7 +32,7 @@ exports.createPaymentIntent = async (req, res) => {
     });
 
     res.send({
-      noneSold,
+      noneSoldBackend: noneSold,
     	clientSecret: paymentIntent.client_secret,
       chargeAmount,
     });
