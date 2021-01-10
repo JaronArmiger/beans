@@ -90,11 +90,32 @@ const ProductCard = ({ product }) => {
     <Link
       to={`/product/${slug}`}
     >
+    {/*<div>
+      <div
+        style={{
+          height: '400px',
+          width: `400px`,
+          backgroundImage: `url(${(images && images.length > 0) ? images[0].url : defaultImage})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+        }}
+      >
+      </div>
+        <img 
+                  src={(images && images.length > 0) ? images[0].url : defaultImage}
+                  style={{ height: '250px', objectFit: 'contain' }}
+                  className='p-1'
+                  alt={title}
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+               />
+    </div> */}
       <Card
         cover={
           (<img 
               src={(images && images.length > 0) ? images[0].url : defaultImage}
-              style={{ height: '250px', objectFit: 'contain' }}
+              style={{ height: '300px', objectFit: 'contain' }}
               className='p-1'
               alt={title}
               onMouseOver={handleMouseOver}
@@ -102,25 +123,37 @@ const ProductCard = ({ product }) => {
            />)
         }
       >
-        <Meta
-            className={
-              `text-center ${sold ? 'alert alert-danger' : ''}`
-            }
-            title={title.toUpperCase()}
-            description={
-              sold ?
-              'SOLD' :
-              `${price ? price.toLocaleString('en-US',{
-                style: 'currency',
-                currency: 'USD',
-              }) : ''}`
-              // description ? (
-              //   (description.length > 30) ?
-              //   (`${description.substring(0, 30)}...`)
-              //   : description
-              // ) : ''
-            }
-          />
+        {/*<Meta
+                    className={
+                      `text-center ${sold ? 'alert alert-danger' : ''}`
+                    }
+                    title={title.toUpperCase()}
+                    description={
+                      sold ?
+                      'SOLD' :
+                      `${price ? price.toLocaleString('en-US',{
+                        style: 'currency',
+                        currency: 'USD',
+                      }) : ''}`
+                      // description ? (
+                      //   (description.length > 30) ?
+                      //   (`${description.substring(0, 30)}...`)
+                      //   : description
+                      // ) : ''
+                    }
+                  />*/}
+          {sold && (
+            <p
+              className='alert alert-danger text-center'
+            >
+              SOLD
+            </p>
+          )}
+          <p 
+            className='mb-0 text-uppercase'
+          >
+            {title} / ${price}
+          </p>
       </Card>
     </Link>
   );

@@ -25,10 +25,7 @@ const ProductListItems = ({ product }) => {
       )}
       <p className='mb-3'>{title}</p>
       <p className='mb-3'>
-        {price ? price.toLocaleString('en-US',{
-          style: 'currency',
-          currency: 'USD',
-        }) : ''}
+        ${price}
       </p>
       <p className='mb-1'>{description}</p>
       <hr />

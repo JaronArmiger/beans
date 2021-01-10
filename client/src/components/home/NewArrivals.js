@@ -9,7 +9,7 @@ const NewArrivals = () => {
   const [loading, setLoading] = useState(false);
   const [productsCount, setProductsCount] = useState(0);
   const [page, setPage] = useState(1);
-  const perPage = 3;
+  const perPage = 4;
 
   useEffect(() => {
     loadProducts();
@@ -43,11 +43,11 @@ const NewArrivals = () => {
   	<React.Fragment>
   	  <div className="container">
         {loading ? 
-          (<LoadingCards count={3} />) :
+          (<LoadingCards count={4} />) :
         	(<div className="row">
               {products.map((product) => {
               	return (
-              	  <div className="col-md-4" key={product._id}>
+              	  <div className="col-md-6" key={product._id}>
               	    <ProductCard 
               	     product={product}
               	    />

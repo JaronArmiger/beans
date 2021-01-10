@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import SliderContent from './SliderContent';
 
 const imageURLs = [
-  'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978130/pvt-cover1_hvd6pv.jpg',
+  'https://res.cloudinary.com/pilsenvintage/image/upload/v1610303542/pvt-cover1-min_xk9ojr.jpg',
   'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978129/pvt-cover2_ufyhrw.jpg',
   'https://res.cloudinary.com/pilsenvintage/image/upload/v1609978127/pvt-cover3_hmbfgf.jpg',
 ];
