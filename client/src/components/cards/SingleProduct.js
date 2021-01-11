@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Card, 
   Tabs, 
@@ -31,9 +31,18 @@ const SingleProduct = ({
     sold,
   } = product;
 
+  const intialWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
+  const [windowWidth, setWindowWidth] = useState(intialWidth);
   const { cart, user } = useSelector(state => state);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', () => {
+      setWindowWidth(window.innerWidth);
+    })
+    }
+  }, []);
 
   const handleAddToCart = () => {
     if (sold) {
@@ -105,16 +114,40 @@ const SingleProduct = ({
           infiniteLoop
           dots={false}
         >
+          {/*{(images && images.length > 0) ? images.map((i) => {
+                      return (
+                        <img 
+                          src={i.url} 
+                          alt={title} 
+                          key={i.public_id}
+                          style={{ maxHeight: '400px' }}
+                        />
+                      );
+                    }) : <img src={defaultImage} alt={title} />}*/}
           {(images && images.length > 0) ? images.map((i) => {
-          	return (
-          	  <img 
-                src={i.url} 
-                alt={title} 
-                key={i.public_id}
-                style={{ maxHeight: '400px' }}
+            return (
+              <div 
+                style={{
+                  height: `${(windowWidth > 900 ? '75vh' : '400px')}`,
+                  width: '100%',
+                  backgroundImage: `url(${i.url})`,
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                }}
               />
-          	);
-          }) : <img src={defaultImage} alt={title} />}
+            );
+          }) : <div 
+                  style={{
+                    height: '400px',
+                    width: `400px`,
+                    backgroundImage: `url(${defaultImage})`,
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'center',
+                  }}
+                />
+          }
         </Carousel>
       </div>
       <div className="col-md-5">
