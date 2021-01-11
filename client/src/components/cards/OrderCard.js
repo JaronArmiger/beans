@@ -23,7 +23,7 @@ const statusOptions = [
 const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
   const [activeKey, setActiveKey] = useState([]);
   const address = order.userAddress || null;
-  const products = order.products;
+  const products = order.products || [];
 
   const calcStatusColor = () => {
     switch (order.orderStatus) {

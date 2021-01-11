@@ -72,7 +72,7 @@ const RegisterComplete = ({ history }) => {
       <input 
         type='email' 
         className='form-control' 
-        defaultValue={email} 
+        value={email} 
       />
       <input 
         type='password' 
