@@ -85,7 +85,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               onChange={e => handleStatusChange(order._id, e.target.value)}
               disabled={!(products.every((p) =>{
                 if (p.product){
-                  p.product.pulled === true
+                  return p.product.pulled === true;
                 } else {
                   return false;
                 }
