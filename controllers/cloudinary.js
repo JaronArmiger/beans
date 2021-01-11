@@ -36,7 +36,7 @@ exports.remove = (req, res) => {
       if (result.result === 'ok') {
         return res.send('ok');
       }
-    };
+    });
   } catch (err) {
     return res.status(400).json({
       success: false,
