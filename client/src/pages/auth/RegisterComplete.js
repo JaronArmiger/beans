@@ -73,7 +73,6 @@ const RegisterComplete = ({ history }) => {
         type='email' 
         className='form-control' 
         defaultValue={email} 
-        disabled
       />
       <input 
         type='password' 

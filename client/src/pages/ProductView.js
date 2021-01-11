@@ -59,10 +59,13 @@ const ProductView = ({ match }) => {
   	    />
   	  </div>
   	  <div className="row">
-  	    <div className='col text-center pt-5 pb-5'>
-          <hr />
-          <h4>You May Also Like</h4>
-          <hr />
+  	    <div className='col text-center'>
+          <p 
+            className="text-center p-3 mt-2 mb-2 font-weight-bold"
+            style={{fontSize: '20px'}}
+          >
+            SIMILAR PIECES
+          </p>
         </div>
   	  </div>
       <div className="row">
