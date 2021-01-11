@@ -83,7 +83,13 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               }}
               defaultValue={order.orderStatus}
               onChange={e => handleStatusChange(order._id, e.target.value)}
-              disabled={!(products.every((p) => p.product.pulled === true))}
+              disabled={!(products.every((p) =>{
+                if (p.product){
+                  p.product.pulled === true
+                } else {
+                  return false;
+                }
+              }))}
             >
               {statusOptions.map((op, idx) => (
                 <option value={op} key={idx}>

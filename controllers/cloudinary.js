@@ -11,29 +11,38 @@ cloudinary.config({
 // we will be sending JSON data from front end
 // which will be binary data
 exports.upload = async (req, res) => {
-  const result = await cloudinary.uploader.upload(req.body.image, {
-  	public_id: `${Date.now()}`,
-  	resource_type: 'auto',
-  });
-  res.json({
-  	public_id: result.public_id,
-  	url: result.secure_url,
-  });
+  try {
+    const result = await cloudinary.uploader.upload(req.body.image, {
+      public_id: `${Date.now()}`,
+      resource_type: 'auto',
+    });
+    res.json({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      err: err.message,
+    });
+  }
 };
 
 exports.remove = (req, res) => {
-  const imageId = req.body.public_id;
-  console.log('imageId ', imageId);
-  cloudinary.uploader.destroy(imageId, (result) => {
-    if (result.result === 'ok') {
-      return res.send('ok');
-    } else {
-      return res.status(400).json({
-        success: false,
-        err: err.message,
-      });
-    }
-  })
+  try {
+    const imageId = req.body.public_id;
+    console.log('imageId ', imageId);
+    cloudinary.uploader.destroy(imageId, (result) => {
+      if (result.result === 'ok') {
+        return res.send('ok');
+      }
+    };
+  } catch (err) {
+    return res.status(400).json({
+      success: false,
+      err: err.message,
+    });
+  }
 };
 
 exports.removalPromise = (imageId) => {
