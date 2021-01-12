@@ -93,9 +93,11 @@ const StripeCheckout = ({
           chargeAmount,
           noneSoldBackend,
         } = res.data;
+        console.log(res);
         setClientSecret(clientSecret);
         setPayable(chargeAmount);
         setNoneSoldRecheck(noneSoldBackend);
+        console.log('________clientSecret______', clientSecret);
         toast.success('Payment details confirmed');
         setConfirmed(true);
       })

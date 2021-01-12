@@ -154,52 +154,54 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
     </div>
   );
 
-  const showProducts = () => (
-    products.map((p, i) => {
-      const {
-        title,
-        images,
-        pulled,
-      } = p.product;
-      return (
-        <React.Fragment key={i}>
-          <div
-            className='d-flex justify-content-between'
-          >
-            <img 
-              src={images && images[0] ? images[0].url : defaultImage }
-              alt={p.product}
-              style={{ maxWidth: '100px', height: 'auto' }}
-            />
-            <div
-              className='text-right'
-            >
-              <p>{title}</p>
-              <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
-            </div>
-          </div>
-          {admin && 
-            <p className='d-flex align-items-center mt-2'>
-              <b>Pulled?</b>
-              {pulled ? (
-                  <CheckCircleOutlined 
-                    className='text-success ml-4'
-                    style={{ fontSize: '30px' }}
-                  />
-                ) : (
-                  <CloseCircleOutlined 
-                    className='text-danger ml-4'
-                    style={{ fontSize: '30px' }}
-                  />
-                )
+  const showProducts = () => {
+    if (products) {
+      return products.map((p, i) => {
+          const {
+            title,
+            images,
+            pulled,
+          } = p.product;
+          return (
+            <React.Fragment key={i}>
+              <div
+                className='d-flex justify-content-between'
+              >
+                <img 
+                  src={images && images[0] ? images[0].url : defaultImage }
+                  alt={p.product}
+                  style={{ maxWidth: '100px', height: 'auto' }}
+                />
+                <div
+                  className='text-right'
+                >
+                  <p>{title}</p>
+                  <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
+                </div>
+              </div>
+              {admin && 
+                <p className='d-flex align-items-center mt-2'>
+                  <b>Pulled?</b>
+                  {pulled ? (
+                      <CheckCircleOutlined 
+                        className='text-success ml-4'
+                        style={{ fontSize: '30px' }}
+                      />
+                    ) : (
+                      <CloseCircleOutlined 
+                        className='text-danger ml-4'
+                        style={{ fontSize: '30px' }}
+                      />
+                    )
+                  }
+                </p>
               }
-            </p>
-          }
-          <hr />
-        </React.Fragment>
-      );
-    })
-  );
+              <hr />
+            </React.Fragment>
+          );
+        })
+    };
+  };
 
   return (
       <div
