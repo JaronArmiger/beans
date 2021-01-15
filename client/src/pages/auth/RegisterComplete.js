@@ -10,6 +10,7 @@ import { createOrUpdateUser } from '../../functions/auth';
 const RegisterComplete = ({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // const { user } = useSelector(state => state);
   let dispatch = useDispatch();
@@ -31,6 +32,10 @@ const RegisterComplete = ({ history }) => {
       return;
     }
 
+    if (password !== confirmPassword) {
+      toast.error('Passwords must match.');
+      return;
+    }
 
     try {
       const result = await auth.signInWithEmailLink(
@@ -82,8 +87,19 @@ const RegisterComplete = ({ history }) => {
         placeholder='Create Password'
         autoFocus
       />
+      <input 
+        type='password' 
+        className='form-control' 
+        value={confirmPassword} 
+        onChange={e => setConfirmPassword(e.target.value)}
+        placeholder='Confirm Password'
+      />
       <br/>
-      <button type='submit' className='btn btn-raised'>
+      <button 
+        type='submit' 
+        className='btn btn-raised'
+        disabled={!email || !password || password.length < 6 || password !== confirmPassword}
+      >
         Complete Registration
       </button>
     </form>
