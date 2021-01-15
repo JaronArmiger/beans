@@ -21,7 +21,7 @@ import { Elements } from '@stripe/react-stripe-js';
 import StripeCheckout from '../components/StripeCheckout';
 import '../stripe.css';
 
-const promise = loadStripe(process.env.REACT_APP_STRIPE_API_KEY);
+const promise = loadStripe(process.env.REACT_STRIPE_API_KEY);
 
 
 const { Panel } = Collapse;

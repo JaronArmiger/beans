@@ -93,12 +93,10 @@ const StripeCheckout = ({
           chargeAmount,
           noneSoldBackend,
         } = res.data;
-        console.log(res);
         setClientSecret(clientSecret);
         setPayable(chargeAmount);
         setNoneSoldRecheck(noneSoldBackend);
         console.log('________clientSecret______', clientSecret);
-        toast.success('Payment details confirmed');
         setConfirmed(true);
       })
       .catch(err => {
@@ -118,9 +116,10 @@ const StripeCheckout = ({
           }
         });
       if (payload.error) {
-        setError(`Payment failed ${payload.error.message}`);
+        setError(`Payment failed: ${payload.error.message}`);
         setProcessing(false);
       } else {
+        toast.success('Payment details confirmed');
         createStripeOrder(cartId, addressId, shipping, payload.paymentIntent)
           .then(res => {
             if (res.data.ok) {
