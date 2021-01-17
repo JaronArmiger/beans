@@ -8,7 +8,7 @@ const UserNav = () => {
       <ul className='nav flex-column'>
       	<li className="nav-item">
       	  <Link 
-      	    to='/user/history'
+      	    to='/user/dashboard'
       	    className='nav-link'
       	  >
       	    History
