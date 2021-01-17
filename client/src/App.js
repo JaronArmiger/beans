@@ -7,6 +7,7 @@ import { auth } from './firebase';
 import { useDispatch } from 'react-redux';
 import { currentUser } from './functions/auth';
 import { LoadingOutlined } from '@ant-design/icons';
+import ErrorBoundary from './components/error/ErrorBoundary';
 
 const Login = lazy(() => import('./pages/auth/Login'));
 const Register = lazy(() => import('./pages/auth/Register'));
@@ -78,6 +79,7 @@ const App = () => {
     return () => unsubscribe();
   }, [dispatch])
   return (
+    <ErrorBoundary>
     <Suspense fallback={
         <div className="col text-center p-5">
           <h1>
@@ -131,6 +133,7 @@ const App = () => {
         <Route exact path='/order/:orderId' component={OrderReceipt} />
       </Switch>
     </Suspense>
+    </ErrorBoundary>
   );
 };
 

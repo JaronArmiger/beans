@@ -8,8 +8,17 @@ import NewArrivals from '../components/home/NewArrivals';
 
 
 const Home = () => {
+  const createError = () => {
+    throw new Error('sheeit');
+  }
+
   return (
     <div className="container-fluid">
+      <button
+        onClick={createError}
+      >
+        throw error
+      </button>
       <Slider />
       <p 
         className="text-center p-3 mt-2 mb-2 font-weight-bold"
