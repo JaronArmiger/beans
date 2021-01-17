@@ -268,7 +268,7 @@ const AltMobileHeader = () => {
             {user && user.role === "subscriber" && (
               <Item>
                 <Link 
-                  to="/user/history"
+                  to="/user/dashboard"
                   onClick={() => setDrawerOpen(false)}
                 >
                   Dashboard

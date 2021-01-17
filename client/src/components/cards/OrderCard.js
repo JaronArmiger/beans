@@ -228,7 +228,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
           <hr />
           {showProducts()}
         </div>
-        <div
+        {admin && <div
           className='d-flex justify-content-end'
         >
           <DeleteOutlined 
@@ -237,7 +237,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
             onClick={() => handleOrderDelete(order._id, order.orderStatus, allPulled)}
             disabled={order.orderStatus !== 'Completed'}
           />
-        </div>
+        </div>}
       </div>
   );
 };
