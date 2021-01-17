@@ -155,6 +155,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
   );
 
   const showProducts = () => {
+    console.log(products);
     if (products) {
       return products.map((p, i) => {
           const {
@@ -175,7 +176,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
                 <div
                   className='text-right'
                 >
-                  <p>{title}</p>
+                  <p>{title || 'No title'}</p>
                   <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
                 </div>
               </div>
