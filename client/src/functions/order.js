@@ -22,3 +22,14 @@ export const createStripeOrder = async (cartId, addressId, shipping, paymentInte
     },
   );
 };
+
+export const deleteOrder = async (orderId, authtoken) => {
+  return await axios.delete(
+     `${process.env.REACT_APP_API}/order/${orderId}`,
+     {
+       headers: {
+         authtoken,
+       },
+     }
+  );
+};

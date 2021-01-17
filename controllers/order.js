@@ -1,5 +1,6 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
+const Address = require('../models/address');
 const Cart = require('../models/cart');
 const PaymentDetail = require('../models/paymentDetail');
 const { createPaymentPromise } = require('../utils/square');
@@ -184,7 +185,16 @@ exports.list = async (req, res) => {
 
 exports.remove = async (req, res) => {
   try {
+    const {
+      orderId,
+    } = req.params;
 
+
+    const { userAddress } = await Order.findByIdAndDelete(orderId);
+    if (userAddress) await Address.findByIdAndDelete(userAddress);
+    res.send({
+      ok: true,
+    })
   } catch (err) {
     console.log(err);
     res.status(400).json({

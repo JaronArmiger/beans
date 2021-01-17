@@ -10,6 +10,7 @@ import {
   FastForwardOutlined,
 } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const ProductsToPull = () => {
   const [products, setProducts] = useState([]);
@@ -30,10 +31,11 @@ const ProductsToPull = () => {
       });
   };
 
-  const pullProduct = (productId) => {
+  const pullProduct = (productId, title) => {
     markAsPulled(productId, token)
       .then(res => {
         if (res.data.ok) loadProducts();
+        toast.success(`${title} marked as pulled.`)
       })
       .catch(err => {
         console.log(err);
@@ -77,7 +79,7 @@ const ProductsToPull = () => {
           >
             <button
               className='btn btn-outline-primary'
-              onClick={() => pullProduct(_id)}
+              onClick={() => pullProduct(_id, title)}
             >
               Mark as pulled
               <FastForwardOutlined

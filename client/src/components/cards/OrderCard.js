@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Collapse,
 } from 'antd';
@@ -8,6 +8,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import {
   CloseCircleOutlined,
   CheckCircleOutlined,
+  DeleteOutlined,
 } from '@ant-design/icons';
 
 const { Panel } = Collapse;
@@ -20,10 +21,22 @@ const statusOptions = [
   'Completed',
 ];
 
-const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
+const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDelete }) => {
   const [activeKey, setActiveKey] = useState([]);
+  const [allPulled, setAllPulled] = useState(false);
   const address = order.userAddress || null;
   const products = order.products || [];
+
+  useEffect(() => {
+    const checkPulled = products.every((p) => {
+      if (p.product){
+        return p.product.pulled === true;
+      } else {
+        return false;
+      }
+    });
+    setAllPulled(checkPulled);
+  }, [products])
 
   const calcStatusColor = () => {
     switch (order.orderStatus) {
@@ -83,13 +96,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
               }}
               defaultValue={order.orderStatus}
               onChange={e => handleStatusChange(order._id, e.target.value)}
-              disabled={!(products.every((p) =>{
-                if (p.product){
-                  return p.product.pulled === true;
-                } else {
-                  return false;
-                }
-              }))}
+              disabled={!allPulled}
             >
               {statusOptions.map((op, idx) => (
                 <option value={op} key={idx}>
@@ -155,7 +162,6 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
   );
 
   const showProducts = () => {
-    console.log(products);
     if (products) {
       return products.map((p, i) => {
           const {
@@ -221,6 +227,16 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null }) => {
           {showOrderDetail()}
           <hr />
           {showProducts()}
+        </div>
+        <div
+          className='d-flex justify-content-end'
+        >
+          <DeleteOutlined 
+            style={{ fontSize: '20px' }}
+            className={`${(order.orderStatus !== 'Completed' || !allPulled) ? 'text-secondary' : 'text-danger'} mb-4 mr-3`}
+            onClick={() => handleOrderDelete(order._id, order.orderStatus, allPulled)}
+            disabled={order.orderStatus !== 'Completed'}
+          />
         </div>
       </div>
   );
