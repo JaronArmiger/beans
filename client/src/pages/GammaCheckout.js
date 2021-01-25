@@ -48,6 +48,7 @@ const GammaCheckout = () => {
   const [addressErrors, setAddressErrors] = useState([]);
   const [chargeAmount, setChargeAmount] = useState(0);
   const [taxAmount, setTaxAmount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
   const [payable, setPayable] = useState(0);
@@ -126,22 +127,21 @@ const GammaCheckout = () => {
     setNoneSold(noProductsSold);
   }, [products]);
 
-  useEffect(() => {
-    if (shipping) {
-      setChargeAmount(chargeAmount + 8);
-    } else {
-      setChargeAmount(chargeAmount - 8);
-    }
-  }, [shipping]);
   
   useEffect(() => {
-    setChargeAmount(totalAfterDiscount || cartTotal);
-  }, [cartTotal, totalAfterDiscount]);
+    let amount = totalAfterDiscount || cartTotal;
+    if (shipping) amount += 8;
+    setChargeAmount(amount);
+  }, [cartTotal, totalAfterDiscount, shipping]);
 
-  // useEffect(() => {
-  //   const unroundedTax = chargeAmount / 
-  // }, [chargeAmount]);
+  useEffect(() => {
+    const unroundedTax = chargeAmount * 1025 / 10000;
+    setTaxAmount(Math.round(unroundedTax * 100) / 100);
+  }, [chargeAmount]);
 
+  useEffect(() => {
+    setFinalAmount(chargeAmount + taxAmount);
+  }, [chargeAmount, taxAmount]);
 
   const emptyCart = () => {
     if (typeof window !== 'undefined') {
@@ -326,52 +326,6 @@ const GammaCheckout = () => {
     </React.Fragment>
   );
 
-  // const handleOrder = async () => {
-    // try {
-      // const payload = await stripe
-      //   .confirmCardPayment(clientSecret, {
-      //     payment_method: {
-      //       card: cardElement
-      //     }
-      //   });
-    //   if (payload.error) {
-    //     toast.error('An error has occurred. Order not placed.');
-    //   } else {
-    //     // create order and save in database for admin to process
-    //     createOrder(payable)
-    //       .then(res => {
-    //         if (res.data.ok) {
-    //           if (typeof window !== undefined) {
-    //             localStorage.removeItem('cart');
-    //           }
-    //         }
-    //         // dispatch({ type: 'CLEAR_CART' });
-    //         // dispatch({
-    //         //   type: 'COUPON_APPLIED',
-    //         //   payload: false
-    //         // });
-    //         // emptyUserCart(user.token)
-    //         //   .then((res) => {
-    //         //     if (res.data.ok) console.log('cart deleted on backend');
-    //         //   })
-    //         //   .catch(err => console.log(err.response));
-    //       })
-    //       .catch(err => {
-    //         console.log(err);
-    //       })
-        
-    //     // console.log(payload);
-    //     // setError(null);
-    //     // setProcessing(false);
-    //     // setSucceeded(true);
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    //   toast.error('An error has occurred. Order not placed.');
-    // };
-  // };
-
-
   return (
     <div className="container-fluid">
       <div className="row justify-content-md-center">
@@ -406,10 +360,10 @@ const GammaCheckout = () => {
             </React.Fragment>
           }
           <p className='text-right'>
-            <b>Order Total: {(chargeAmount).toLocaleString('en-US',{
-              style: 'currency',
-              currency: 'USD',
-            })}
+              Sales Tax: ${taxAmount}
+          </p>
+          <p className='text-right'>
+            <b>Order Total: ${finalAmount}
             </b>
           </p>
           {!noneSold && (
@@ -499,10 +453,7 @@ const GammaCheckout = () => {
                 stripe={promise}
               >
                 <p className='text-center'>
-                  <b>Charge Amount:</b> {(chargeAmount).toLocaleString('en-US', {
-                      style: 'currency',
-                      currency: 'USD',
-                    })}
+                  <b>Charge Amount:</b> ${finalAmount}
                 </p>
                 <StripeCheckout 
                   shipping={shipping}
