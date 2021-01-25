@@ -93,6 +93,7 @@ const StripeCheckout = ({
           chargeAmount,
           noneSoldBackend,
         } = res.data;
+        console.log(chargeAmount);
         setClientSecret(clientSecret);
         setPayable(chargeAmount);
         setNoneSoldRecheck(noneSoldBackend);

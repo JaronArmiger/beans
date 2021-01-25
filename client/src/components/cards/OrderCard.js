@@ -124,15 +124,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
         <b>
           Total:{' '}
         </b>
-        ${order.chargeAmount ?
-          (order.chargeAmount)
-            .toLocaleString('en-US', {
-              type: 'currency',
-              currency: 'USD'
-            }) : (
-            '$0'
-          )
-          }
+        ${order.chargeAmount.toFixed(2)}
       </p>
       {address ? (
         <Collapse
@@ -156,7 +148,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
       <div
         className='d-flex justify-content-center'
       >
-        {!admin && showDownloadLink()} 
+        {showDownloadLink()} 
       </div>
     </div>
   );
