@@ -136,7 +136,7 @@ const GammaCheckout = () => {
 
   useEffect(() => {
     const unroundedTax = chargeAmount * 1025 / 10000;
-    setTaxAmount(Math.round(unroundedTax * 100) / 100);
+    setTaxAmount((Math.round(unroundedTax * 100) / 100));
   }, [chargeAmount]);
 
   useEffect(() => {
@@ -360,10 +360,10 @@ const GammaCheckout = () => {
             </React.Fragment>
           }
           <p className='text-right'>
-              Sales Tax: ${taxAmount}
+              Sales Tax: ${taxAmount.toFixed(2)}
           </p>
           <p className='text-right'>
-            <b>Order Total: ${finalAmount}
+            <b>Order Total: ${finalAmount.toFixed(2)}
             </b>
           </p>
           {!noneSold && (
@@ -453,7 +453,7 @@ const GammaCheckout = () => {
                 stripe={promise}
               >
                 <p className='text-center'>
-                  <b>Charge Amount:</b> ${finalAmount}
+                  <b>Charge Amount:</b> ${finalAmount.toFixed(2)}
                 </p>
                 <StripeCheckout 
                   shipping={shipping}
