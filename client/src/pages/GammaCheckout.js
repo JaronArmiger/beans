@@ -47,6 +47,7 @@ const GammaCheckout = () => {
   const [activeKey, setActiveKey] = useState(['1']);
   const [addressErrors, setAddressErrors] = useState([]);
   const [chargeAmount, setChargeAmount] = useState(0);
+  const [taxAmount, setTaxAmount] = useState(0);
   const [couponApplied, setCouponApplied] = useState(false);
   const [shipping, setShipping] = useState(false);
   const [payable, setPayable] = useState(0);
@@ -126,8 +127,20 @@ const GammaCheckout = () => {
   }, [products]);
 
   useEffect(() => {
+    if (shipping) {
+      setChargeAmount(chargeAmount + 8);
+    } else {
+      setChargeAmount(chargeAmount - 8);
+    }
+  }, [shipping]);
+  
+  useEffect(() => {
     setChargeAmount(totalAfterDiscount || cartTotal);
   }, [cartTotal, totalAfterDiscount]);
+
+  // useEffect(() => {
+  //   const unroundedTax = chargeAmount / 
+  // }, [chargeAmount]);
 
 
   const emptyCart = () => {
@@ -393,7 +406,7 @@ const GammaCheckout = () => {
             </React.Fragment>
           }
           <p className='text-right'>
-            <b>Order Total: {(shipping ? (chargeAmount + 8) : chargeAmount).toLocaleString('en-US',{
+            <b>Order Total: {(chargeAmount).toLocaleString('en-US',{
               style: 'currency',
               currency: 'USD',
             })}
@@ -486,7 +499,7 @@ const GammaCheckout = () => {
                 stripe={promise}
               >
                 <p className='text-center'>
-                  <b>Charge Amount:</b> {(shipping ? (chargeAmount + 8) : chargeAmount).toLocaleString('en-US', {
+                  <b>Charge Amount:</b> {(chargeAmount).toLocaleString('en-US', {
                       style: 'currency',
                       currency: 'USD',
                     })}
