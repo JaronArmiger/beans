@@ -141,6 +141,43 @@ const ShippingAddress = ({
           <Radio value={false}>I'll pick up my order in store</Radio>
           <Radio value={true}>I want my order shipped</Radio>
         </Radio.Group>
+        {shipping ? (
+          <React.Fragment>
+            <p
+              className='mt-2 mb-2 text-secondary'
+              style={{
+                fontSize: '0.9em',
+              }}
+            >
+              Orders ship every Tuesday morning, provided they were placed 48 hours prior.
+            </p>
+            <p
+              className='mb-0 text-secondary'
+              style={{
+                fontSize: '0.9em',
+              }}
+            >
+              Flat-rate shipping only applies to domestic orders. Email us at vintageon18@gmail.com if you're interested in having your order shipped internationally.
+            </p>
+          </React.Fragment>
+        ) : (
+          <p
+            className='mt-2 text-secondary'
+            style={{
+              fontSize: '0.9em',
+            }}
+          >
+            Your order will be ready for pickup 48 hours after it is placed. Please bring a valid state ID when picking up your order.
+          </p>
+        )}
+        <p
+            className='mt-2 text-secondary'
+            style={{
+              fontSize: '0.9em',
+            }}
+          >
+           Once you place your order, you will receive an email with further information.
+        </p>
       </div>
       {!shipping && 
         <button

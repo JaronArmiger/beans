@@ -99,7 +99,6 @@ const SingleProduct = ({
       .then(res => {
         if (res.data.ok) {
           toast.success(`"${title}" added to wishlist! View in your dashboard!`);
-          // history.push('/user/wishlist');
         }
       })
       .catch(err => {
@@ -114,19 +113,10 @@ const SingleProduct = ({
           infiniteLoop
           dots={false}
         >
-          {/*{(images && images.length > 0) ? images.map((i) => {
-                      return (
-                        <img 
-                          src={i.url} 
-                          alt={title} 
-                          key={i.public_id}
-                          style={{ maxHeight: '400px' }}
-                        />
-                      );
-                    }) : <img src={defaultImage} alt={title} />}*/}
-          {(images && images.length > 0) ? images.map((i) => {
+          {(images && images.length > 0) ? images.map((i, idx) => {
             return (
-              <div 
+              <div
+                key={idx}
                 style={{
                   height: `${(windowWidth > 900 ? '75vh' : '400px')}`,
                   width: '100%',

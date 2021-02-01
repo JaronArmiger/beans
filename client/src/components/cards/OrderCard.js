@@ -145,6 +145,36 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
           <p>In-Store pickup</p>
         )
       }
+      {address && !admin? (
+        <React.Fragment>
+          <p
+            className='mt-2 mb-2 text-secondary'
+            style={{
+              fontSize: '0.9em',
+            }}
+          >
+            Orders ship every Tuesday morning, provided they were placed 48 hours prior.
+          </p>
+          <p
+            className='mb-0 text-secondary'
+            style={{
+              fontSize: '0.9em',
+            }}
+          >
+            Flat-rate shipping only applies to domestic orders. Email us at vintageon18@gmail.com if you're interested in having your order shipped internationally.
+          </p>
+        </React.Fragment>
+        ) : (
+          <p
+            className='mt-2 text-secondary'
+            style={{
+              fontSize: '0.9em',
+            }}
+          >
+            Your order will be ready for pickup 48 hours after it is placed. Please bring a valid state ID when picking up your order.
+          </p>
+        )
+      }
       <div
         className='d-flex justify-content-center'
       >
