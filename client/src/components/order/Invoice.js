@@ -22,7 +22,7 @@ const Invoice = ({ order }) => (
         ~ Downloaded {new Date().toLocaleString()} ~
       </Text>
       <Text style={styles.title}>
-        Order Invoice
+        Order Receipt
       </Text>
       <Text style={styles.author}>
         Pilsen Vintage
@@ -32,7 +32,7 @@ const Invoice = ({ order }) => (
       </Text>
       <Table>
         <TableHeader>
-          <TableCell>Title</TableCell>
+          <TableCell>Product Name</TableCell>
           <TableCell>Price</TableCell>
           <TableCell>Quantity</TableCell>
         </TableHeader>
@@ -43,7 +43,7 @@ const Invoice = ({ order }) => (
             getContent={(x) => x.product.title}
           />
           <DataTableCell 
-            getContent={(x) => `$${x.product.price}`}
+            getContent={(x) => `$${x.price ? x.price.toFixed(2) : 0}`}
           />
           <DataTableCell 
             getContent={(x) => x.count}
@@ -52,22 +52,18 @@ const Invoice = ({ order }) => (
       </Table>
       <Text style={styles.text}>
         <Text>
-          Date: {'               '} 
-          {new Date(order.createdAt * 1000).toLocaleDateString()}
-        </Text>
-        {'\n'}
-        <Text>
           Order Id: {'           '}
           {order._id}
         </Text>
         {'\n'}
         <Text>
-          Order Status: {'  '} {order.orderStatus}
+          Order Date: {'               '} 
+          {new Date(order.createdAt).toLocaleDateString()}
         </Text>
         {'\n'}
         <Text>
           Amount Paid: {'       '}
-          ${order.chargeAmount}
+          ${order.chargeAmount ? order.chargeAmount.toFixed(2) : 0}
         </Text>
       </Text>
       <Text style={styles.footer}>

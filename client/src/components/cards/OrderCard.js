@@ -24,8 +24,8 @@ const statusOptions = [
 const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDelete }) => {
   const [activeKey, setActiveKey] = useState([]);
   const [allPulled, setAllPulled] = useState(false);
-  const address = order.userAddress || null;
-  const products = order.products || [];
+  const address = order?.userAddress || null;
+  const products = order?.products || [];
 
   useEffect(() => {
     const checkPulled = products.every((p) => {
@@ -39,7 +39,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
   }, [products])
 
   const calcStatusColor = () => {
-    switch (order.orderStatus) {
+    switch (order?.orderStatus) {
       case 'Not Processed':
         return '#d9ad0d';
         break;
@@ -94,7 +94,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
                 fontSize: '17px',
                 border: 'none',
               }}
-              defaultValue={order.orderStatus}
+              defaultValue={order?.orderStatus}
               onChange={e => handleStatusChange(order._id, e.target.value)}
               disabled={!allPulled}
             >
@@ -113,18 +113,18 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
               color: calcStatusColor(),
             }}
           >
-            {order.orderStatus}
+            {order?.orderStatus}
           </b>
         </p>
         )}
-      <p className='mb-0'><b>Order Id: </b>{order._id}</p>
-      <p className='mb-0'><b>User Email: </b>{order.userEmail}</p>
-      <p className='mb-0'><b>Date Placed: </b>{new Date(order.createdAt).toLocaleDateString()}</p>
+      <p className='mb-0'><b>Order Id: </b>{order?._id}</p>
+      <p className='mb-0'><b>User Email: </b>{order?.userEmail}</p>
+      <p className='mb-0'><b>Date Placed: </b>{new Date(order?.createdAt).toLocaleDateString()}</p>
       <p className='mb-0'>
         <b>
           Total:{' '}
         </b>
-        ${order.chargeAmount.toFixed(2)}
+        ${order?.chargeAmount ? order.chargeAmount.toFixed(2) : 0}
       </p>
       {address ? (
         <Collapse
@@ -175,7 +175,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
                   className='text-right'
                 >
                   <p>{title || 'No title'}</p>
-                  <p>${parseInt(p.price).toLocaleString('en-US', { type: 'currency', currency: 'USD' })}</p>
+                  <p>${p.price ? p.price.toFixed(2) : 0}</p>
                 </div>
               </div>
               {admin && 
@@ -211,7 +211,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
           className='p-2'
           style={{ backgroundColor: '#99b4e0'}}
         >
-          Id: {order._id}
+          Id: {order?._id}
         </h6>
         <div
           className='p-2'

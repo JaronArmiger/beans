@@ -225,6 +225,7 @@ const GammaCheckout = () => {
           setAddressId(res.data.addressId);
           setActiveKey(['2']);
           setAddressSaved(true);
+          setShipping(true);
         })
         .catch(err => {
           console.log(err);

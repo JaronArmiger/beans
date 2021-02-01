@@ -1,7 +1,10 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 const Order = require('../models/order');
-const { generateOrderEmailText } = require('../utils/emailGenerator');
+const { 
+  generateOrderEmailText,
+  generateOrderEmailHtml
+} = require('../utils/emailGenerator');
 
 const transport = nodemailer.createTransport({
   host: "smtp.mailtrap.io",
@@ -50,11 +53,13 @@ exports.sendOrderEmailDev = async (req, res) => {
 
     const subject = `Order Confirmation ${order._id}`;
     const text = generateOrderEmailText(order);
+    const html = generateOrderEmailHtml(order);
     const message = {
       from: 'Pilsen Vintage <vintageon18th@gmail.com>',
       to: order.userEmail,
       subject,
       text,
+      html,
     };
     // res.send(text);
     transport.sendMail(message, (err, info) => {

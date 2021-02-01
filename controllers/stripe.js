@@ -29,7 +29,7 @@ exports.createPaymentIntent = async (req, res) => {
     console.log('________chargeAmount______', chargeAmount);
 
     const paymentIntent = await stripe.paymentIntents.create({
-      amount: chargeAmount * 100,
+      amount: Math.round(chargeAmount * 100),
       currency: 'usd',
     });
 

@@ -147,6 +147,7 @@ exports.createStripe = async (req, res) => {
 
     const newOrder = new Order({
       products,
+      shipping,
       paid: true,
       userEmail,
       userAddress: addressId || null,

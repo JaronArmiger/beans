@@ -3,7 +3,10 @@ const DOMAIN = 'mg.pilsenvintagechicago.com';
 require('dotenv').config();
 const mg = mailgun({ apiKey: process.env.MAILGUN_API_KEY, domain: DOMAIN });
 const Order = require('../models/order');
-const { generateOrderEmailText } = require('../utils/emailGenerator');
+const { 
+  generateOrderEmailText,
+  generateOrderEmailHtml
+} = require('../utils/emailGenerator');
 
 exports.sendEmailProd = async (req, res) => {
   const data = {
@@ -30,11 +33,13 @@ exports.sendOrderEmailProd = async (req, res) => {
 
     const subject = `Order Confirmation ${order._id}`;
     const text = generateOrderEmailText(order);
+    const html = generateOrderEmailHtml(order);
     const message = {
       from: 'Pilsen Vintage <vintageon18th@gmail.com>',
       to: order.userEmail,
       subject,
       text,
+      html,
     };
     // res.send(text);
     mg.messages().send(message, (err, info) => {
