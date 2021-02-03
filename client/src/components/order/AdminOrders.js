@@ -9,11 +9,15 @@ import {
 } from '../../functions/order';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import {
+  LoadingOutlined,
+} from '@ant-design/icons';
 
 
 
 const AdminOrders = () => {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { token } = useSelector(state => state.user);
 
@@ -22,12 +26,15 @@ const AdminOrders = () => {
   }, []);
 
   const loadOrders = () => {
+    setLoading(true);
     getOrders(token)
       .then(res => {
         setOrders(res.data);
+        setLoading(false);
       })
       .catch(err => {
         console.log(err);
+        setLoading(false);
       })
   };
 
@@ -80,12 +87,16 @@ const AdminOrders = () => {
   );
 
   return (
-    <React.Fragment>
-      {orders && orders.length > 0 ?
-        showOrders() :
-        'No orders yet :\'('
-      }
-    </React.Fragment>
+    loading ? (
+      <LoadingOutlined className='h1'/>
+    ) : (
+      <React.Fragment>
+        {orders && orders.length > 0 ?
+          showOrders() :
+          'No orders yet :\'('
+        }
+      </React.Fragment>
+    )
   );
 };
 

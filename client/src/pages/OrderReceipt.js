@@ -49,29 +49,35 @@ const OrderReceipt = ({ match }) => {
 
 
   return (
-    <div className="container-fluid">
-      <div className="row justify-content-center">
-        <div 
-          className="col-md-8 pt-3"
-        > 
-          <h4>Order Receipt</h4>
-          <OrderCard order={order} />
-          {
-            <div
-              className='p-2'
-            >
-              { user && 
-                <Link
-                  to='/user/dashboard'
-                >
-                  View in your order dashboard >> 
-                </Link>
-            }
-            </div>
-          }
+      <div className="container-fluid">
+        <div className="row justify-content-center">
+          <div 
+            className="col-md-8 pt-3"
+          > 
+            {order ? (
+              <React.Fragment>
+                <h4>Order Receipt</h4>
+                <OrderCard order={order} />
+                {
+                  <div
+                    className='p-2'
+                  >
+                    { user && 
+                      <Link
+                        to='/user/dashboard'
+                      >
+                        View in your order dashboard >> 
+                      </Link>
+                  }
+                  </div>
+                }
+              </React.Fragment>
+            ) : (
+              <h1>Order {orderId} not found.</h1>
+            )}
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
