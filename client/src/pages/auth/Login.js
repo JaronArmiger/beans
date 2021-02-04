@@ -18,7 +18,6 @@ const Login = ({ history }) => {
   const { user } = useSelector(state => state);
   
   useEffect(() => {
-    console.log(history.location.state);
     const fromState = history.location.state;
     if (fromState) return;
     if (user && user.token) history.push('/');

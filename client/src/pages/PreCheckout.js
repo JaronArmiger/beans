@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import { Button } from 'antd';
 import { createCart } from '../functions/cart';
 import { useSelector, useDispatch } from 'react-redux';
+import { addEmail } from '../functions/mailingList';
 
 const PreCheckout = ({ history }) => {
   const [email, setEmail] = useState('');
+  const [wantMail, setWantMail] = useState(false);
   const { cart, cartId, user } = useSelector(state => state);
 
   useEffect(() => {
@@ -19,13 +21,16 @@ const PreCheckout = ({ history }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createCart(cart, email, cartId)
-      .then((res) => {
+      .then(async (res) => {
         dispatch({
           type: 'MODIFY_CART_ID',
           payload: res.data.cartId,
         });
         if (typeof window !== 'undefined') {
           localStorage.setItem("cartId", res.data.cartId);
+        }
+        if (wantMail) {
+          await addEmail(email);
         }
         history.push('/gamma-checkout');
       })
@@ -77,6 +82,25 @@ const PreCheckout = ({ history }) => {
                   className='form-control'
                 />
               </div>
+              <div className="form-check mb-2">
+                <input 
+                  type='checkbox' 
+                  className='form-check-input'
+                  id='wantMailCheck'
+                  checked={wantMail} 
+                  onChange={e => setWantMail(e.target.checked)}
+                />
+                <label 
+                  htmlFor="wantMailCheck" 
+                  className="form-check-label"
+                  style={{
+                    fontSize: '.9em',
+                    color: 'FFF'
+                  }}
+                >
+                  I want to receive emails about dope deals and events
+                </label>
+              </div>
               <button
                 className='btn btn-primary'
                 disabled={!email}
@@ -84,6 +108,9 @@ const PreCheckout = ({ history }) => {
                 Continue
               </button>
             </form>
+            <p>
+              {wantMail ? 'yes' : 'no'}
+            </p>
           </div>
         </div>
       </div>
