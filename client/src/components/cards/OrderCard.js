@@ -84,7 +84,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
       return (
         <React.Fragment>
           <p
-            className='mt-2 mb-2 text-secondary'
+            className='mt-2 mb-0 text-secondary'
             style={{
               fontSize: '0.9em',
             }}
@@ -183,7 +183,7 @@ const OrderCard = ({ order, admin=false, handleStatusChange=null, handleOrderDel
       }
       {!admin ? showRetrievalInfo() : ''}
       <div
-        className='d-flex justify-content-center'
+        className='d-flex justify-content-center mt-4'
       >
         {showDownloadLink()} 
       </div>

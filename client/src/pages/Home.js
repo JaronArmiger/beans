@@ -5,6 +5,7 @@ import React, { lazy } from 'react';
 // import SubList from '../components/sub/SubList';
 import Slider from '../components/slider/Slider';
 import NewArrivals from '../components/home/NewArrivals';
+import JoinNewsletterForm from '../components/forms/JoinNewsletterForm';
 
 
 const Home = () => {
@@ -18,6 +19,7 @@ const Home = () => {
         NEW ARRIVALS
       </p>
   	  <NewArrivals />
+      <JoinNewsletterForm />
 
       {/*<h4 className="text-center p-3 mt-5 mb-5 display-4 jumbotron">
         Best Sellers
