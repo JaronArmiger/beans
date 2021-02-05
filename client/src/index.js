@@ -1,15 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Wrapper from './Wrapper';
+// import App from './App';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import 'antd-mobile/dist/antd-mobile.css';
 
 // import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import store from './store';
+// import { Provider } from 'react-redux';
+// import store from './store';
 // import { composeWithDevTools } from 'redux-devtools-extension';
 // import rootReducer from './reducers';
 
@@ -18,11 +19,7 @@ import store from './store';
 
 ReactDOM.render(
   // <React.StrictMode>
-  <Provider store={store}>
-  	<BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>,
+  <Wrapper />,
   // </React.StrictMode>,
   document.getElementById('root')
 );

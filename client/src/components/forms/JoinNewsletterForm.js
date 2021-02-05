@@ -21,10 +21,16 @@ const JoinNewsletterForm = () => {
   }
 
   return (
-    <div className="row">
+    <div 
+      className="row"
+      style={{
+        // backgroundColor: '#BBB',
+      }}
+    >
       <div className="col-md-4 offset-md-4 my-5"
         style={{
-          border: '1px solid black'
+          border: '1px solid black',
+          // backgroundColor: '#f5f5f9',
         }}
       >
         <p 

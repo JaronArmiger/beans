@@ -80,7 +80,8 @@ const App = () => {
   }, [dispatch])
   return (
     <ErrorBoundary>
-    <Suspense fallback={
+    <Suspense 
+      fallback={
         <div className="col text-center p-5">
           <h1>
             Pilsen Vint
@@ -90,48 +91,52 @@ const App = () => {
         </div>
       }
     >
-      {windowWidth > 900 ? 
-         (<Header />) : 
-         (<AltMobileHeader />)
-      }
-      <SideDrawer />
-      <ToastContainer />
-      <Switch>
-        <Route exact path='/' component={Home} />
-        <Route exact path='/login' component={Login} />
-        <Route exact path='/register' component={Register} />
-        <Route exact path='/register/complete' component={RegisterComplete} />
-        <Route exact path='/forgot/password' component={ForgotPassword} />
-        <UserRoute exact path='/user/dashboard' component={UserDashboard} />
-        {/*<UserRoute exact path='/checkout' component={Checkout} />*/}
-        <UserRoute exact path='/payment' component={Payment} />
-        <AdminRoute exact path='/admin/dashboard/:key?' component={AdminDashboard} />
-        <AdminRoute 
-          exact 
-          path='/admin/category/:slug' 
-          component={CategoryUpdate} 
-        />
-        <AdminRoute 
-          exact 
-          path='/admin/sub/:slug' 
-          component={SubUpdate} 
-        />
-        <AdminRoute 
-          exact 
-          path='/admin/product/:slug' 
-          component={ProductUpdate} 
-        />
+      <div
+        className='content'
+      >
+        {windowWidth > 900 ? 
+           (<Header />) : 
+           (<AltMobileHeader />)
+        }
+        <SideDrawer />
+        <ToastContainer />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/register/complete' component={RegisterComplete} />
+          <Route exact path='/forgot/password' component={ForgotPassword} />
+          <UserRoute exact path='/user/dashboard' component={UserDashboard} />
+          {/*<UserRoute exact path='/checkout' component={Checkout} />*/}
+          <UserRoute exact path='/payment' component={Payment} />
+          <AdminRoute exact path='/admin/dashboard/:key?' component={AdminDashboard} />
+          <AdminRoute 
+            exact 
+            path='/admin/category/:slug' 
+            component={CategoryUpdate} 
+          />
+          <AdminRoute 
+            exact 
+            path='/admin/sub/:slug' 
+            component={SubUpdate} 
+          />
+          <AdminRoute 
+            exact 
+            path='/admin/product/:slug' 
+            component={ProductUpdate} 
+          />
 
-        <Route exact path='/product/:slug' component={ProductView} />
-        <Route exact path='/category/:slug' component={CategoryHome} />
-        <Route exact path='/sub/:slug' component={SubHome} />
-        <Route exact path='/shop' component={() => <Shop windowWidth={windowWidth} />} />
-        <Route exact path='/cart' component={Cart} />
-        <Route exact path='/pre-checkout' component={PreCheckout} />
-        {/*<Route exact path='/beta-checkout' component={BetaCheckout} />*/}
-        <Route exact path='/gamma-checkout' component={GammaCheckout} />
-        <Route exact path='/order/:orderId' component={OrderReceipt} />
-      </Switch>
+          <Route exact path='/product/:slug' component={ProductView} />
+          <Route exact path='/category/:slug' component={CategoryHome} />
+          <Route exact path='/sub/:slug' component={SubHome} />
+          <Route exact path='/shop' component={() => <Shop windowWidth={windowWidth} />} />
+          <Route exact path='/cart' component={Cart} />
+          <Route exact path='/pre-checkout' component={PreCheckout} />
+          {/*<Route exact path='/beta-checkout' component={BetaCheckout} />*/}
+          <Route exact path='/gamma-checkout' component={GammaCheckout} />
+          <Route exact path='/order/:orderId' component={OrderReceipt} />
+        </Switch>
+      </div>
     </Suspense>
     </ErrorBoundary>
   );
